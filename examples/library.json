@@ -1,0 +1,13 @@
+{
+  "name": "FABRIK2D",
+  "keywords": "inverse kinematics, fabrik, robot arm",
+  "description": "Fabrik2D is an inverse kinematics solver for Arduino based on the FABRIK algorithm.",
+  "include": "Arduino/FABRIK2D.h",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/henriksod/Fabrik2DArduino.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "atmelavr"
+}
