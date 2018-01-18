@@ -104,8 +104,14 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         float ey = this->chain->joints[this->numJoints-1].y;
         float dif = abs(x-ex) + abs(y-ey);
         
-        while (dif > this->tolerance)
+        float prevDif = 0;
+        float tolerance = this->tolerance;
+        while (dif > tolerance)
         {
+            if (prevDif == dif)
+                tolerance *= 2;
+            
+            prevDif = dif;
             
             // STAGE 1: FORWARD REACHING
             // Set the end effector as target
