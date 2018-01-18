@@ -38,7 +38,7 @@ void setup() {
 
 void loop() {
 
-  if (y < 10) {
+  if (y < 0) {
     toggle_y = 0;
     y = 0;
   } else if (y > 40) {
