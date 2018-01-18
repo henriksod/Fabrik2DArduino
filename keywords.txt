@@ -1,0 +1,24 @@
+#######################################
+# Syntax Coloring Map For Ethernet
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Fabrik2D	KEYWORD1	Fabrik2D
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+solve	KEYWORD2
+getX	KEYWORD2
+getY	KEYWORD2
+getAngle	KEYWORD2
+setTolerance	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
