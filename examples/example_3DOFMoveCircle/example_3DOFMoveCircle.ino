@@ -56,7 +56,7 @@ void loop() {
   // Solve inverse kinematics given the coordinates x and y and the list of lengths for the arm.
   fabrik2D.solve(x,y,lengths);
 
-  // Angle is printed in degrees, this is the angle between the origin and the end effector.
+  // Angles are printed in degrees.
   // The function calls below shows how easy it is to get the results from the inverse kinematics solution.
   Serial.print(fabrik2D.getAngle(0)* 57296 / 1000);
   Serial.print("\t");
