@@ -156,6 +156,9 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         }
     }
     
+    if (this->numJoints > 1)
+        this->chain->joints[0].angle = atan2(this->chain->joints[1].y,this->chain->joints[1].x);
+    
     for (int i = 1; i <= this->numJoints-2; i++)
     {
         float ax = this->chain->joints[i+1].x;

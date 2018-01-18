@@ -16,6 +16,8 @@ int toggle_y = 0;
 void setup() {
   Serial.begin(9600);
 
+  Serial.print("ang0");
+  Serial.print("\t");
   Serial.print("ang1");
   Serial.print("\t");
   Serial.print("x0");
@@ -36,7 +38,7 @@ void setup() {
 
 void loop() {
 
-  if (y < 0) {
+  if (y < 10) {
     toggle_y = 0;
     y = 0;
   } else if (y > 40) {
@@ -49,6 +51,8 @@ void loop() {
 
   // Angle is printed in degrees, this is the angle between the origin and the end effector.
   // The function calls below shows how easy it is to get the results from the inverse kinematics solution.
+  Serial.print(fabrik2D.getAngle(0)* 57296 / 1000);
+  Serial.print("\t");
   Serial.print(fabrik2D.getAngle(1)* 57296 / 1000);
   Serial.print("\t");
   Serial.print(fabrik2D.getX(0));
