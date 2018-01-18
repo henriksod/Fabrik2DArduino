@@ -40,16 +40,16 @@ void setup() {
 void loop() {
 
   // Move from -30 to 40 in the y axis
-  if (y < -30) {
+  if (y < 10) {
     toggle_y = 0;
-    y = -30;
-  } else if (y > 40) {
+    y = 10;
+  } else if (y > 100) {
     toggle_y = 1;
-    y = 40;
+    y = 100;
   }
 
   // Solve inverse kinematics given the coordinates x and y and the list of lengths for the arm.
-  fabrik2D.solve(150,y,lengths);
+  fabrik2D.solve(200,y,lengths);
 
   // Angles are printed in degrees.
   // The function calls below shows how easy it is to get the results from the inverse kinematics solution.

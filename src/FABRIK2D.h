@@ -82,6 +82,14 @@ class Fabrik2D
      * length size should always be one lesser than the number of joints
      */
     void createChain(int* lengths);
+    
+    /* distance(x1,y1,x2,y2)
+     * inputs: coordinates
+     * outputs: distance between points
+     *
+     * Uses euclidean distance
+     */
+    float distance(float x1, float y1, float x2, float y2);
 };
 
 #endif

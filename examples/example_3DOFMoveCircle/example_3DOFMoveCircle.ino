@@ -13,7 +13,7 @@ Fabrik2D fabrik2D(4, lengths); // This arm has 4 joints; one in the origin, the 
 float ang = 0;
 float radius = 30;
 float x_offset = 150;
-float y_offset = 100;
+float y_offset = 200;
 
 void setup() {
   Serial.begin(9600);
@@ -80,5 +80,5 @@ void loop() {
   Serial.print("\t");
   Serial.println(fabrik2D.getY(3));
 
-  delay(50);
+  //delay(50);
 }

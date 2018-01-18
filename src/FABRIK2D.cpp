@@ -16,7 +16,7 @@
  */
 Fabrik2D::Fabrik2D(int numJoints, int* lengths)
 {
-  
+
   this->numJoints = numJoints;
   createChain(lengths);
   
@@ -78,7 +78,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
            // Find the distance r_i between the target (x,y) and the joint i position (jx,jy)
            float jx = this->chain->joints[i].x;
            float jy = this->chain->joints[i].y;
-           float r_i = abs(x-jx) + abs(y-jy);
+           float r_i = distance(jx,jy,x,y); // abs(x-jx) + abs(y-jy)
            float lambda_i = ((float)lengths[i])/r_i;
            
            // Find the new joint positions
@@ -96,7 +96,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         // greater than a tolerance
         float ex = this->chain->joints[this->numJoints-1].x;
         float ey = this->chain->joints[this->numJoints-1].y;
-        float dif = abs(x-ex) + abs(y-ey);
+        float dif = distance(ex,ey,x,y);
         
         float prevDif = 0;
         float tolerance = this->tolerance;
@@ -122,7 +122,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
                 float jy = this->chain->joints[i].y;
                 float nx = this->chain->joints[i+1].x;
                 float ny = this->chain->joints[i+1].y;
-                float r_i = abs(nx-jx) + abs(ny-jy);
+                float r_i = distance(jx,jy,nx,ny);
                 float lambda_i = ((float)lengths[i])/r_i;
                 
                 // Find the new joint positions
@@ -144,7 +144,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
                 float jy = this->chain->joints[i+1].y;
                 float nx = this->chain->joints[i].x;
                 float ny = this->chain->joints[i].y;
-                float r_i = abs(nx-jx) + abs(ny-jy);
+                float r_i = distance(jx,jy,nx,ny);
                 float lambda_i = ((float)lengths[i])/r_i;
                 
                 // Find the new joint positions
@@ -155,12 +155,12 @@ void Fabrik2D::solve(float x, float y, int* lengths)
             // Update distance between end effector and target
             ex = this->chain->joints[this->numJoints-1].x;
             ey = this->chain->joints[this->numJoints-1].y;
-            dif = abs(x-ex) + abs(y-ey);
+            dif = distance(ex,ey,x,y);
         }
     }
     
-    if (this->numJoints > 1)
-        this->chain->joints[0].angle = atan2(this->chain->joints[1].y,this->chain->joints[1].x);
+    
+    this->chain->joints[0].angle = atan2(this->chain->joints[1].y,this->chain->joints[1].x);
     
     for (int i = 1; i < this->numJoints-1; i++)
     {
@@ -170,7 +170,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         float cy = this->chain->joints[i-1].y;
         
         float a = lengths[i];
-        float b = abs(cx-ax) + abs(cy-ay);
+        float b = distance(cx,cy,ax,ay);
         float c = lengths[i-1];
         
         float cosAng = (a*a+c*c-b*b)/(2*a*c);
@@ -229,4 +229,16 @@ float Fabrik2D::getAngle(int joint)
 void Fabrik2D::setTolerance(float tolerance) 
 {
     this->tolerance = tolerance;
+}
+
+/* distance(x1,y1,x2,y2)
+ * inputs: coordinates
+ * outputs: distance between points
+ *
+ * Uses euclidean distance
+ */
+float Fabrik2D::distance(float x1, float y1, float x2, float y2) {
+    float xDiff = x2-x1;
+    float yDiff = y2-y1;
+    return sqrt(xDiff*xDiff + yDiff*yDiff);
 }
