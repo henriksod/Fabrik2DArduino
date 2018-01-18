@@ -30,9 +30,6 @@ Fabrik2D::Fabrik2D(int numJoints, int* lengths)
  */
 void Fabrik2D::createChain(int* lengths)
 {
-    if (sizeof(lengths)/sizeof(int)+1 < this->numJoints-1) {
-        return;
-    }
 
     Chain* chain = (Chain*)malloc(sizeof(Chain));
     chain->joints = (Joint*)malloc(sizeof(Joint)*this->numJoints);
@@ -60,9 +57,6 @@ void Fabrik2D::createChain(int* lengths)
  */
 void Fabrik2D::solve(float x, float y, int* lengths)
 {
-    if (sizeof(lengths)/sizeof(int)+1 < this->numJoints-1) {
-        return;
-    }
 
     // Distance between root and target (root is always 0,0)
     int dist = abs(x) + abs(y);
@@ -108,6 +102,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         float tolerance = this->tolerance;
         while (dif > tolerance)
         {
+
             if (prevDif == dif)
                 tolerance *= 2;
             
@@ -120,6 +115,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
             
             for (int i = this->numJoints-2; i >= 0; i--) 
             {
+                   
                 // Find the distance r_i between the new joint position i+1 (nx,ny)
                 // and the joint i (jx,jy)
                 float jx = this->chain->joints[i].x;
@@ -141,6 +137,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
             
             for (int i = 0; i < this->numJoints-1; i++)
             {
+                   
                 // Find the distance r_i between the new joint position i (nx,ny)
                 // and the joint i+1 (jx,jy)
                 float jx = this->chain->joints[i+1].x;
@@ -165,7 +162,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
     if (this->numJoints > 1)
         this->chain->joints[0].angle = atan2(this->chain->joints[1].y,this->chain->joints[1].x);
     
-    for (int i = 1; i <= this->numJoints-2; i++)
+    for (int i = 1; i < this->numJoints-1; i++)
     {
         float ax = this->chain->joints[i+1].x;
         float ay = this->chain->joints[i+1].y;
@@ -176,7 +173,8 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         float b = abs(cx-ax) + abs(cy-ay);
         float c = lengths[i-1];
         
-        float angleRad = acos((a*a+c*c-b*b)/(2*a*c));
+        float cosAng = (a*a+c*c-b*b)/(2*a*c);
+        float angleRad = acos(min(1, max(-1, cosAng)));
         this->chain->joints[i].angle = angleRad;
     }
 }

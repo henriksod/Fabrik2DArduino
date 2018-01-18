@@ -1,17 +1,19 @@
 /********************************************************
- * FABRIK2D 2DOF example
- * Creating the FABRIK object and moving the end effector up and down.
+ * FABRIK2D 3DOF example
+ * Creating the FABRIK object and moving the end effector in a circular motion.
  * You can use whichever unit you want for coordinates, lengths and tolerances as long as you are consistent.
  * Default unit is millimeters.
  ********************************************************/
 
 #include <FABRIK2D.h>
 
-int lengths[] = {225, 150}; // 2DOF arm where shoulder to elbow is 225mm and elbow to end effector is 150mm.
-Fabrik2D fabrik2D(3, lengths); // This arm has 3 joints; one in the origin, the elbow and the end effector.
+int lengths[] = {225, 150, 100}; // 3DOF arm where shoulder to elbow is 225mm, elbow to wrist is 150mm and wrist to end effector is 100mm.
+Fabrik2D fabrik2D(4, lengths); // This arm has 4 joints; one in the origin, the elbow, the wrist and the end effector.
 
-float y = 0;
-int toggle_y = 0;
+float ang = 0;
+float radius = 30;
+float x_offset = 150;
+float y_offset = 100;
 
 void setup() {
   Serial.begin(9600);
@@ -19,6 +21,8 @@ void setup() {
   Serial.print("ang0");
   Serial.print("\t");
   Serial.print("ang1");
+  Serial.print("\t");
+  Serial.print("ang2");
   Serial.print("\t");
   Serial.print("x0");
   Serial.print("\t");
@@ -30,7 +34,11 @@ void setup() {
   Serial.print("\t");
   Serial.print("x2");
   Serial.print("\t");
-  Serial.println("y2");
+  Serial.print("y2");
+  Serial.print("\t");
+  Serial.print("x3");
+  Serial.print("\t");
+  Serial.println("y3");
 
   // Set tolerance to 0.5mm. If reachable, the end effector will approach
   // the target with this tolerance
@@ -39,23 +47,22 @@ void setup() {
 
 void loop() {
 
-  // Move from -30 to 40 in the y axis
-  if (y < -30) {
-    toggle_y = 0;
-    y = -30;
-  } else if (y > 40) {
-    toggle_y = 1;
-    y = 40;
-  }
+  // Move x and y in a circular motion
+  float x = x_offset+radius*cos(ang * 1000 / 57296);
+  float y = y_offset+radius*sin(ang * 1000 / 57296);
+
+  ang = ((int)(ang + 1)) % 360;
 
   // Solve inverse kinematics given the coordinates x and y and the list of lengths for the arm.
-  fabrik2D.solve(150,y,lengths);
+  fabrik2D.solve(x,y,lengths);
 
   // Angle is printed in degrees, this is the angle between the origin and the end effector.
   // The function calls below shows how easy it is to get the results from the inverse kinematics solution.
   Serial.print(fabrik2D.getAngle(0)* 57296 / 1000);
   Serial.print("\t");
   Serial.print(fabrik2D.getAngle(1)* 57296 / 1000);
+  Serial.print("\t");
+  Serial.print(fabrik2D.getAngle(2)* 57296 / 1000);
   Serial.print("\t");
   Serial.print(fabrik2D.getX(0));
   Serial.print("\t");
@@ -67,14 +74,11 @@ void loop() {
   Serial.print("\t");
   Serial.print(fabrik2D.getX(2));
   Serial.print("\t");
-  Serial.println(fabrik2D.getY(2));
-  
-
-  if (toggle_y == 0) {
-    y++;
-  } else {
-    y--;
-  }
+  Serial.print(fabrik2D.getY(2));
+  Serial.print("\t");
+  Serial.print(fabrik2D.getX(3));
+  Serial.print("\t");
+  Serial.println(fabrik2D.getY(3));
 
   delay(50);
 }
