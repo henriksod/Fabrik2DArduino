@@ -4,3 +4,8 @@
 * This Library is licensed under a GPLv3 License
 ***************************************************************
 
+**Example 2DOF chain moving up and down**
+![Alt Text](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)
+
+**Example 3DOF chain moving in a circle**
+![Alt Text](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif)
