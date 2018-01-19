@@ -78,9 +78,9 @@ Clone this repository to your local machine, and place it in your Arduino librar
 
 Class methods of Fabrik2D class
 -----------------------------
-* Fabrik2D(int numJoints, int* lengths) - The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints.
-* void solve(float x, float y, int* lengths) - Solves inverse kinematics for the end effector to reach (x,y). The length values can be changed which allows prismatic joints to be used.
-* float getX(int n) - Current x coordinate of joint n
-* float getY(int n) - Current y coordinate of joint n
-* float getAngle(int n) - Current angle on joint n
-* void setTolerance(float val) - Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance.
+* ```Fabrik2D(int numJoints, int* lengths)``` - The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints.
+* ```void solve(float x, float y, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y). The length values can be changed which allows prismatic joints to be used.
+* ```float getX(int n)``` - Current x coordinate of joint n
+* ```float getY(int n)``` - Current y coordinate of joint n
+* ```float getAngle(int n)``` - Current angle on joint n
+* ```void setTolerance(float val)``` - Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance.
