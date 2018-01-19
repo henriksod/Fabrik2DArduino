@@ -17,7 +17,7 @@ http://www.andreasaristidou.com/FABRIK.html
 Usage
 -----
 
-```
+```C
 #include <FABRIK2D.h>
 #include <Servo.h>
 
