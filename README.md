@@ -2,7 +2,7 @@ FABRIK based 2D Inverse kinematics solver
 =====
 
 ***************************************************************
-* FABRIK 2D inverse kinematics solver - Version 0.1
+* FABRIK 2D inverse kinematics solver - Version 0.6.1
 * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
 * This Library is licensed under a GPLv3 License
 ***************************************************************
@@ -71,9 +71,13 @@ Three usage examples are included which give more in-depth information:
 * example_3DOFMoveCircle creates a 3DOF arm and moves it in a circle
 * example_3DOFToolAngle creates a 3DOF arm and moves it in a circle with given tool angle
 
-**Example 2DOF chain moving up and down**                                                                                |  **Example 3DOF chain moving in a circle**                                                                            |  **Example 3DOF chain moving in a circle with given tool angle at -45 degrees**                                                |  **Example 3DOF chain moving in a circle with given tool angle at -90 degrees**
-:-----------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------:
-![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)  |  ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif) |  ![Example3DOFToolAng45](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview1.gif) |  ![Example3DOFToolAng90](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview2.gif)
+**Example 2DOF chain moving up and down**                                                                                |  **Example 3DOF chain moving in a circle**                                                                            
+:-----------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------:
+![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)  |  ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif) 
+
+**Example 3DOF chain moving in a circle with given tool angle at -45 degrees**                                                                                |  **Example 3DOF chain moving in a circle with given tool angle at -90 degrees**                                                                           
+:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
+![Example3DOFToolAng45](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview1.gif)                                 |  ![Example3DOFToolAng90](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview2.gif)
 
 Installation
 ------------
