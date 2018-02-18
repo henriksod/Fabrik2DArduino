@@ -55,7 +55,7 @@ void Fabrik2D::createChain(int* lengths)
  *
  * solves the inverse kinematics of the stored chain to reach the target
  */
-void Fabrik2D::solve(float x, float y, int* lengths)
+bool Fabrik2D::solve(float x, float y, int* lengths)
 {
 
     // Distance between root and target (root is always 0,0)
@@ -73,7 +73,7 @@ void Fabrik2D::solve(float x, float y, int* lengths)
     if (dist > totalLength) 
     {
        // The target is unreachable
-       for (int i = 0; i < this->numJoints-1; i++)
+       /*for (int i = 0; i < this->numJoints-1; i++)
        {
            // Find the distance r_i between the target (x,y) and the joint i position (jx,jy)
            float jx = this->chain->joints[i].x;
@@ -84,7 +84,9 @@ void Fabrik2D::solve(float x, float y, int* lengths)
            // Find the new joint positions
            this->chain->joints[i+1].x = (float)((1-lambda_i)*jx + lambda_i*x);
            this->chain->joints[i+1].y = (float)((1-lambda_i)*jy + lambda_i*y);
-       }
+       }*/
+       
+       return false;
     }
     else 
     {
@@ -176,6 +178,63 @@ void Fabrik2D::solve(float x, float y, int* lengths)
         float cosAng = (a*a+c*c-b*b)/(2*a*c);
         float angleRad = acos(min(1, max(-1, cosAng)));
         this->chain->joints[i].angle = angleRad;
+    }
+    
+    return true;
+}
+
+/* solve(x, y, angle, lengths)
+ * inputs: x and y positions of target, desired tool angle and lengths between each joint
+ *
+ * !!! tool angle is in radians !!!
+ *
+ * solves the inverse kinematics of the stored chain to reach the target with tool angle
+ *
+ * will only work for 3DOF or more
+ */
+bool Fabrik2D::solve(float x, float y, float toolAngle, int* lengths)
+{
+    if (this->numJoints >= 4) {
+    
+        // Find wrist center by moving from the desired position with tool angle and link length
+        float oc_x = x - lengths[this->numJoints-2]*cos(toolAngle);
+        float oc_y = y - lengths[this->numJoints-2]*sin(toolAngle);
+        
+        // We solve IK from first joint to wrist center
+        int tmp = this->numJoints;
+        this->numJoints = this->numJoints-1;
+        
+        bool solvable = solve(oc_x, oc_y, lengths);
+        
+        this->numJoints = tmp;
+        
+        if (solvable == true) {
+        
+            // Update the end effector position to preserve tool angle
+            this->chain->joints[this->numJoints-1].x = 
+                this->chain->joints[this->numJoints-2].x + lengths[this->numJoints-2]*cos(toolAngle);
+            this->chain->joints[this->numJoints-1].y = 
+                this->chain->joints[this->numJoints-2].y + lengths[this->numJoints-2]*sin(toolAngle);
+            
+            // Update angle of last joint
+            float ax = this->chain->joints[this->numJoints-1].x;
+            float ay = this->chain->joints[this->numJoints-1].y;
+            float cx = this->chain->joints[this->numJoints-3].x;
+            float cy = this->chain->joints[this->numJoints-3].y;
+            
+            float a = lengths[this->numJoints-2];
+            float b = distance(cx,cy,ax,ay);
+            float c = lengths[this->numJoints-3];
+            
+            float cosAng = (a*a+c*c-b*b)/(2*a*c);
+            float angleRad = acos(min(1, max(-1, cosAng)));
+            this->chain->joints[this->numJoints-2].angle = angleRad;
+            
+            // Save tool angle
+            this->chain->joints[this->numJoints-1].angle = toolAngle;
+        
+        }
+    
     }
 }
 

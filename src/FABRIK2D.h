@@ -23,10 +23,23 @@ class Fabrik2D
 
     /* solve(x, y, lengths)
      * inputs: x and y positions of target, lengths between each joint
+     * outputs: True if solvable, false if not solvable
      *
      * solves the inverse kinematics of the stored chain to reach the target
      */
-    void solve(float x, float y, int* lengths);
+    bool solve(float x, float y, int* lengths);
+    
+    /* solve(x, y, angle, lengths)
+     * inputs: x and y positions of target, desired tool angle and lengths between each joint
+     * outputs: True if solvable, false if not solvable
+     *
+     * !!! tool angle is in radians !!!
+     *
+     * solves the inverse kinematics of the stored chain to reach the target with tool angle
+     *
+     * will only work for 3DOF or more
+     */
+    bool solve(float x, float y, float toolAngle, int* lengths);
     
     /* getX(joint)
      * inputs: joint number
