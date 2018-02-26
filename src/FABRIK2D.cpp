@@ -7,7 +7,7 @@
 
 
 #include "Arduino.h"
-#include "Fabrik2D.h"
+#include "FABRIK2D.h"
 
 /* Fabrik2D(numJoints, lengths)
  * inputs: numJoints, lengths
@@ -59,7 +59,7 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
 {
 
     // Distance between root and target (root is always 0,0)
-    int dist = abs(x) + abs(y);
+    int dist = sqrt(x*x+y*y);
     
     // Total length of chain
     int totalLength = 0;
@@ -73,7 +73,7 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
     if (dist > totalLength) 
     {
        // The target is unreachable
-       /*
+       
        for (int i = 0; i < this->numJoints-1; i++)
        {
            // Find the distance r_i between the target (x,y) and the joint i position (jx,jy)
@@ -86,7 +86,7 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
            this->chain->joints[i+1].x = (float)((1-lambda_i)*jx + lambda_i*x);
            this->chain->joints[i+1].y = (float)((1-lambda_i)*jy + lambda_i*y);
        }
-       */
+       
        return false;
     }
     else 
