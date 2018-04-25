@@ -300,8 +300,30 @@ void Fabrik2D::setTolerance(float tolerance)
  *
  * Uses euclidean distance
  */
-float Fabrik2D::distance(float x1, float y1, float x2, float y2) {
+float Fabrik2D::distance(float x1, float y1, float x2, float y2) 
+{
     float xDiff = x2-x1;
     float yDiff = y2-y1;
     return sqrt(xDiff*xDiff + yDiff*yDiff);
+}
+
+void Fabrik2D::setJoints(int* angles, int* lengths) 
+{
+    int angListLen = sizeof(angles)/sizeof(int);
+    int lenListLen = sizeof(lengths)/sizeof(int);
+    if (angListLen == numJoints && lenListLen == numJoints-1) 
+    {
+       int accAng = angles[0];
+       int accX = 0;
+       int accY = 0;
+       this->chain->joints[0].angle = angles[0];
+       
+       for (int i = 1; i < this->numJoints-1; i++)
+       {
+           accAng += angles[i];
+           this->chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
+           this->chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
+           this->chain->joints[i].angle = angles[i];
+       }
+    }
 }

@@ -65,6 +65,8 @@ class Fabrik2D
      * sets the tolerance of the distance between the end effector and the target
      */
     void setTolerance(float tolerance);
+    
+    void setJoints(int* angles, int* lengths);
 
   private:
     
