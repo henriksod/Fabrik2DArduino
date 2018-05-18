@@ -66,6 +66,11 @@ class Fabrik2D
      */
     void setTolerance(float tolerance);
     
+    /* setJoints(angles, lengths)
+     * inputs: New joint angles(in radians) and list of lengths between each joint
+     * 
+     * manually sets the joint angles and updates their position using forward kinematics
+     */
     void setJoints(int* angles, int* lengths);
 
   private:

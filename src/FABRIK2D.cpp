@@ -307,6 +307,11 @@ float Fabrik2D::distance(float x1, float y1, float x2, float y2)
     return sqrt(xDiff*xDiff + yDiff*yDiff);
 }
 
+/* setJoints(angles, lengths)
+ * inputs: New joint angles (in radians) and list of lengths between each joint
+ * 
+ * manually sets the joint angles and updates their position using forward kinematics
+ */
 void Fabrik2D::setJoints(int* angles, int* lengths) 
 {
     int angListLen = sizeof(angles)/sizeof(int);
@@ -318,12 +323,14 @@ void Fabrik2D::setJoints(int* angles, int* lengths)
        int accY = 0;
        this->chain->joints[0].angle = angles[0];
        
-       for (int i = 1; i < this->numJoints-1; i++)
+       for (int i = 1; i < this->numJoints; i++)
        {
            accAng += angles[i];
            this->chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
            this->chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
            this->chain->joints[i].angle = angles[i];
+           accX = this->chain->joints[i].x;
+           accY = this->chain->joints[i].y;
        }
     }
 }
