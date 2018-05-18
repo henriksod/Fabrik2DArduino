@@ -17,6 +17,7 @@ getX	KEYWORD2
 getY	KEYWORD2
 getAngle	KEYWORD2
 setTolerance	KEYWORD2
+setJoints	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
