@@ -6,7 +6,7 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-Fabrik2D	KEYWORD1	Fabrik2D
+Fabrik2D	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
