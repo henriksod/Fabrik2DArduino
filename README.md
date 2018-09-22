@@ -9,7 +9,7 @@ FABRIK based 2D Inverse kinematics solver
 
 A FABRIK based inverse kinematics solver for Arduino.
 
-This library lets you specify coordinates in the 2-dimensional plane and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position.
+This library lets you specify coordinates in the 2-dimensional plane and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position. It works for N number of joints.
 You can also specify a desired angle for the end effector to approach the desired position, which allows picking up objects from different orientations.
 This library has protection against unsolvability by simply not computing unsolvable inverse kinematics problems for unreachable positions.
 
