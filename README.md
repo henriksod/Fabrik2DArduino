@@ -32,7 +32,7 @@ Servo elbow;
 
 void setup() {
   shoulder.attach(9);
-  elbow.attach(9);
+  elbow.attach(10);
   
   fabrik2D.setTolerance(0.5);
 }
