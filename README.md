@@ -23,10 +23,13 @@ Usage
 #include <FABRIK2D.h>
 #include <Servo.h>
 
-// For a 2DOF arm
-int lengths[] = {225, 150};
-Fabrik2D fabrik2D(3, lengths);
+// For a 2DOF arm, we have 2 links and 2+1 joints, 
+// where the end effector counts as one joint in this case.
+int lengths[] = {225, 150}; // Length of shoulder and elbow in mm.
+Fabrik2D fabrik2D(3, lengths); // 3 Joints in total
 
+// Servos should be positioned so that when all joint angles are
+// equal to 0, the manipulator should point straight up.
 Servo shoulder;
 Servo elbow;
 
@@ -34,33 +37,40 @@ void setup() {
   shoulder.attach(9);
   elbow.attach(10);
   
+  // Tolerance determines how much error is allowed for solving
+  // the inverse kinematics for the end effector to reach the
+  // desired point.
   fabrik2D.setTolerance(0.5);
 }
 
 void loop() {
-  // Move up to x=200, y=50
+  // Solve IK, move up to x=200, y=50
   fabrik2D.solve(200,50,lengths);
   
   // Get the angles (in radians) and convert them to degrees
   int shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
   int elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
   
-  // Write to the servos (with limits)
-  shoulder.write(min(180, max(0, shoulderAngle)));
-  elbow.write(min(180, max(0, elbowAngle)));
+  // Write to the servos with limits, these will probably not be the same
+  // for your manipulator and will have to be changed depending on your
+  // setup.
+  shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
+  elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
   delay(1000);
   
-  // Move down to x=150, y=10
+  // Solve IK, move down to x=150, y=10
   fabrik2D.solve(150,10,lengths);
   
   // Get the angles (in radians) and convert them to degrees
   shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
   elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
   
-  // Write to the servos (with limits)
-  shoulder.write(min(180, max(0, shoulderAngle)));
-  elbow.write(min(180, max(0, elbowAngle)));
+  // Write to the servos with limits, these will probably not be the same
+  // for your manipulator and will have to be changed depending on your
+  // setup.
+  shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
+  elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
   delay(1000);
 }
