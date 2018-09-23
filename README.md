@@ -55,8 +55,8 @@ void loop() {
   fabrik2D.solve(150,10,lengths);
   
   // Get the angles (in radians) and convert them to degrees
-  int shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
-  int elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
+  shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
+  elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
   
   // Write to the servos (with limits)
   shoulder.write(min(180, max(0, shoulderAngle)));
