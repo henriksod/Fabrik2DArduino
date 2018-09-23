@@ -47,7 +47,7 @@ void loop() {
   // Solve IK, move up to x=200, y=50
   fabrik2D.solve(200,50,lengths);
   
-  // Get the angles (in radians) and convert them to degrees
+  // Get the angles (in radians [-pi,pi]) and convert them to degrees [-180,180]
   int shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
   int elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
   
@@ -62,7 +62,7 @@ void loop() {
   // Solve IK, move down to x=150, y=10
   fabrik2D.solve(150,10,lengths);
   
-  // Get the angles (in radians) and convert them to degrees
+  // Get the angles (in radians [-pi,pi]) and convert them to degrees [-180,180]
   shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
   elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
   
