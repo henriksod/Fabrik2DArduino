@@ -76,7 +76,7 @@ void loop() {
 }
 ```
 
-Three usage examples are included which give more in-depth information:
+Five usage examples are included which give more in-depth information:
 * example_2DOFMoveUpAndDown creates a 2DOF arm and moves it up and down
 * example_3DOFMoveCircle creates a 3DOF arm and moves it in a circle
 * example_3DOFToolAngle creates a 3DOF arm and moves it in a circle with given tool angle
