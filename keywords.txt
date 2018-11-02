@@ -13,11 +13,15 @@ Fabrik2D	KEYWORD1	Fabrik2D
 #######################################
 
 solve	KEYWORD2
+solve2	KEYWORD2
 getX	KEYWORD2
 getY	KEYWORD2
+getZ	KEYWORD2
 getAngle	KEYWORD2
 setTolerance	KEYWORD2
 setJoints	KEYWORD2
+getBaseAngle    KEYWORD2
+setBaseAngle    KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

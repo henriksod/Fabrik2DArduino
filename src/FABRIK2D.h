@@ -1,8 +1,22 @@
 /**********************************************************************************************
- * FABRIK 2D inverse kinematics solver - Version 0.1
+ * FABRIK 2D inverse kinematics solver - Version 0.6.6
  * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
  *
- * This Library is licensed under a GPLv3 License
+ * Copyright (C) 2018 Henrik Söderlund
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
  **********************************************************************************************/
 
 
@@ -20,7 +34,7 @@ class Fabrik2D
      * creates the chain to be used for the inverse kinematics solver
      */
     Fabrik2D(int numJoints, int* lengths);
-
+    
     /* solve(x, y, lengths)
      * inputs: x and y positions of target, lengths between each joint
      * outputs: True if solvable, false if not solvable
@@ -37,9 +51,75 @@ class Fabrik2D
      *
      * solves the inverse kinematics of the stored chain to reach the target with tool angle
      *
-     * will only work for 3DOF or more
+     * will only work for 3DOF
      */
     bool solve(float x, float y, float toolAngle, int* lengths);
+    
+    /* solve(x, y, angle, offset, lengths)
+     * inputs: x and y positions of target, desired tool angle and lengths between each joint
+     * outputs: True if solvable, false if not solvable
+     *
+     * !!! tool angle is in radians !!!
+     *
+     * solves the inverse kinematics of the stored chain to reach the target with tool angle 
+     * and gripping offset
+     *
+     * will only work for 3DOF
+     */
+    bool solve(float x, float y, float toolAngle, float grippingOffset, int* lengths);
+    
+    /* solve2(x, y, z, lengths)
+     * inputs: x, y and z positions of target, desired tool angle and lengths between each joint
+     * outputs: True if solvable, false if not solvable
+     *
+     * !!! tool angle is in radians !!!
+     *
+     * solves the inverse kinematics of the stored chain to reach the target
+     * introducing the z-axis, which allows a rotational base of the manipulator
+     *
+     * angle of the chain defines the base rotation
+     *
+     * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+     *
+     * will only work for 4DOF, i.e. 4 joints or more and a rotational base
+     */
+    bool solve2(float x, float y, float z, int* lengths);
+    
+    /* solve2(x, y, z, toolAngle, lengths)
+     * inputs: x, y and z positions of target, desired tool angle and lengths between each joint
+     * outputs: True if solvable, false if not solvable
+     *
+     * !!! tool angle is in radians !!!
+     *
+     * solves the inverse kinematics of the stored chain to reach the target with tool angle
+     * introducing the z-axis, which allows a rotational base of the manipulator
+     *
+     * angle of the chain defines the base rotation
+     *
+     * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+     *
+     * will only work for 4DOF, i.e. 4 joints or more and a rotational base
+     */
+    bool solve2(float x, float y, float z, float toolAngle, int* lengths);
+    
+    /* solve2(x, y, z, angle, offset, lengths)
+     * inputs: x, y and z positions of target, desired tool angle, gripping offset and lengths 
+               between each joint
+     * outputs: True if solvable, false if not solvable
+     *
+     * !!! tool angle is in radians !!!
+     *
+     * solves the inverse kinematics of the stored chain to reach the target with tool angle 
+     * and gripping offset
+     * introducing the z-axis, which allows a rotational base of the manipulator
+     *
+     * angle of the chain defines the base rotation
+     *
+     * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+     *
+     * will only work for 4DOF, i.e. 4 joints or more and a rotational base
+     */
+    bool solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths);
     
     /* getX(joint)
      * inputs: joint number
@@ -53,11 +133,26 @@ class Fabrik2D
      */
     float getY(int joint);
     
+    /* getZ()
+     * outputs: z offset of the chain from the plane
+     */
+    float getZ();
+    
     /* getAngle(joint)
      * inputs: joint number
      * outputs: angle (radians) of joint
      */
     float getAngle(int joint);
+    
+    /* getBaseAngle()
+     * outputs: base angle (radians) of chain
+     */
+    float getBaseAngle();
+    
+    /* setBaseAngle()
+     * inputs: base angle (radians) of chain to set
+     */
+    void setBaseAngle(float baseAngle);
     
     /* setTolerance(tolerance)
      * inputs: tolerance value
@@ -87,6 +182,8 @@ class Fabrik2D
     typedef struct 
     {
       Joint* joints; // list of joints
+      float z;  // z position defining the offset of the chain from the plane
+      float angle; // base (plane) rotation
     } Chain;
     
     // Number of joints in the chain

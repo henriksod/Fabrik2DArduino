@@ -1,8 +1,22 @@
 /**********************************************************************************************
- * FABRIK 2D inverse kinematics solver - Version 0.1
+ * FABRIK 2D inverse kinematics solver - Version 1.0.0
  * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
  *
- * This Library is licensed under a GPLv3 License
+ * Copyright (C) 2018 Henrik Söderlund
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
  **********************************************************************************************/
 
 
@@ -183,22 +197,28 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
     return true;
 }
 
-/* solve(x, y, angle, lengths)
- * inputs: x and y positions of target, desired tool angle and lengths between each joint
+/* solve2(x, y, z, angle, offset, lengths)
+ * inputs: x, y and z positions of target, desired tool angle, gripping offset and lengths between each joint
+ * outputs: True if solvable, false if not solvable
  *
  * !!! tool angle is in radians !!!
  *
- * solves the inverse kinematics of the stored chain to reach the target with tool angle
+ * solves the inverse kinematics of the stored chain to reach the target with tool angle and gripping offset
+ * introducing the z-axis, which allows a rotational base of the manipulator
  *
- * will only work for 3DOF or more
+ * angle of the chain defines the base rotation
+ *
+ * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+ *
+ * will only work for 4DOF, i.e. 4 joints or more and a rotational base
  */
-bool Fabrik2D::solve(float x, float y, float toolAngle, int* lengths)
+bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)
 {
     if (this->numJoints >= 4) {
     
         // Find wrist center by moving from the desired position with tool angle and link length
-        float oc_x = x - lengths[this->numJoints-2]*cos(toolAngle);
-        float oc_y = y - lengths[this->numJoints-2]*sin(toolAngle);
+        float oc_x = x - (lengths[this->numJoints-2]+grippingOffset)*cos(toolAngle);
+        float oc_y = y - (lengths[this->numJoints-2]+grippingOffset)*sin(toolAngle);
         
         // We solve IK from first joint to wrist center
         int tmp = this->numJoints;
@@ -236,10 +256,96 @@ bool Fabrik2D::solve(float x, float y, float toolAngle, int* lengths)
             
             // Save tool angle
             this->chain->joints[this->numJoints-1].angle = toolAngle;
+            
+            // Save base angle (if z different from zero)
+            if (z != 0) {
+                this->chain->z = z;
+                this->chain->angle = atan2(z,x);
+            }
         
         }
     
     }
+}
+
+/* solve(x, y, angle, lengths)
+ * inputs: x and y positions of target, desired tool angle and lengths between each joint
+ * outputs: True if solvable, false if not solvable
+ *
+ * !!! tool angle is in radians !!!
+ *
+ * solves the inverse kinematics of the stored chain to reach the target with tool angle
+ *
+ * will only work for 3DOF
+ */
+bool Fabrik2D::solve(float x, float y, float toolAngle, int* lengths)
+{
+    return solve2(x, y, 0, toolAngle, 0, lengths);
+}
+
+/* solve(x, y, angle, offset, lengths)
+ * inputs: x and y positions of target, desired tool angle and lengths between each joint
+ * outputs: True if solvable, false if not solvable
+ *
+ * !!! tool angle is in radians !!!
+ *
+ * solves the inverse kinematics of the stored chain to reach the target with tool angle 
+ * and gripping offset
+ *
+ * will only work for 3DOF
+ */
+bool Fabrik2D::solve(float x, float y, float toolAngle, float grippingOffset, int* lengths)
+{
+    return solve2(x, y, 0, toolAngle, grippingOffset, lengths);
+}
+
+/* solve2(x, y, z, lengths)
+ * inputs: x, y and z positions of target, desired tool angle and lengths between each joint
+ * outputs: True if solvable, false if not solvable
+ *
+ * !!! tool angle is in radians !!!
+ *
+ * solves the inverse kinematics of the stored chain to reach the target
+ * introducing the z-axis, which allows a rotational base of the manipulator
+ *
+ * angle of the chain defines the base rotation
+ *
+ * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+ *
+ * will only work for 4DOF, i.e. 4 joints or more and a rotational base
+ */
+bool Fabrik2D::solve2(float x, float y, float z, int* lengths)
+{
+    float r = distance(0, 0, x, z);
+    
+    bool solvable =  solve(r, z, lengths);
+    if (solvable == true) 
+    {
+        this->chain->z = z;
+        this->chain->angle = atan2(z,x);
+    }
+    
+    return solvable;
+}
+
+/* solve(x, y, z, toolAngle, lengths)
+ * inputs: x, y and z positions of target, desired tool angle and lengths between each joint
+ * outputs: True if solvable, false if not solvable
+ *
+ * !!! tool angle is in radians !!!
+ *
+ * solves the inverse kinematics of the stored chain to reach the target with tool angle
+ * introducing the z-axis, which allows a rotational base of the manipulator
+ *
+ * angle of the chain defines the base rotation
+ *
+ * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+ *
+ * will only work for 4DOF, i.e. 4 joints or more and a rotational base
+ */
+bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, int* lengths)
+{
+    return solve2(x, y, z, toolAngle, 0, lengths);
 }
 
 /* getX(joint)
@@ -282,6 +388,30 @@ float Fabrik2D::getAngle(int joint)
       
   }
   return 0;
+}
+
+/* getZ()
+ * outputs: z offset of the chain from the plane
+ */
+float Fabrik2D::getZ() 
+{
+    return this->chain->z;
+}
+
+/* getBaseAngle()
+ * outputs: base angle (radians) of chain
+ */
+float Fabrik2D::getBaseAngle() 
+{
+    return this->chain->angle;
+}
+
+/* setBaseAngle()
+ * inputs: base angle (radians) of chain to set
+ */
+void Fabrik2D::setBaseAngle(float baseAngle) 
+{
+    this->chain->angle = baseAngle;
 }
 
 /* setTolerance(tolerance)
