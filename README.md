@@ -76,17 +76,16 @@ void loop() {
 }
 ```
 
-Three usage examples are included which give more in-depth information:
+Five usage examples are included which give more in-depth information:
 * example_2DOFMoveUpAndDown creates a 2DOF arm and moves it up and down
 * example_3DOFMoveCircle creates a 3DOF arm and moves it in a circle
 * example_3DOFToolAngle creates a 3DOF arm and moves it in a circle with given tool angle
 * example_3DOFGrippingOffset creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset
 * example_4DOF creates a 3DOF arm and solves for a rotating base which yields movement in the z-axis (offset from the chain plane)
 
-**Example 2DOF chain moving up and down**                                                                                                                     |  **Example 3DOF chain moving in a circle**                                                                                              
+**&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 2DOF chain moving up and down &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**                                                                                                                     |  **&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 3DOF chain moving in a circle &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**  
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
 ![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)                                       |  ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif)
-
 
 **Example 3DOF chain moving in a circle with given tool angle at -45 degrees**                                                                                |  **Example 3DOF chain moving in a circle with given tool angle at -90 degrees**                                                                           
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
@@ -109,14 +108,14 @@ Class methods of Fabrik2D class
 * ```bool solve2(float x, float y, float z, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y,z). Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case.
 * ```bool solve2(float x, float y, float z, float toolAngle, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case.
 * ```bool solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle and a gripping offset. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case.
-* ```float getX(int n)``` - Current x coordinate of joint n
-* ```float getY(int n)``` - Current y coordinate of joint n
-* ```float getZ()``` - Current z offset of the chain end effector from the plane
-* ```float getAngle(int n)``` - Current angle on joint n
-* ```float getBaseAngle()``` - Current angle of the base of the chain (the angle in which the chain is pointing)
+* ```float getX(int n)``` - Current x coordinate of joint n.
+* ```float getY(int n)``` - Current y coordinate of joint n.
+* ```float getZ()``` - Current z offset of the chain end effector from the plane.
+* ```float getAngle(int n)``` - Current angle on joint n.
+* ```float getBaseAngle()``` - Current angle of the base of the chain (the angle in which the chain is pointing).
 * ```void setTolerance(float val)``` - Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance.
 * ```void setJoints(int* angles, int* lengths)``` - Manually sets the joint angles and updates their position using forward kinematics.
-* ```void setBaseAngle()``` - Manually set the angle of the base of the chain
+* ```void setBaseAngle()``` - Manually set the angle of the base of the chain.
 
 Notice
 ------------
