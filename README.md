@@ -83,7 +83,7 @@ Three usage examples are included which give more in-depth information:
 * example_3DOFGrippingOffset creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset
 * example_4DOF creates a 3DOF arm and solves for a rotating base which yields movement in the z-axis (offset from the chain plane)
 
-**Example 2DOF chain moving up and down**                                                                                                                     |  **Example 3DOF chain moving in a circle**                                                                                              
+**&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 2DOF chain moving up and down &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**                                                                                                                     |  **&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 3DOF chain moving in a circle &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**  
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
 ![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)                                       |  ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif)
 
