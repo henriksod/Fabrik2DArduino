@@ -98,7 +98,9 @@ Installation
 ------------
 Clone this repository to your local machine, and place it in your Arduino libraries folder as 'Fabrik2DArduino'.
 
-Class methods of Fabrik2D class
+You can also download the library via Arduino IDE. Navigate to Sketch->Include Library->Manage Libraries... and search for "Fabrik2D", then press "install".
+
+Methods of Fabrik2D class
 -----------------------------
 * ```Fabrik2D(int numJoints, int* lengths)``` - The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints.
 * ```bool solve(float x, float y, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case.
