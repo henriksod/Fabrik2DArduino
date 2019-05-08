@@ -2,16 +2,15 @@ FABRIK based 2D Inverse kinematics solver
 =====
 
 ***************************************************************
-* FABRIK 2D inverse kinematics solver - Version 1.0.0
-* By Henrik Söderlund <henrik.a.soderlund@gmail.com>
+* FABRIK 2D inverse kinematics solver - Version 1.0.1
+* By Henrik Söderlund <henrik.a.soderlund@hotmail.com>
 * This Library is licensed under a GPLv3 License
 ***************************************************************
 
 A FABRIK based inverse kinematics solver for Arduino.
 
-This library lets you specify (x,y) coordinates in the 2-dimensional plane and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position. It works for N number of joints up to 3DOF, but with support for 4DOF (3D) with the addition of a rotating base.
-You can also specify a desired angle for the end effector to approach the desired position, which allows picking up objects from different orientations. Moreover, you can adjust the gripping offset to compensate for your chosen gripper and you can also solve IK with a rotating base which yields movement in the z-axis.
-This library has protection against unsolvability by simply not computing unsolvable inverse kinematics problems for unreachable positions.
+This library lets you specify (x,y) coordinates in the 2-dimensional plane and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position. It works for N number of joints up to 3DOF, but with support for 4DOF (3D movements) with the addition of a rotating base.
+You can also specify a desired angle for the end effector to approach the desired position, which allows picking up objects from different orientations. Moreover, you can adjust the gripping offset to compensate for your chosen gripper. This library has protection against unsolvability by simply not computing unsolvable inverse kinematics problems for unreachable positions.
 
 The library is based on an iterative inverse kinematics algorithm called FABRIK:
 http://www.andreasaristidou.com/FABRIK.html
@@ -83,11 +82,11 @@ Five usage examples are included which give more in-depth information:
 * example_3DOFGrippingOffset creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset
 * example_4DOF creates a 3DOF arm and solves for a rotating base which yields movement in the z-axis (offset from the chain plane)
 
-**&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 2DOF chain moving up and down &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**                                                                                                                     |  **&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 3DOF chain moving in a circle &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**  
+**&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 2DOF chain moving in a vertical line &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**                                                                                                                     |  **&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 3DOF chain moving in a circle &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**  
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
 ![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)                                       |  ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif)
 
-**Example 3DOF chain moving in a circle with given tool angle at -45 degrees**                                                                                |  **Example 3DOF chain moving in a circle with given tool angle at -90 degrees**                                                                           
+**Example 3DOF chain moving in a circle with given tool angle at -45 degrees**                                                                                |  **Example 3DOF chain moving in a vertical line with given tool angle at -90 degrees**                                                                           
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
 ![Example3DOFToolAng45](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview1.gif)                                 |  ![Example3DOFToolAng90](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview2.gif)
 
@@ -99,7 +98,9 @@ Installation
 ------------
 Clone this repository to your local machine, and place it in your Arduino libraries folder as 'Fabrik2DArduino'.
 
-Class methods of Fabrik2D class
+You can also download the library via Arduino IDE. Navigate to Sketch->Include Library->Manage Libraries... and search for "Fabrik2D", then press "install".
+
+Methods of Fabrik2D class
 -----------------------------
 * ```Fabrik2D(int numJoints, int* lengths)``` - The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints.
 * ```bool solve(float x, float y, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case.
