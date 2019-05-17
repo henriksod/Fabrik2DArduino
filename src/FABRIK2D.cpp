@@ -322,7 +322,7 @@ bool Fabrik2D::solve2(float x, float y, float z, int* lengths)
 {
     float r = distance(0, 0, x, z);
     
-    bool solvable =  solve(r, z, lengths);
+    bool solvable =  solve(r, y, lengths);
     if (solvable == true) 
     {
         this->chain->z = z;
