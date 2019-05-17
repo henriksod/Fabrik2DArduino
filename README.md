@@ -2,9 +2,9 @@ FABRIK based 2D Inverse kinematics solver
 =====
 
 ***************************************************************
-* FABRIK 2D inverse kinematics solver - Version 1.0.1
+* FABRIK 2D inverse kinematics solver - Version 1.0.3
 * By Henrik Söderlund <henrik.a.soderlund@hotmail.com>
-* This Library is licensed under a GPLv3 License
+* This Library is licensed under a MIT License
 ***************************************************************
 
 A FABRIK based inverse kinematics solver for Arduino.
@@ -52,10 +52,12 @@ void loop() {
   
   // Write to the servos with limits, these will probably not be the same
   // for your manipulator and will have to be changed depending on your
-  // setup.
+  // setup. Since the library may output negative angles, it is important
+  // to apply limits before sending the angles to the servos!
   shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
   elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
+  // The following delay is just a part of this example
   delay(1000);
   
   // Solve IK, move down to x=150, y=10
@@ -71,6 +73,7 @@ void loop() {
   shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
   elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
+  // The following delay is just a part of this example
   delay(1000);
 }
 ```
@@ -93,6 +96,18 @@ Five usage examples are included which give more in-depth information:
 **Example 3DOF chain moving in a horizontal line with varying gripping offset and with tool angle at -90 degrees**                                            |  **Example 4DOF chain moving in a plane in the x-z axes with given tool angle at -72 degrees**                                                                           
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
 ![Example3DOFGrippingOffset](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFGrippingOffset/preview.gif)                                 |  ![Example4DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_4DOF/preview.gif)
+
+Robot Arm Configuration
+------------
+Due to many requests by email, I have decided to provide you with figures illustrating the configuration of the robot arm that is necessary for this library to work as it is supposed to. Remember that these are only examples of how your arm could look like, but the same concept is applied to any arm that you use with this library.
+
+Robot arm configuration in 2D:
+![3DOFSetup](https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/3DOFSetup.png)
+
+Robot arm configuration in 3D:
+![4DOFSetup](https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png)
+
+What is important, and can be seen in the figures, is that the servos' angles have to be zero when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero.
 
 Installation
 ------------
@@ -120,4 +135,4 @@ Methods of Fabrik2D class
 
 Notice
 ------------
-It is recommended that you implement your own acceleration and velocity functions to make sure that your manipulator does not snap into the solved positions (which could cause breakage or slipping)! One way of doing this is to just increment the x and y positions and solving inverse kinematics over time until the manipulator has reached it's destination.
+It is recommended that you implement your own acceleration and velocity functions to make sure that your manipulator does not snap into the solved positions (which could cause breakage or slipping)! One way of doing this is to interpolate the joint angles over time until the manipulator has reached it's destination. I would reccoment using [RAMP](https://github.com/siteswapjuggler/RAMP), an Arduino interpolation library made by [siteswapjuggler](https://github.com/siteswapjuggler).
