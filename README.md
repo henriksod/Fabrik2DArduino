@@ -103,11 +103,11 @@ Due to many requests by email, I have decided to provide you with figures illust
 
 Robot arm configuration in 2D:
 
-![3DOFSetup](https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/3DOFSetup.png | width=100)
+<img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/3DOFSetup.png" width="100" height="100">
 
 Robot arm configuration in 3D:
 
-![4DOFSetup](https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png | width=100)
+<img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="100" height="100">
 
 What is important, and can be seen in the figures, is that the servos' angles have to be zero when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero.
 
