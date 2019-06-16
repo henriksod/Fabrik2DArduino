@@ -27,8 +27,8 @@ Usage
 int lengths[] = {225, 150}; // Length of shoulder and elbow in mm.
 Fabrik2D fabrik2D(3, lengths); // 3 Joints in total
 
-// Servos should be positioned so that when all joint angles are
-// equal to 0, the manipulator should point straight up.
+// Servos should be positioned so that when all servo angles are
+// equal to 90 degrees, the manipulator should point straight up.
 Servo shoulder;
 Servo elbow;
 
@@ -73,7 +73,7 @@ void loop() {
   shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
   elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
-  // The following delay is just a part of this example
+  // The following delay is just a part of this example, remove it
   delay(1000);
 }
 ```
@@ -113,7 +113,7 @@ Due to many requests by email, I have decided to provide you with figures illust
 <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="500">
 </p>
 
-What is important, and can be seen in the figures, is that the servos' angles have to be zero when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero.
+What is important, and can be seen in the figures, is that the servos' angles have to be 90 degrees when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero (in the library).
 
 Installation
 ------------
