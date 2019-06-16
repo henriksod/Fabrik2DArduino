@@ -99,7 +99,7 @@ Five usage examples are included which give more in-depth information:
 
 Robot Arm Configuration
 ------------
-Due to many requests by email, I have decided to provide you with figures illustrating the configuration of the robot arm that is necessary for this library to work as it is supposed to. Remember that these are only examples of how your arm could look like, but the same concept is applied to any arm that you use with this library.
+Due to many requests by email, I have decided to provide you with figures illustrating the configuration of the robot arm that is necessary for this library to work as it is supposed to. Remember that these are only examples of how your arm could look like, but the same concept is applied to any arm that you use with this library. To use the examples, an additional joint is required. I did not include all joints in the configuration example images because the images would have been unnecessarily complex. What is important is that the servos are oriented correctly, as described in the images.
 
 **Robot arm configuration in 2D:**
 
