@@ -57,7 +57,7 @@ void loop() {
   shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
   elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
-  // The following delay is just a part of this example
+  // The following delay is just a part of this example, remove it
   delay(1000);
   
   // Solve IK, move down to x=150, y=10
