@@ -1,4 +1,4 @@
-FABRIK based 2D Inverse kinematics solver
+FABRIK Based 2D Inverse Kinematics Solver
 =====
 
 ***************************************************************
