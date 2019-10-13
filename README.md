@@ -67,9 +67,11 @@ void loop() {
   shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
   elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
   
-  // Write to the servos with limits, these will probably not be the same
-  // for your manipulator and will have to be changed depending on your
-  // setup.
+  // It is important that your servos are pointing straight up when set to
+  // 90 degrees! This is because the servos are limited to 0 to 180 degrees
+  // while the library is limited to -180 to 180 degrees. This is why the
+  // servos have to be limited and the output from the library offset by
+  // 90 degrees.
   shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
   elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
@@ -113,7 +115,7 @@ Due to many requests by email, I have decided to provide you with figures illust
 <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="500">
 </p>
 
-What is important, and can be seen in the figures, is that the servos' angles have to be 90 degrees when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero (in the library).
+**DISCLAIMER: What is important, and can be seen in the figures, is that the servos' angles have to be 90 degrees when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero (in the library). This is because the library is limited between -180 to 180 degrees while the servos are in general between 0 to 180 degrees. Moreover, the library has it's zero angle along the y-axis so in order for the servos to move below this point, they have to be offset by 90 degrees. I will make a video in the future showing exactly what I mean. In the meantime, you will have to try to understand what I am saying here.**
 
 Installation
 ------------
