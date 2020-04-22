@@ -138,7 +138,7 @@ Methods of Fabrik2D class
 * ```float getAngle(int n)``` - Current angle on joint n.
 * ```float getBaseAngle()``` - Current angle of the base of the chain (the angle in which the chain is pointing).
 * ```void setTolerance(float val)``` - Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance.
-* ```void setJoints(int* angles, int* lengths)``` - Manually sets the joint angles and updates their position using forward kinematics.
+* ```void setJoints(float* angles, int* lengths)``` - Manually sets the joint angles and updates their position using forward kinematics.
 * ```void setBaseAngle(float baseAngle)``` - Manually set the angle of the base of the chain.
 
 Notice
