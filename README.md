@@ -47,15 +47,15 @@ void loop() {
   fabrik2D.solve(200,50,lengths);
   
   // Get the angles (in radians [-pi,pi]) and convert them to degrees [-180,180]
-  int shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
-  int elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
+  int shoulderAngle = fabrik2D.getAngle(0) * RAD_TO_DEG; // In degrees
+  int elbowAngle = fabrik2D.getAngle(1) * RAD_TO_DEG; // In degrees
   
   // Write to the servos with limits, these will probably not be the same
   // for your manipulator and will have to be changed depending on your
   // setup. Since the library may output negative angles, it is important
   // to apply limits before sending the angles to the servos!
   shoulder.write(min(180, max(0, shoulderAngle)));
-  elbow.write(min(180, max(0, elbowAngle + 180/2)));
+  elbow.write(min(180, max(0, elbowAngle + 90)));
   
   // The following delay is just a part of this example, remove it
   delay(1000);
@@ -64,16 +64,12 @@ void loop() {
   fabrik2D.solve(150,10,lengths);
   
   // Get the angles (in radians [-pi,pi]) and convert them to degrees [-180,180]
-  shoulderAngle = fabrik2D.getAngle(0)* 57296 / 1000; // In degrees
-  elbowAngle = fabrik2D.getAngle(1)* 57296 / 1000; // In degrees
+  shoulderAngle = fabrik2D.getAngle(0) * RAD_TO_DEG; // In degrees
+  elbowAngle = fabrik2D.getAngle(1) * RAD_TO_DEG; // In degrees
   
-  // It is important that your servos are pointing straight up when set to
-  // 90 degrees! This is because the servos are limited to 0 to 180 degrees
-  // while the library is limited to -180 to 180 degrees. This is why the
-  // servos have to be limited and the output from the library offset by
-  // 90 degrees.
-  shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
-  elbow.write(min(180, max(0, elbowAngle + 180/2)));
+  // Compute servo angles based on the output (see explanation in README.md under "Servo Orientation")
+  shoulder.write(min(180, max(0, shoulderAngle)));
+  elbow.write(min(180, max(0, elbowAngle + 90)));
   
   // The following delay is just a part of this example, remove it
   delay(1000);
@@ -99,21 +95,26 @@ Five usage examples are included which give more in-depth information:
 :------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
 ![Example3DOFGrippingOffset](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFGrippingOffset/preview.gif)                                 |  ![Example4DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_4DOF/preview.gif)
 
-Robot Arm Configuration
+Servo Orientation
 ------------
-Due to many requests by email, I have decided to provide you with figures illustrating the configuration of the robot arm that is necessary for this library to work as it is supposed to. Remember that these are only examples of how your arm could look like, but the same concept is applied to any arm that you use with this library. To use the examples, an additional joint is required. I did not include all joints in the configuration example images because the images would have been unnecessarily complex. What is important is that the servos are oriented correctly, as described in the images.
+The library computes angles with respect to the x-axis. This means that all angles which makes a joint point down will be negative. Servos do not take negative angles. If we are using 180 degree servos, we will have to do some modificaitons to the angle outputs from the library, as shown below:
+```
+// Let's say we have a manipulator with 3 joints. A shoulder joint, an elbow joint, and a wrist joint (3 DOF).
 
-**Robot arm configuration in 2D:**
+// Solve IK
+fabrik2D.solve(x,y,lengths);
 
-<p align="center">
-<img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/3DOFSetup.png" width="500">
-</p>
+// Get the angles (in radians [-pi,pi]) and convert them to degrees [-180,180]
+shoulderAngle = fabrik2D.getAngle(0) * RAD_TO_DEG; // In degrees
+elbowAngle = fabrik2D.getAngle(1) * RAD_TO_DEG; // In degrees
+wristAngle = fabrik2D.getAngle(2) * RAD_TO_DEG // In degrees
 
-**Robot arm configuration in 3D:**
-
-<p align="center">
-<img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="500">
-</p>
+// Compute servo angles
+shoulder.write(min(180, max(0, shoulderAngle)));
+elbow.write(min(180, max(0, elbowAngle + 90)));
+wrist.write(min(180, max(0, wristAngle + 90)));
+```
+As you can see, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle. All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the should er joint in this case, because we want it to be able to point backwards and forwards along the surface, e.g. a table.
 
 Installation
 ------------
