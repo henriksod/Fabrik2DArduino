@@ -115,8 +115,6 @@ Due to many requests by email, I have decided to provide you with figures illust
 <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="500">
 </p>
 
-**DISCLAIMER: What is important, and can be seen in the figures, is that the servos' angles have to be 90 degrees when the link is parallel to the previous link. By setting up the servos in this manner, the arm will be pointing straight up when all joint angles are set to zero (in the library). This is because the library is limited between -180 to 180 degrees while the servos are in general between 0 to 180 degrees. Moreover, the library has it's zero angle along the y-axis so in order for the servos to move below this point, they have to be offset by 90 degrees. I will make a video in the future showing exactly what I mean. In the meantime, you will have to try to understand what I am saying here.**
-
 Installation
 ------------
 Clone this repository to your local machine, and place it in your Arduino libraries folder as 'Fabrik2DArduino'.
