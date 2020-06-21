@@ -50,10 +50,7 @@ void loop() {
   int shoulderAngle = fabrik2D.getAngle(0) * RAD_TO_DEG; // In degrees
   int elbowAngle = fabrik2D.getAngle(1) * RAD_TO_DEG; // In degrees
   
-  // Write to the servos with limits, these will probably not be the same
-  // for your manipulator and will have to be changed depending on your
-  // setup. Since the library may output negative angles, it is important
-  // to apply limits before sending the angles to the servos!
+  // Compute servo angles based on the output (see explanation in README.md under "Servo Orientation")
   shoulder.write(min(180, max(0, shoulderAngle)));
   elbow.write(min(180, max(0, elbowAngle + 90)));
   
