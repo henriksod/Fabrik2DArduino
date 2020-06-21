@@ -54,7 +54,7 @@ void loop() {
   // for your manipulator and will have to be changed depending on your
   // setup. Since the library may output negative angles, it is important
   // to apply limits before sending the angles to the servos!
-  shoulder.write(min(180, max(0, shoulderAngle + 180/2)));
+  shoulder.write(min(180, max(0, shoulderAngle)));
   elbow.write(min(180, max(0, elbowAngle + 180/2)));
   
   // The following delay is just a part of this example, remove it
