@@ -218,6 +218,8 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
  */
 bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)
 {
+	bool solvable = false;
+	
     if (this->numJoints >= 4) {
     
         // Find wrist center by moving from the desired position with tool angle and link length
@@ -228,7 +230,7 @@ bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float gripping
         int tmp = this->numJoints;
         this->numJoints = this->numJoints-1;
         
-        bool solvable = solve(oc_x, oc_y, lengths);
+        solvable = solve(oc_x, oc_y, lengths);
         
         this->numJoints = tmp;
         
@@ -270,6 +272,8 @@ bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float gripping
         }
     
     }
+	
+	return solvable;
 }
 
 /* solve(x, y, angle, lengths)
