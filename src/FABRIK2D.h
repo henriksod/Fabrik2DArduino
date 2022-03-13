@@ -1,5 +1,5 @@
 /**********************************************************************************************
- * FABRIK 2D inverse kinematics solver - Version 1.0.3
+ * FABRIK 2D inverse kinematics solver - Version 1.0.4
  * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
  *
  * Copyright (c) 2018 Henrik Söderlund
