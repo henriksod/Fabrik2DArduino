@@ -112,21 +112,23 @@ You can also download the library via Arduino IDE. Navigate to Sketch->Include L
 
 Methods of Fabrik2D class
 -----------------------------
-* ```Fabrik2D(int numJoints, int* lengths)``` - The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints.
-* ```bool solve(float x, float y, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case.
-* ```bool solve(float x, float y, float toolAngle, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle. Returns false if IK could not be solved, will not update joints in this case.
-* ```bool solve(float x, float y, float toolAngle, float grippingOffset, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle and a gripping offset. Returns false if IK could not be solved, will not update joints in this case.
-* ```bool solve2(float x, float y, float z, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y,z). Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case.
-* ```bool solve2(float x, float y, float z, float toolAngle, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case.
-* ```bool solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)``` - Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle and a gripping offset. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case.
-* ```float getX(int n)``` - Current x coordinate of joint n.
-* ```float getY(int n)``` - Current y coordinate of joint n.
-* ```float getZ()``` - Current z offset of the chain end effector from the plane.
-* ```float getAngle(int n)``` - Current angle on joint n.
-* ```float getBaseAngle()``` - Current angle of the base of the chain (the angle in which the chain is pointing).
-* ```void setTolerance(float val)``` - Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance.
-* ```void setJoints(float* angles, int* lengths)``` - Manually sets the joint angles and updates their position using forward kinematics.
-* ```void setBaseAngle(float baseAngle)``` - Manually set the angle of the base of the chain.
+| Method | Description |
+| --- | --- |
+| `Fabrik2D(int numJoints, int* lengths)`{:.cpp} | The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints. |
+| `bool solve(float x, float y, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case. |
+| `bool solve(float x, float y, float toolAngle, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle. Returns false if IK could not be solved, will not update joints in this case. |
+| `bool solve(float x, float y, float toolAngle, float grippingOffset, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle and a gripping offset. Returns false if IK could not be solved, will not update joints in this case. |
+| `bool solve2(float x, float y, float z, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y,z). Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. |
+| `bool solve2(float x, float y, float z, float toolAngle, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. |
+| `bool solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle and a gripping offset. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. |
+| `float getX(int n)`{:.cpp} | Current x coordinate of joint n. |
+| `float getY(int n)`{:.cpp} | Current y coordinate of joint n. |
+| `float getZ()`{:.cpp} | Current z offset of the chain end effector from the plane. |
+| `float getAngle(int n)`{:.cpp} | Current angle on joint n. |
+| `float getBaseAngle()`{:.cpp} | Current angle of the base of the chain (the angle in which the chain is pointing). |
+| `void setTolerance(float val)`{:.cpp} | Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance. |
+| `void setJoints(float* angles, int* lengths)`{:.cpp} | Manually sets the joint angles and updates their position using forward kinematics. |
+| `void setBaseAngle(float baseAngle)`{:.cpp} | Manually set the angle of the base of the chain. |
 
 Notice
 ------------
