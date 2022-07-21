@@ -1,4 +1,4 @@
-name: Compile and Benchmark
+name: Compile
 
 on: [push, pull_request]
 env:
