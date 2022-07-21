@@ -3,12 +3,6 @@
 [![Compilation Status](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 
-***************************************************************
-* FABRIK 2D inverse kinematics solver - Version 1.0.4
-* By Henrik Söderlund <henrik.a.soderlund@hotmail.com>
-* This Library is licensed under a MIT License
-***************************************************************
-
 A FABRIK based inverse kinematics solver for Arduino.
 
 This library lets you specify (x,y) coordinates in the 2-dimensional plane and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position. It works for N number of joints up to 3DOF, but with support for 4DOF (3D movements) with the addition of a rotating base.
