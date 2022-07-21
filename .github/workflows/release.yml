@@ -1,0 +1,10 @@
+name: Release
+
+on: [push, create, delete]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Latest Tag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
