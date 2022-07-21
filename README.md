@@ -77,7 +77,8 @@ void loop() {
 Five usage examples are included which give more in-depth information:
 | Example | Description |
 | --- | --- |
-| [example_2DOFMoveUpAndDown](/examples/example_2DOFMoveUpAndDown/example_2DOFMoveUpAndDown.ino) | Creates a 2DOF arm and moves it up and down. ![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif) | 
+| [example_2DOFMoveUpAndDown](/examples/example_2DOFMoveUpAndDown/example_2DOFMoveUpAndDown.ino) | Creates a 2DOF arm and moves it up and down. 
+<img src="[http://....jpg](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)" width="64" height="64" /> | 
 | [example_3DOFMoveCircle](/examples/example_3DOFMoveCircle/example_3DOFMoveCircle.ino) | Creates a 3DOF arm and moves it in a circle. ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif) |
 | [example_3DOFToolAngle](/examples/example_3DOFToolAngle/example_3DOFToolAngle.ino) | Creates a 3DOF arm and moves it in a circle with given tool angle. ![Example3DOFToolAng45](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview1.gif) ![Example3DOFToolAng90](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview2.gif) |
 | [example_3DOFGrippingOffset](/examples/example_3DOFGrippingOffset/example_3DOFGrippingOffset.ino) | Creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset. ![Example3DOFGrippingOffset](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFGrippingOffset/preview.gif) |
