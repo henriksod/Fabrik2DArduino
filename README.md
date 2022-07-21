@@ -114,9 +114,7 @@ Methods of Fabrik2D class
 -----------------------------
 | Method | Description |
 | --- | --- |
-| ```cpp
-Fabrik2D(int numJoints, int* lengths)
-``` | The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints. |
+| ```cpp<br />Fabrik2D(int numJoints, int* lengths)<br />``` | The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints. |
 | `bool solve(float x, float y, int* lengths)`{:.language-cpp} | Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case. |
 | `bool solve(float x, float y, float toolAngle, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle. Returns false if IK could not be solved, will not update joints in this case. |
 | `bool solve(float x, float y, float toolAngle, float grippingOffset, int* lengths)`{:.cpp} | Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle and a gripping offset. Returns false if IK could not be solved, will not update joints in this case. |
