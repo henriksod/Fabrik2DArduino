@@ -16,6 +16,7 @@ You can also specify a desired angle for the end effector to approach the desire
 The library is based on an iterative inverse kinematics algorithm called FABRIK:
 http://www.andreasaristidou.com/FABRIK.html
 
+
 Usage
 -----
 
@@ -83,6 +84,7 @@ Five usage examples are included which give more in-depth information:
 | [example_3DOFGrippingOffset](/examples/example_3DOFGrippingOffset/example_3DOFGrippingOffset.ino) | Creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset.<br /><img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFGrippingOffset/preview.gif" width="128" height="128" /> |
 | [example_4DOF](/examples/example_4DOF/example_4DOF.ino) | Creates a 3DOF arm and solves for a rotating base which yields movement in the z-axis (offset from the chain plane).<br /><img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_4DOF/preview.gif" width="128" height="128" /> |
 
+
 Servo Orientation
 ------------
 The library computes angles with respect to the x-axis. This means that all angles which makes a joint point down will be negative. Servos do not take negative angles. If we are using 180 degree servos, we will have to do some modificaitons to the angle outputs from the library, as shown below:
@@ -104,179 +106,13 @@ wrist.write(min(180, max(0, wristAngle + 90)));
 ```
 As you can see, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle. All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case, because we want it to be able to point backwards and forwards along the surface, e.g. a table.
 
+
 Installation
 ------------
 Clone this repository to your local machine, and place it in your Arduino libraries folder as 'Fabrik2DArduino'.
 
 You can also download the library via Arduino IDE. Navigate to Sketch->Include Library->Manage Libraries... and search for "Fabrik2D", then press "install".
 
-Methods of Fabrik2D class
------------------------------
-
-<table>
-<tr>
-<td> 
-  
-__Method__
-  
-</td>
-<td>
-
-__Description__
-
-</td>
-</tr>
-<tr>
-<td>
-
-```cpp
-Fabrik2D(int numJoints, int* lengths)
-```
-
-</td>
-<td> The constructor of the class. Here you specify the number of joints (which cannot be changed) and the array of lengths which is always one less than the number of joints. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-bool solve(float x, float y, int* lengths)
-```
-
-</td>
-<td> Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-bool solve(float x, float y, float toolAngle, int* lengths)
-```
-
-</td>
-<td> Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle. Returns false if IK could not be solved, will not update joints in this case. </td>
-</tr>
-<tr>
-<td>
-  
-```cpp
-bool solve(float x, float y, float toolAngle, float grippingOffset, int* lengths)
-```
-
-</td>
-<td> Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle and a gripping offset. Returns false if IK could not be solved, will not update joints in this case. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-bool solve2(float x, float y, float z, int* lengths)
-```
-
-</td>
-<td> Solves inverse kinematics for the end effector to reach (x,y,z). Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-bool solve2(float x, float y, float z, float toolAngle, int* lengths)
-```
-
-</td>
-<td> Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-bool solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)
-```
-
-</td>
-<td> Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle and a gripping offset. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-float getX(int n)
-```
-
-</td>
-<td> Current x coordinate of joint n. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-float getY(int n)
-```
-
-</td>
-<td> Current y coordinate of joint n. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-float getZ()
-```
-
-</td>
-<td> Current z offset of the chain end effector from the plane. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-float getAngle(int n)
-```
-
-</td>
-<td> Current angle on joint n. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-float getBaseAngle()
-```
-
-</td>
-<td> Current angle of the base of the chain (the angle in which the chain is pointing). </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-void setTolerance(float val)
-```
-
-</td>
-<td> Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-void setJoints(float* angles, int* lengths)
-```
-
-</td>
-<td> Manually sets the joint angles and updates their position using forward kinematics. </td>
-</tr>
-<tr>
-<td>
-
-```cpp
-void setBaseAngle(float baseAngle)
-```
-
-</td>
-<td> Manually set the angle of the base of the chain. </td>
-</tr>
-</table>
 
 Notice
 ------------
