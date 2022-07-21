@@ -117,12 +117,12 @@ Methods of Fabrik2D class
 <tr>
 <td> 
   
-*Method*
+_Method_
   
 </td>
 <td>
 
-*Description*
+_Description_
 
 </td>
 </tr>
