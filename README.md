@@ -136,6 +136,8 @@ bool solve(float x, float y, int* lengths)
 
 </td>
 <td> Solves inverse kinematics for the end effector to reach (x,y). Returns false if IK could not be solved, will not update joints in this case. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -144,6 +146,8 @@ bool solve(float x, float y, float toolAngle, int* lengths)
 
 </td>
 <td> Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle. Returns false if IK could not be solved, will not update joints in this case. </td>
+</tr>
+<tr>
 <td>
   
 ```cpp
@@ -152,6 +156,8 @@ bool solve(float x, float y, float toolAngle, float grippingOffset, int* lengths
 
 </td>
 <td> Solves inverse kinematics for the end effector to reach (x,y) with a given tool angle and a gripping offset. Returns false if IK could not be solved, will not update joints in this case. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -160,6 +166,8 @@ bool solve2(float x, float y, float z, int* lengths)
 
 </td>
 <td> Solves inverse kinematics for the end effector to reach (x,y,z). Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -168,6 +176,8 @@ bool solve2(float x, float y, float z, float toolAngle, int* lengths)
 
 </td>
 <td> Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -176,6 +186,8 @@ bool solve2(float x, float y, float z, float toolAngle, float grippingOffset, in
 
 </td>
 <td> Solves inverse kinematics for the end effector to reach (x,y,z) with a given tool angle and a gripping offset. Requires a rotating base. Returns false if IK could not be solved, will not update joints in this case. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -184,6 +196,8 @@ float getX(int n)
 
 </td>
 <td> Current x coordinate of joint n. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -192,6 +206,8 @@ float getY(int n)
 
 </td>
 <td> Current y coordinate of joint n. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -200,6 +216,8 @@ float getZ()
 
 </td>
 <td> Current z offset of the chain end effector from the plane. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -208,6 +226,8 @@ float getAngle(int n)
 
 </td>
 <td> Current angle on joint n. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -216,6 +236,8 @@ float getBaseAngle()
 
 </td>
 <td> Current angle of the base of the chain (the angle in which the chain is pointing). </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -224,6 +246,8 @@ void setTolerance(float val)
 
 </td>
 <td> Set tolerance to a value. If reachable, the end effector will approach the target with this tolerance. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
@@ -232,6 +256,8 @@ void setJoints(float* angles, int* lengths)
 
 </td>
 <td> Manually sets the joint angles and updates their position using forward kinematics. </td>
+</tr>
+<tr>
 <td>
 
 ```cpp
