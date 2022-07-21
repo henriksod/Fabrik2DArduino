@@ -1,7 +1,6 @@
 # FABRIK Based 2D Inverse Kinematics Solver
 
 [![Compilation Status](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
-[![Latest Release](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/release.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/release.yml)
 
 ***************************************************************
 * FABRIK 2D inverse kinematics solver - Version 1.0.4
