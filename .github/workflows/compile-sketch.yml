@@ -20,6 +20,9 @@ jobs:
         with:
           # The default is to compile for the Arduino Uno board. If you want to compile for other boards, use the `fqbn` input.
           sketch-paths: |
-            # Configure the action to search all folders under the root of the repository for sketches and compile them.
-            # This is formatted as a YAML list, which makes it possible to have multiple sketch paths if needed.
-            - ./
+            - ./examples/example_2DOFMoveUpAndDown/example_2DOFMoveUpAndDown.ino
+            - ./examples/example_3DOFGrippingOffset/example_3DOFGrippingOffset.ino
+            - ./examples/example_3DOFMoveCircle/example_3DOFMoveCircle.ino
+            - ./examples/example_3DOFToolAngle/example_3DOFToolAngle.ino
+            - ./examples/example_3DOFToolAngle/example_3DOFToolAngle.ino
+            - ./examples/example_4DOF/example_4DOF.ino
