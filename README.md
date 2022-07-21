@@ -115,7 +115,16 @@ Methods of Fabrik2D class
 
 <table>
 <tr>
-<td> Method </td> <td> Description </td>
+<td> 
+  
+*Method*
+  
+</td>
+<td>
+
+*Description*
+
+</td>
 </tr>
 <tr>
 <td>
