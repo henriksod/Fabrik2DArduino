@@ -77,23 +77,11 @@ void loop() {
 Five usage examples are included which give more in-depth information:
 | Example | Description |
 | --- | --- |
-| [example_2DOFMoveUpAndDown](/examples/example_2DOFMoveUpAndDown/example_2DOFMoveUpAndDown.ino) | Creates a 2DOF arm and moves it up and down. | 
-| [example_3DOFMoveCircle](/examples/example_3DOFMoveCircle/example_3DOFMoveCircle.ino) | Creates a 3DOF arm and moves it in a circle. |
-| [example_3DOFToolAngle](/examples/example_3DOFToolAngle/example_3DOFToolAngle.ino) | Creates a 3DOF arm and moves it in a circle with given tool angle. |
-| [example_3DOFGrippingOffset](/examples/example_3DOFGrippingOffset/example_3DOFGrippingOffset.ino) | Creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset. |
-| [example_4DOF](/examples/example_4DOF/example_4DOF.ino) | Creates a 3DOF arm and solves for a rotating base which yields movement in the z-axis (offset from the chain plane). |
-
-**&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 2DOF chain moving in a vertical line &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**                                                                                                                     |  **&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example 3DOF chain moving in a circle &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;**  
-:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
-![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif)                                       |  ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif)
-
-**Example 3DOF chain moving in a circle with given tool angle at -45 degrees**                                                                                |  **Example 3DOF chain moving in a vertical line with given tool angle at -90 degrees**                                                                           
-:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
-![Example3DOFToolAng45](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview1.gif)                                 |  ![Example3DOFToolAng90](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview2.gif)
-
-**Example 3DOF chain moving in a horizontal line with varying gripping offset and with tool angle at -90 degrees**                                            |  **Example 4DOF chain moving in a plane in the x-z axes with given tool angle at -72 degrees**                                                                           
-:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:
-![Example3DOFGrippingOffset](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFGrippingOffset/preview.gif)                                 |  ![Example4DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_4DOF/preview.gif)
+| [example_2DOFMoveUpAndDown](/examples/example_2DOFMoveUpAndDown/example_2DOFMoveUpAndDown.ino) | Creates a 2DOF arm and moves it up and down. ![Example2DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_2DOFMoveUpAndDown/preview.gif) | 
+| [example_3DOFMoveCircle](/examples/example_3DOFMoveCircle/example_3DOFMoveCircle.ino) | Creates a 3DOF arm and moves it in a circle. ![Example3DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFMoveCircle/preview.gif) |
+| [example_3DOFToolAngle](/examples/example_3DOFToolAngle/example_3DOFToolAngle.ino) | Creates a 3DOF arm and moves it in a circle with given tool angle. ![Example3DOFToolAng45](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview1.gif) ![Example3DOFToolAng90](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFToolAngle/preview2.gif) |
+| [example_3DOFGrippingOffset](/examples/example_3DOFGrippingOffset/example_3DOFGrippingOffset.ino) | Creates a 3DOF arm and moves it in a horizontal line with given tool angle and varying gripping offset. ![Example3DOFGrippingOffset](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_3DOFGrippingOffset/preview.gif) |
+| [example_4DOF](/examples/example_4DOF/example_4DOF.ino) | Creates a 3DOF arm and solves for a rotating base which yields movement in the z-axis (offset from the chain plane). ![Example4DOF](https://github.com/henriksod/Fabrik2DArduino/blob/master/examples/example_4DOF/preview.gif) |
 
 Servo Orientation
 ------------
