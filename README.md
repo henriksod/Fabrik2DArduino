@@ -7,11 +7,11 @@ A FABRIK based inverse kinematics solver for Arduino.
 
 This library solves the inverse kinematics problem for robotic arms with or without a rotating base.
 
-It lets you specify (x, y) coordinates and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position with up to 3 degrees of freedom (DOF).
+* It lets you specify (x, y) coordinates and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position with up to 3 degrees of freedom (DOF).
 
-With the addition of a rotating base, you can move in (x, y, z) coordinates with up to 4 degrees of freedom (DOF).
+* With the addition of a rotating base, you can move in (x, y, z) coordinates with up to 4 degrees of freedom (DOF).
 
-You can also specify a desired angle for the end effector to approach the desired position, which allows picking up objects from different orientations. Moreover, you can adjust the gripping offset to compensate for your chosen gripper.
+* You can also specify a desired angle for the end effector to approach the desired position, which allows picking up objects from different orientations. Moreover, you can adjust the gripping offset to compensate for your chosen gripper.
 
 The library is based on an iterative inverse kinematics algorithm called FABRIK:
 http://www.andreasaristidou.com/FABRIK.html
