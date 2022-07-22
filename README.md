@@ -7,6 +7,8 @@ A FABRIK based inverse kinematics solver for Arduino.
 
 The library is based on an iterative inverse kinematics algorithm called [FABRIK](http://www.andreasaristidou.com/FABRIK.html).
 
+* This solver is faster than conventional methods.
+
 * It lets you specify (x, y) coordinates and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position with up to 3 degrees of freedom (DOF).
 
 * With the addition of a rotating base, you can move in (x, y, z) coordinates with up to 4 degrees of freedom (DOF).
