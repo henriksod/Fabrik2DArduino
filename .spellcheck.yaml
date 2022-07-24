@@ -27,4 +27,4 @@ matrix:
   - pyspelling.filters.cpp:
       line_comments: false
   sources:
-  - '**/*.{cpp,hpp,c,h}'
+  - '**/*.{cpp,hpp,c,h,ino}'
