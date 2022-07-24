@@ -14,3 +14,9 @@ matrix:
   sources:
   - '**/*.md'
   default_encoding: utf-8
+- name: cpp
+  pipeline:
+  - pyspelling.filters.cpp
+      line_comments: false
+  sources:
+  - '**/*.{cpp,hpp,c,h}'
