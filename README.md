@@ -88,7 +88,7 @@ Five usage examples are included which give more in-depth information:
 
 Servo Orientation
 ------------
-The library computes angles with respect to the x-axis. This means that all angles which makes a joint point down will be negative. Servos do not take negative angles. If we are using 180 degree servos, we will have to do some modificaitons to the angle outputs from the library, as shown below:
+The library computes angles with respect to the x-axis. This means that all angles which makes a joint point down will be negative. Servos do not take negative angles. If we are using 180 degree servos, we will have to do some modifications to the angle outputs from the library, as shown below:
 ```cpp
 // Let's say we have a manipulator with 3 joints. A shoulder joint, an elbow joint, and a wrist joint (3 DOF).
 
@@ -117,4 +117,4 @@ You can also download the library via Arduino IDE. Navigate to Sketch->Include L
 
 Notice
 ------------
-It is recommended that you implement your own acceleration and velocity functions to make sure that your manipulator does not snap into the solved positions (which could cause breakage or slipping)! One way of doing this is to interpolate the joint angles over time until the manipulator has reached it's destination. I would reccoment using [RAMP](https://github.com/siteswapjuggler/RAMP), an Arduino interpolation library made by [siteswapjuggler](https://github.com/siteswapjuggler).
+It is recommended that you implement your own acceleration and velocity functions to make sure that your manipulator does not snap into the solved positions (which could cause breakage or slipping)! One way of doing this is to interpolate the joint angles over time until the manipulator has reached it's destination. I would recommend using [RAMP](https://github.com/siteswapjuggler/RAMP), an Arduino interpolation library made by [siteswapjuggler](https://github.com/siteswapjuggler).
