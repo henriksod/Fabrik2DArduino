@@ -1,6 +1,7 @@
 # FABRIK Based Inverse Kinematics Solver for Arduino
 
-[![Compilation Status](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
+[![Tests Status](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
+[![Spell Check](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml)
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 
 A FABRIK based inverse kinematics solver for Arduino.
