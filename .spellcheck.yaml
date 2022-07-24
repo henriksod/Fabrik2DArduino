@@ -17,6 +17,12 @@ matrix:
   - '**/*.md'
   default_encoding: utf-8
 - name: cpp
+  aspell:
+    lang: en
+  dictionary:
+    wordlists:
+    - .wordlist.txt
+    encoding: utf-8
   pipeline:
   - pyspelling.filters.cpp:
       line_comments: false
