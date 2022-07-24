@@ -16,6 +16,13 @@ jobs:
           compliance: strict
           recursive: true
           project-type: library
+  cpplint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+    - run: pip install cpplint
+    - run: cpplint --recursive ./src
   compile:
     runs-on: ubuntu-latest
     strategy:
