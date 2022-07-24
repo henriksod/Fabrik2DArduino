@@ -14,13 +14,14 @@ on:
   repository_dispatch:
 
 jobs:
-  spellcheck:
+  build:
+    name: Spellcheck
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # See: https://github.com/codespell-project/actions-codespell/blob/master/README.md
-      - name: Spell check
-        uses: codespell-project/actions-codespell@master
+    # The checkout step
+    - uses: actions/checkout@master
+    - uses: rojopolis/spellcheck-github-actions@0.25.0
+      name: Spellcheck
+      with:
+        source_files: README.md
+        task_name: Markdown
