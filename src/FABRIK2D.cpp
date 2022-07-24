@@ -1,5 +1,5 @@
 /**********************************************************************************************
- * FABRIK 2D inverse kinematics solver - Version 1.0.4
+ * FABRIK 2D inverse kinematics solver - Version 1.0.5
  * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
  *
  * Copyright (c) 2018 Henrik Söderlund
@@ -248,8 +248,7 @@ bool Fabrik2D::solve2(
             // Update angle of last joint
             this->chain->joints[0].angle = atan2(
                 this->chain->joints[1].y,
-                this->chain->joints[1].x
-            );
+                this->chain->joints[1].x);
 
             float prevAngle = this->chain->joints[0].angle;
             for (int i = 2; i <= this->numJoints-1; i++) {
