@@ -1,10 +1,10 @@
 # Fast Inverse Kinematics Solver for Arduino
 
-[![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
-[![Spell Check](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 ![C++](https://img.shields.io/badge/Langauge-C++-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
+[![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
+[![Spell Check](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml)
 
 A fast inverse kinematics solver for Arduino based on the FABRIK algorithm.
 
