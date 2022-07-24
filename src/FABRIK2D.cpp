@@ -36,7 +36,7 @@
 Fabrik2D::Fabrik2D(int numJoints, int* lengths) {
   this->numJoints = numJoints;
   createChain(lengths);
-  
+
   this->tolerance = 1;  // 1mm tolerance default
 }
 
@@ -47,7 +47,9 @@ Fabrik2D::Fabrik2D(int numJoints, int* lengths) {
  */
 void Fabrik2D::createChain(int* lengths) {
     Chain* chain = reinterpret_cast<Chain*>(malloc(sizeof(Chain)));
-    chain->joints = reinterpret_cast<Joint*>(malloc(sizeof(Joint)*this->numJoints));
+    chain->joints = reinterpret_cast<Joint*>(
+        malloc(sizeof(Joint)*this->numJoints)
+    );
 
     chain->joints[0].x = 0;
     chain->joints[0].y = 0;
@@ -81,19 +83,23 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
 
     // Check whether the target is within reach
     if (dist > totalLength) {
-       // The target is unreachable
+        // The target is unreachable
 
-       for (int i = 0; i < this->numJoints-1; i++) {
-           // Find the distance r_i between the target (x,y) and the joint i position (jx,jy)
-           float jx = this->chain->joints[i].x;
-           float jy = this->chain->joints[i].y;
-           float r_i = distance(jx,jy,x,y);
-           float lambda_i = ((float)lengths[i])/r_i;
+        for (int i = 0; i < this->numJoints-1; i++) {
+            // Find the distance r_i between the target (x,y) and the joint i position (jx,jy)
+            float jx = this->chain->joints[i].x;
+            float jy = this->chain->joints[i].y;
+            float r_i = distance(jx, jy, x, y);
+            float lambda_i = static_cast<float>(lengths[i])/r_i;
 
-           // Find the new joint positions
-           this->chain->joints[i+1].x = static_cast<float>((1-lambda_i)*jx + lambda_i*x);
-           this->chain->joints[i+1].y = static_cast<float>((1-lambda_i)*jy + lambda_i*y);
-       }
+            // Find the new joint positions
+            this->chain->joints[i+1].x = static_cast<float>(
+                (1-lambda_i)*jx + lambda_i*x
+            );
+            this->chain->joints[i+1].y = static_cast<float>(
+                (1-lambda_i)*jy + lambda_i*y
+            );
+        }
 
        return false;
     } else {
@@ -120,9 +126,7 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
             this->chain->joints[this->numJoints-1].x = x;
             this->chain->joints[this->numJoints-1].y = y;
 
-            for (int i = this->numJoints-2; i >= 0; i--) 
-            {
-                   
+            for (int i = this->numJoints-2; i >= 0; i--) {
                 // Find the distance r_i between the new joint position i+1 (nx,ny)
                 // and the joint i (jx,jy)
                 float jx = this->chain->joints[i].x;
@@ -131,10 +135,14 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
                 float ny = this->chain->joints[i+1].y;
                 float r_i = distance(jx,jy,nx,ny);
                 float lambda_i = static_cast<float>(lengths[i])/r_i;
-                
+
                 // Find the new joint positions
-                this->chain->joints[i].x = static_cast<float>((1-lambda_i)*nx + lambda_i*jx);
-                this->chain->joints[i].y = static_cast<float>((1-lambda_i)*ny + lambda_i*jy);
+                this->chain->joints[i].x = static_cast<float>(
+                    (1-lambda_i)*nx + lambda_i*jx
+                );
+                this->chain->joints[i].y = static_cast<float>(
+                    (1-lambda_i)*ny + lambda_i*jy
+                );
             }
 
             // STAGE 2: BACKWARD REACHING
@@ -143,7 +151,6 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
             this->chain->joints[0].y = by;
 
             for (int i = 0; i < this->numJoints-1; i++) {
-
                 // Find the distance r_i between the new joint position i (nx,ny)
                 // and the joint i+1 (jx,jy)
                 float jx = this->chain->joints[i+1].x;
@@ -154,8 +161,12 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
                 float lambda_i = static_cast<float>(lengths[i])/r_i;
 
                 // Find the new joint positions
-                this->chain->joints[i+1].x = static_cast<float>((1-lambda_i)*nx + lambda_i*jx);
-                this->chain->joints[i+1].y = static_cast<float>((1-lambda_i)*ny + lambda_i*jy);
+                this->chain->joints[i+1].x = static_cast<float>(
+                    (1-lambda_i)*nx + lambda_i*jx
+                );
+                this->chain->joints[i+1].y = static_cast<float>(
+                    (1-lambda_i)*ny + lambda_i*jy
+                );
             }
 
             // Update distance between end effector and target
@@ -165,10 +176,12 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
         }
     }
 
-
-    this->chain->joints[0].angle = atan2(this->chain->joints[1].y, this->chain->joints[1].x);
+    this->chain->joints[0].angle = atan2(
+        this->chain->joints[1].y, this->chain->joints[1].x
+    );
 
     float prevAngle = this->chain->joints[0].angle;
+
     for (int i = 2; i <= this->numJoints-1; i++) {
         float ax = this->chain->joints[i-1].x;
         float ay = this->chain->joints[i-1].y;
@@ -186,14 +199,15 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
 }
 
 /* solve2(x, y, z, angle, offset, lengths)
- * inputs: x, y and z positions of target, desired tool angle, gripping offset and lengths between
- *         each joint
+ * inputs: x, y and z positions of target, desired tool angle, gripping offset
+ *         and lengths betweeneach joint
  * outputs: True if solvable, false if not solvable
  *
  * !!! tool angle is in radians !!!
  *
- * solves the inverse kinematics of the stored chain to reach the target with tool angle and
- * gripping offset introducing the z-axis, which allows a rotational base of the manipulator
+ * solves the inverse kinematics of the stored chain to reach the target with tool
+ * angle and gripping offset introducing the z-axis, which allows a rotational base
+ * of the manipulator
  *
  * angle of the chain defines the base rotation
  *
@@ -211,7 +225,8 @@ bool Fabrik2D::solve2(
 
     if (this->numJoints >= 4) {
 
-        // Find wrist center by moving from the desired position with tool angle and link length
+        // Find wrist center by moving from the desired position with tool angle and
+        // link length
         float oc_x = x - (lengths[this->numJoints-2]+grippingOffset)*cos(toolAngle);
         float oc_y = y - (lengths[this->numJoints-2]+grippingOffset)*sin(toolAngle);
 
@@ -351,9 +366,7 @@ bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, int* lengths) 
  */
 float Fabrik2D::getX(int joint) {
   if (joint >= 0 && joint < numJoints) {
-
       return this->chain->joints[joint].x;
-
   }
   return 0;
 }
@@ -364,9 +377,7 @@ float Fabrik2D::getX(int joint) {
  */
 float Fabrik2D::getY(int joint) {
   if (joint >= 0 && joint < numJoints) {
-
       return this->chain->joints[joint].y;
-
   }
   return 0;
 }
@@ -377,9 +388,7 @@ float Fabrik2D::getY(int joint) {
  */
 float Fabrik2D::getAngle(int joint) {
   if (joint >= 0 && joint < numJoints) {
-
       return this->chain->joints[joint].angle;
-
   }
   return 0;
 }
