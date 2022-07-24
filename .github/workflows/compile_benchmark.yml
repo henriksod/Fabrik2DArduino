@@ -1,4 +1,4 @@
-name: Compile
+name: Tests
 
 on: [push, pull_request]
 env:
@@ -15,6 +15,13 @@ jobs:
           - "arduino:samd:mkrzero"
     steps:
       - uses: actions/checkout@v2
+      
+      - uses: arduino/arduino-lint-action@v1
+        with:
+          library-manager: update
+          compliance: strict
+          recursive: true
+          project-type: library
 
       - uses: arduino/compile-sketches@v1
         with:
