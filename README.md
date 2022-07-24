@@ -118,3 +118,7 @@ You can also download the library via Arduino IDE. Navigate to Sketch->Include L
 Notice
 ------------
 It is recommended that you implement your own acceleration and velocity functions to make sure that your manipulator does not snap into the solved positions (which could cause breakage or slipping)! One way of doing this is to interpolate the joint angles over time until the manipulator has reached it's destination. I would recommend using [RAMP](https://github.com/siteswapjuggler/RAMP), an Arduino interpolation library made by [siteswapjuggler](https://github.com/siteswapjuggler).
+
+Todo
+------------
+* Implement templates for all methods with default type as single precision float. Make calculations work for arbitrary-precision integers and floating point numbers.
