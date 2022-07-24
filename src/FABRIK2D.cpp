@@ -194,7 +194,7 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
 
 /* solve2(x, y, z, angle, offset, lengths)
  * inputs: x, y and z positions of target, desired tool angle, gripping offset
- *         and lengths betweeneach joint
+ *         and lengths between each joint
  * outputs: True if solvable, false if not solvable
  *
  * !!! tool angle is in radians !!!
