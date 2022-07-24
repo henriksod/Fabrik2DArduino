@@ -6,6 +6,16 @@ env:
   SKETCHES_REPORTS_PATH: sketches-reports
   SKETCHES_REPORTS_ARTIFACT_NAME: sketches-reports
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: arduino/arduino-lint-action@v1
+        with:
+          library-manager: update
+          compliance: strict
+          recursive: true
+          project-type: library
   compile:
     runs-on: ubuntu-latest
     strategy:
@@ -15,14 +25,6 @@ jobs:
           - "arduino:samd:mkrzero"
     steps:
       - uses: actions/checkout@v2
-      
-      - uses: arduino/arduino-lint-action@v1
-        with:
-          library-manager: update
-          compliance: strict
-          recursive: true
-          project-type: library
-
       - uses: arduino/compile-sketches@v1
         with:
           fqbn: ${{ matrix.fqbn }}
