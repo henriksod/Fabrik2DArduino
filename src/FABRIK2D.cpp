@@ -1,21 +1,26 @@
 /**********************************************************************************************
- * FABRIK 2D inverse kinematics solver - Version 1.0.1
+ * FABRIK 2D inverse kinematics solver - Version 1.0.4
  * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
  *
- * Copyright (C) 2018 Henrik Söderlund
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (c) 2018 Henrik Söderlund
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *
  **********************************************************************************************/
 
@@ -82,7 +87,6 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
         totalLength = totalLength + lengths[i];
     }
 
-    
     // Check whether the target is within reach
     if (dist > totalLength) 
     {
@@ -93,7 +97,7 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
            // Find the distance r_i between the target (x,y) and the joint i position (jx,jy)
            float jx = this->chain->joints[i].x;
            float jy = this->chain->joints[i].y;
-           float r_i = distance(jx,jy,x,y); // abs(x-jx) + abs(y-jy)
+           float r_i = distance(jx,jy,x,y);
            float lambda_i = ((float)lengths[i])/r_i;
            
            // Find the new joint positions
@@ -214,6 +218,8 @@ bool Fabrik2D::solve(float x, float y, int* lengths)
  */
 bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float grippingOffset, int* lengths)
 {
+	bool solvable = false;
+	
     if (this->numJoints >= 4) {
     
         // Find wrist center by moving from the desired position with tool angle and link length
@@ -224,7 +230,7 @@ bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float gripping
         int tmp = this->numJoints;
         this->numJoints = this->numJoints-1;
         
-        bool solvable = solve(oc_x, oc_y, lengths);
+        solvable = solve(oc_x, oc_y, lengths);
         
         this->numJoints = tmp;
         
@@ -266,6 +272,8 @@ bool Fabrik2D::solve2(float x, float y, float z, float toolAngle, float gripping
         }
     
     }
+	
+	return solvable;
 }
 
 /* solve(x, y, angle, lengths)
@@ -318,7 +326,7 @@ bool Fabrik2D::solve2(float x, float y, float z, int* lengths)
 {
     float r = distance(0, 0, x, z);
     
-    bool solvable =  solve(r, z, lengths);
+    bool solvable =  solve(r, y, lengths);
     if (solvable == true) 
     {
         this->chain->z = z;
@@ -442,15 +450,15 @@ float Fabrik2D::distance(float x1, float y1, float x2, float y2)
  * 
  * manually sets the joint angles and updates their position using forward kinematics
  */
-void Fabrik2D::setJoints(int* angles, int* lengths) 
+void Fabrik2D::setJoints(float* angles, int* lengths) 
 {
-    int angListLen = sizeof(angles)/sizeof(int);
-    int lenListLen = sizeof(lengths)/sizeof(int);
+    int angListLen = sizeof(angles)/sizeof(float);
+    int lenListLen = sizeof(lengths)/sizeof(float);
     if (angListLen == numJoints && lenListLen == numJoints-1) 
     {
-       int accAng = angles[0];
-       int accX = 0;
-       int accY = 0;
+       float accAng = angles[0];
+       float accX = 0;
+       float accY = 0;
        this->chain->joints[0].angle = angles[0];
        
        for (int i = 1; i < this->numJoints; i++)

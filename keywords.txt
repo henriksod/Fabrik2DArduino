@@ -20,8 +20,8 @@ getZ	KEYWORD2
 getAngle	KEYWORD2
 setTolerance	KEYWORD2
 setJoints	KEYWORD2
-getBaseAngle    KEYWORD2
-setBaseAngle    KEYWORD2
+getBaseAngle	KEYWORD2
+setBaseAngle	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
