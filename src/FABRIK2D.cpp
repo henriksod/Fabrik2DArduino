@@ -48,8 +48,7 @@ Fabrik2D::Fabrik2D(int numJoints, int* lengths) {
 void Fabrik2D::createChain(int* lengths) {
     Chain* chain = reinterpret_cast<Chain*>(malloc(sizeof(Chain)));
     chain->joints = reinterpret_cast<Joint*>(
-        malloc(sizeof(Joint)*this->numJoints)
-    );
+        malloc(sizeof(Joint)*this->numJoints));
 
     chain->joints[0].x = 0;
     chain->joints[0].y = 0;
@@ -95,22 +94,20 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
 
             // Find the new joint positions
             this->chain->joints[i+1].x = static_cast<float>(
-                (1-lambda_i)*jx + lambda_i*x
-            );
+                (1-lambda_i)*jx + lambda_i*x);
             this->chain->joints[i+1].y = static_cast<float>(
-                (1-lambda_i)*jy + lambda_i*y
-            );
+                (1-lambda_i)*jy + lambda_i*y);
         }
 
        return false;
     } else {
-        // The target is reachable; this, set as (bx,by) the initial position of the
-        // joint i
+        // The target is reachable; this, set as (bx,by) the initial
+        // position of the joint i
         float bx = this->chain->joints[0].x;
         float by = this->chain->joints[0].y;
 
-        // Check whether the distance between the end effector joint n (ex,ey) and the
-        // target is greater than a tolerance
+        // Check whether the distance between the end effector
+        // joint n (ex,ey) and the target is greater than a tolerance
         float ex = this->chain->joints[this->numJoints-1].x;
         float ey = this->chain->joints[this->numJoints-1].y;
         float diff = distance(ex, ey, x, y);
@@ -202,13 +199,14 @@ bool Fabrik2D::solve(float x, float y, int* lengths) {
  *
  * !!! tool angle is in radians !!!
  *
- * solves the inverse kinematics of the stored chain to reach the target with tool
- * angle and gripping offset introducing the z-axis, which allows a rotational base
- * of the manipulator
+ * solves the inverse kinematics of the stored chain to reach the target
+ * with tool angle and gripping offset introducing the z-axis, which
+ * allows a rotational base of the manipulator
  *
  * angle of the chain defines the base rotation
  *
- * the x- and y-axes define the plane and the z-axis defines the offset from the plane
+ * the x- and y-axes define the plane and the z-axis defines the
+ * offset from the plane
  *
  * will only work for 4DOF, i.e. 4 joints or more and a rotational base
  */
@@ -221,15 +219,13 @@ bool Fabrik2D::solve2(
     bool solvable = false;
 
     if (this->numJoints >= 4) {
-        // Find wrist center by moving from the desired position with tool angle and
-        // link length
+        // Find wrist center by moving from the desired position with
+        // tool angle and link length
         float oc_x = x - (
-            lengths[this->numJoints-2]+grippingOffset
-        )*cos(toolAngle);
+            lengths[this->numJoints-2]+grippingOffset)*cos(toolAngle);
 
         float oc_y = y - (
-            lengths[this->numJoints-2]+grippingOffset
-        )*sin(toolAngle);
+            lengths[this->numJoints-2]+grippingOffset)*sin(toolAngle);
 
         // We solve IK from first joint to wrist center
         int tmp = this->numJoints;
@@ -459,7 +455,7 @@ void Fabrik2D::setJoints(float* angles, int* lengths) {
        float accX = 0;
        float accY = 0;
        this->chain->joints[0].angle = angles[0];
-       
+
        for (int i = 1; i < this->numJoints; i++) {
            accAng += angles[i];
            this->chain->joints[i].x = accX + lengths[i-1]*cos(accAng);

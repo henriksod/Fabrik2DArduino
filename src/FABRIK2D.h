@@ -31,7 +31,6 @@
 #include "Arduino.h"
 
 class Fabrik2D {
-
  public:
     /* Fabrik2D(numJoints, lengths)
      * inputs: numJoints, lengths
