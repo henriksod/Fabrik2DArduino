@@ -56,7 +56,7 @@ void loop() {
   int elbowAngle = fabrik2D.getAngle(1) * RAD_TO_DEG; // In degrees
   
   // Compute servo angles based on the output (see explanation in README.md under "Servo Orientation")
-  shoulder.write(min(180, max(0, shoulderAngle)));
+  shoulder.write(min(180, max(0, -shoulderAngle)));
   elbow.write(min(180, max(0, elbowAngle + 90)));
   
   // The following delay is just a part of this example, remove it
@@ -103,13 +103,13 @@ elbowAngle = fabrik2D.getAngle(1) * RAD_TO_DEG; // In degrees
 wristAngle = fabrik2D.getAngle(2) * RAD_TO_DEG // In degrees
 
 // Compute servo angles
-shoulder.write(min(180, max(0, shoulderAngle)));
+shoulder.write(min(180, max(0, -shoulderAngle)));
 elbow.write(min(180, max(0, elbowAngle + 90)));
 wrist.write(min(180, max(0, wristAngle + 90)));
 ```
 As you can see in the example above, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle.
 
-All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case, because we want it to be able to point backwards and forwards along the surface, e.g. a table.
+All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case. Instead, we take the negative shoulder angle. We assume the servo is oriented with its 0 degrees pointing up and 180 degrees pointing down. This increases the range of motion in front of the robotic arm.
 
 Here is an example of how a 4 DOF setup might look like:
 
