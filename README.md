@@ -107,7 +107,13 @@ shoulder.write(min(180, max(0, shoulderAngle)));
 elbow.write(min(180, max(0, elbowAngle + 90)));
 wrist.write(min(180, max(0, wristAngle + 90)));
 ```
-As you can see, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle. All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case, because we want it to be able to point backwards and forwards along the surface, e.g. a table.
+As you can see in the example above, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle.
+
+All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case, because we want it to be able to point backwards and forwards along the surface, e.g. a table.
+
+<p align="center">
+  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="512" height="auto" />
+</p>
 
 
 Installation
