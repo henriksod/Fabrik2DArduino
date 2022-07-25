@@ -111,6 +111,8 @@ As you can see in the example above, the servos are clamped between 0 and 180 de
 
 All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case, because we want it to be able to point backwards and forwards along the surface, e.g. a table.
 
+Here is an example of how a 4 DOF setup might look like:
+
 <p align="center">
   <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="512" height="auto" />
 </p>
