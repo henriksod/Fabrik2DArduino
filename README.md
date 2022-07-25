@@ -1,4 +1,4 @@
-# Fast Inverse Kinematics Solver for Arduino
+# :zap: Fast Inverse Kinematics Solver for Arduino
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 ![C++](https://img.shields.io/badge/Langauge-C++-blue.svg)
