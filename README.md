@@ -90,7 +90,7 @@ Five usage examples are included which give more in-depth information:
 
 Servo Orientation
 ------------
-The library computes angles with respect to the x-axis. This means that all angles which makes a joint point down will be negative. Servos do not take negative angles. If we are using 180 degree servos, we will have to do some modifications to the angle outputs from the library, as shown below:
+The library computes angles with respect to the x-axis. For the joints, the x-axis is always pointing in the direction of the attached arm. This means that all angles which makes a joint point down will be negative. Servos do not take negative angles. If we are using 180 degree servos, we will have to do some modifications to the angle outputs from the library, as shown below:
 ```cpp
 // Let's say we have a manipulator with 3 joints. A shoulder joint, an elbow joint, and a wrist joint (3 DOF).
 
