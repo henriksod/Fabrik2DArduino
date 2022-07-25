@@ -107,7 +107,7 @@ shoulder.write(min(180, max(0, -shoulderAngle)));
 elbow.write(min(180, max(0, elbowAngle + 90)));
 wrist.write(min(180, max(0, wristAngle + 90)));
 ```
-As you can see in the example above, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle.
+As you can see in the example above, the servos are clamped between 0 and 180 degrees. Moreover, the elbow and wrist servos are rotated 90 degrees. This makes it possible for the elbow and wrist joints to point down while keeping a positive angle. We assume that the servos for the elbow and wrist joints are oriented such that 0 degrees is pointing forwards and 180 degrees is pointing backwards.
 
 All angles under 90 degrees will make the joint point down while all angles above 90 degrees will make the joint point up. We are not doing this for the shoulder joint in this case. Instead, we take the negative shoulder angle. We assume the servo is oriented with its 0 degrees pointing up and 180 degrees pointing down. This increases the range of motion in front of the robotic arm.
 
