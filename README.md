@@ -10,7 +10,7 @@ A fast forward- and inverse kinematics solver for Arduino based on the FABRIK al
 
 The library is based on an iterative inverse kinematics algorithm called [FABRIK](http://www.andreasaristidou.com/FABRIK.html).
 
-* This solver is as fast as trigonometric IK solvers, but allows arbitrary configurations.
+* This solver is as fast as trigonometric IK solvers, but allows arbitrary joint configurations.
 
 * It lets you specify (x, y) coordinates and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position with up to 3 degrees of freedom (DOF).
 
