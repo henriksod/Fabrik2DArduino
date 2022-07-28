@@ -29,7 +29,6 @@
 #define SRC_FABRIK2D_H_
 
 #include "Arduino.h"
-#include <MemoryUsage.h>
 
 class Fabrik2D {
  public:
