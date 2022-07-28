@@ -12,6 +12,7 @@ Fabrik2D	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
+begin	KEYWORD2
 solve	KEYWORD2
 solve2	KEYWORD2
 getX	KEYWORD2

@@ -116,7 +116,7 @@ All angles under 90 degrees will make the joint point down while all angles abov
 Here is an example of how a 4 DOF setup might look like:
 
 <p align="center">
-  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="512" height="auto" />
+  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/images/4DOFSetup.png" width="512" height="auto" />
 </p>
 
 
