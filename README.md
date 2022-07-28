@@ -1,4 +1,4 @@
-# :zap: Fast Iterative Inverse Kinematics Solver for Arduino
+# Iterative Inverse Kinematics Solver for Arduino
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 ![C++](https://img.shields.io/badge/Langauge-C++-blue.svg)
@@ -22,7 +22,10 @@ The library is based on an iterative inverse kinematics algorithm called [FABRIK
 
 * Moreover, you can adjust the gripping offset to compensate for your chosen gripper or move towards objects from specific angles.
 
-[![Execution Time Evaluation](images/exec_evaluation.png)](Execution Time Evaluation)
+<p align="center">
+  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/images/exec_evaluation.png" width="256" height="auto" />
+</p>
+
 
 Usage
 -----
