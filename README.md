@@ -12,7 +12,7 @@ The library is based on an iterative inverse kinematics algorithm called [FABRIK
 
 * This solver is simple to use.
 
-* It is as fast as trigonometric IK solvers, but allows arbitrary joint configurations.
+* It is as fast as analytical IK solvers, but allows arbitrary joint configurations.
 
 * It lets you specify (x, y) coordinates and it will compute the joint angles required for the end of the manipulator (end effector) to reach the desired position with up to 3 degrees of freedom (DOF).
 
