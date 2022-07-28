@@ -22,9 +22,7 @@ The library is based on an iterative inverse kinematics algorithm called [FABRIK
 
 * Moreover, you can adjust the gripping offset to compensate for your chosen gripper or move towards objects from specific angles.
 
-<p align="center">
-  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/images/exec_evaluation.png" width="512" height="auto" />
-</p>
+[![Execution Time Evaluation](images/exec_evaluation.png)](Execution Time Evaluation)
 
 Usage
 -----
