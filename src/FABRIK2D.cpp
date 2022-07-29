@@ -375,20 +375,27 @@ void Fabrik2D::setTolerance(float tolerance) {
     this->_tolerance = tolerance;
 }
 
-void Fabrik2D::setJoints(float angles[], int lengths[]) {
-     float accAng = angles[0];
-     float accX = 0;
-     float accY = 0;
-     this->_chain->joints[0].angle = angles[0];
+void Fabrik2D::setJoints(float angles[], int lengths[]) { (a1, a2) (l1, l2)
+    float accAng = angles[0];
+    float accX = 0;
+    float accY = 0;
+    this->_chain->joints[0].angle = angles[0];
 
-     for (int i = 1; i < this->_numJoints; i++) {
-         accAng += angles[i];
-         this->_chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
-         this->_chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
-         this->_chain->joints[i].angle = angles[i];
-         accX = this->_chain->joints[i].x;
-         accY = this->_chain->joints[i].y;
-     }
+    for (int i = 1; i < this->_numJoints-1; i++) {
+        accAng += angles[i];
+        this->_chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
+        this->_chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
+        this->_chain->joints[i].angle = angles[i];
+        accX = this->_chain->joints[i].x;
+        accY = this->_chain->joints[i].y;
+    }
+
+    // Update end effector x and y
+    this->_chain->joints[this->_numJoints-1].x =
+        accX + lengths[this->_numJoints-2]*cos(accAng);
+    this->_chain->joints[this->_numJoints-1].y =
+        accY + lengths[this->_numJoints-2]*sin(accAng);
+    this->_chain->joints[this->_numJoints-1].angle = 0;
 }
 
 int Fabrik2D::numJoints() {
