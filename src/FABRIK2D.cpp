@@ -42,7 +42,7 @@ Fabrik2D::~Fabrik2D() {
     }
 
     if (_chain) {
-        delete _chain;    
+        delete _chain;
         _chain = NULL;
     }
 }
@@ -75,11 +75,11 @@ void Fabrik2D::_createChain(int lengths[]) {
 
 uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
     uint8_t result_status = 1;
-    _num_iterations = 0; // Used for debugging
-    
+    _num_iterations = 0;  // Used for debugging
+
     // Distance between root and target (root is always 0,0)
     int origin_to_target = sqrt(x*x+y*y);
-    
+
     // Total length of chain
     int totalLength = 0;
     for (int i = 0; i < this->_numJoints-1; i++) {
@@ -128,8 +128,8 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
                 result_status = 2;
                 // Increase tolerance by 10%
                 tolerance *= 1.1;
-                // If increased tolerance is higher than 2x the desired tolerance
-                // report failed to converge
+                // If increased tolerance is higher than 2x the desired
+                // tolerance report failed to converge
                 if (tolerance > this->_tolerance*2)
                     return 0;
             }
@@ -229,7 +229,7 @@ uint8_t Fabrik2D::solve2(
         int tmp = this->_numJoints;
         this->_numJoints = this->_numJoints-1;
 
-        result_status= solve(oc_x, oc_y, lengths);
+        result_status = solve(oc_x, oc_y, lengths);
 
         this->_numJoints = tmp;
 
@@ -351,7 +351,7 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
      float accX = 0;
      float accY = 0;
      this->_chain->joints[0].angle = angles[0];
-      
+
      for (int i = 1; i < this->_numJoints; i++) {
          accAng += angles[i];
          this->_chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
