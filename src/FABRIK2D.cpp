@@ -367,11 +367,11 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
      }
 }
 
-int numJoints() {
+int Fabrik2D::numJoints() {
     return this->_numJoints;
 }
 
-Chain* getChain() {
+Fabrik2D::Chain* Fabrik2D::getChain() {
     return this->_chain;
 }
 
