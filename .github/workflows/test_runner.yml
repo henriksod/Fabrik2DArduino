@@ -40,7 +40,7 @@ jobs:
         fqbn:
           - "arduino:avr:uno"
           - "arduino:avr:mega"
-          - "arduino:sam:due"
+          - "arduino:sam:arduino_due_x_dbg"
     steps:
       - uses: actions/checkout@v2
       - uses: arduino/compile-sketches@v1
