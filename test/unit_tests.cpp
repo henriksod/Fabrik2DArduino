@@ -116,7 +116,7 @@ unittest(test_constructor)
 
 unittest(test_solve)
 {
-    uint8_t success = 0;
+    int success = 0;
     int lengths_3_joints[] = {200, 200};
     int lengths_4_joints[] = {200, 200, 200};
     
@@ -148,7 +148,7 @@ unittest(test_solve)
     
     // Solve 4 joints, 3DOF
     fprintf(stderr, "Solve 4 joints, 3DOF (tool angle)\n");
-    Fabrik2D fabrik2D_3_3DOF(3, lengths_4_joints, 10);
+    Fabrik2D fabrik2D_3_3DOF(4, lengths_4_joints, 10);
     success = fabrik2D_3_3DOF.solve(50, 50, -HALF_PI, lengths_4_joints);
     assertEqual(1, success);
     
@@ -160,7 +160,7 @@ unittest(test_solve)
     
     // Solve 4 joints, 3DOF (tool angle), Gripping offset
     fprintf(stderr, "Solve 4 joints, 3DOF, Gripping offset\n");
-    Fabrik2D fabrik2D_3_3DOF_GO(3, lengths_4_joints, 1);
+    Fabrik2D fabrik2D_3_3DOF_GO(4, lengths_4_joints, 1);
     success = fabrik2D_3_3DOF_GO.solve(50, 50, -HALF_PI, 10, lengths_4_joints);
     assertEqual(1, success);
     
