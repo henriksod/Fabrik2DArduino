@@ -32,8 +32,6 @@
 #define EPSILON_VALUE 0.001
 
 
-Fabrik2D::Fabrik2D() {}
-
 Fabrik2D::Fabrik2D(int numJoints, int lengths[], float tolerance) {
     begin(numJoints, lengths, tolerance);
 }

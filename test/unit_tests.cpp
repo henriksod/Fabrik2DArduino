@@ -87,7 +87,7 @@ unittest(test_constructor)
   Fabrik2D fabrik2D_4_tolerance_1(4, lengths_4_joints, 1);
   assertEqual(1, fabrik2D_4_tolerance_1.getTolerance());
   
-  Fabrik2D fabrik2D_3_begin_init();
+  Fabrik2D fabrik2D_3_begin_init;
   fabrik2D_3_begin_init.begin(3, lengths_3_joints);
   assertEqual(3, fabrik2D_3_begin_init.numJoints());
   assertEqual(10, fabrik2D_3_begin_init.getTolerance());

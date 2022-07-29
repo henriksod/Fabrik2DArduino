@@ -50,7 +50,7 @@ class Fabrik2D {
      *  
      *  Default constructor. Call begin(numJoints, lengths) to initialize
      */
-    Fabrik2D();
+    Fabrik2D() {};
 
     /* Fabrik2D(numJoints, lengths, tolerance)
      * inputs: numJoints, lengths, (optional) tolerance
