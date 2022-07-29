@@ -1,4 +1,4 @@
-# :zap: Fast Iterative Inverse Kinematics Solver for Arduino
+# Iterative Inverse Kinematics Solver for Arduino
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 ![C++](https://img.shields.io/badge/Langauge-C++-blue.svg)
@@ -21,6 +21,11 @@ The library is based on an iterative inverse kinematics algorithm called [FABRIK
 * You can also specify a desired angle for the end effector to approach the desired position, which allows picking up objects from different orientations.
 
 * Moreover, you can adjust the gripping offset to compensate for your chosen gripper or move towards objects from specific angles.
+
+<p align="center">
+  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/images/exec_evaluation.png" width="512" height="auto" />
+</p>
+
 
 Usage
 -----
@@ -116,7 +121,7 @@ All angles under 90 degrees will make the joint point down while all angles abov
 Here is an example of how a 4 DOF setup might look like:
 
 <p align="center">
-  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/setup/4DOFSetup.png" width="512" height="auto" />
+  <img src="https://github.com/henriksod/Fabrik2DArduino/blob/master/images/4DOFSetup.png" width="512" height="auto" />
 </p>
 
 

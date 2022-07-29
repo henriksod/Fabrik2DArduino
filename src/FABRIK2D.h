@@ -1,5 +1,5 @@
 /**********************************************************************************************
- * FABRIK 2D inverse kinematics solver - Version 1.0.5
+ * FABRIK 2D inverse kinematics solver - Version 1.0.6
  * by Henrik Söderlund <henrik.a.soderlund@gmail.com>
  *
  * Copyright (c) 2018 Henrik Söderlund
@@ -32,25 +32,60 @@
 
 class Fabrik2D {
  public:
-    /* Fabrik2D(numJoints, lengths)
-     * inputs: numJoints, lengths
-     *
-     * creates the chain to be used for the inverse kinematics solver
+    /* Fabrik2D()
+     *  
+     *  Default constructor. Call begin(numJoints, lengths) to initialize
      */
-    Fabrik2D(int numJoints, int* lengths);
+    Fabrik2D() {}
+
+    /* Fabrik2D(numJoints, lengths, tolerance)
+     * inputs: numJoints, lengths, (optional) tolerance
+     *
+     * Calls begin(numJoints, lengths, tolerance)
+     *
+     * tolerance is optional, will be set to 10 by default
+     */
+    Fabrik2D(int numJoints, int lengths[], float tolerance = 10);
+
+    /* Fabrik2D destructor */
+    ~Fabrik2D();
+
+    /*
+     * begin(numJoints, lengths, tolerance)
+     * inputs: numJoints, lengths, (optional) tolerance 
+     * 
+     * Initializes the library
+     * creates the chain to be used for the inverse kinematics solver
+     * 
+     * tolerance is optional, will be set to 10 by default
+     */
+     void begin(int numJoints, int lengths[], float tolerance = 10);
 
     /* solve(x, y, lengths)
-     * inputs: x and y positions of target, lengths between each joint
-     * outputs: True if solvable, false if not solvable
+     *  
+     * Inputs: x and y positions of target, lengths between each joint
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      *
      * solves the inverse kinematics of the stored chain to reach the target
+     * 
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      */
-    bool solve(float x, float y, int* lengths);
+    uint8_t solve(float x, float y, int lengths[]);
 
     /* solve(x, y, angle, lengths)
-     * inputs: x and y positions of target, desired tool angle and lengths
+     *  
+     * Inputs: x and y positions of target, desired tool angle and lengths
      *         between each joint
-     * outputs: True if solvable, false if not solvable
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      *
      * !!! tool angle is in radians !!!
      *
@@ -59,12 +94,16 @@ class Fabrik2D {
      *
      * will only work for 3DOF
      */
-    bool solve(float x, float y, float toolAngle, int* lengths);
+    uint8_t solve(float x, float y, float toolAngle, int lengths[]);
 
     /* solve(x, y, angle, offset, lengths)
-     * inputs: x and y positions of target, desired tool angle and lengths
+     *  
+     * Inputs: x and y positions of target, desired tool angle and lengths
      *         between each joint
-     * outputs: True if solvable, false if not solvable
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      *
      * !!! tool angle is in radians !!!
      *
@@ -74,16 +113,20 @@ class Fabrik2D {
      *
      * will only work for 3DOF
      */
-    bool solve(
+    uint8_t solve(
         float x, float y,
         float toolAngle,
         float grippingOffset,
-        int* lengths);
+        int lengths[]);
 
     /* solve2(x, y, z, lengths)
-     * inputs: x, y and z positions of target, desired tool angle and lengths
+     *  
+     * Inputs: x, y and z positions of target, desired tool angle and lengths
      *         between each joint
-     * outputs: True if solvable, false if not solvable
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      *
      * !!! tool angle is in radians !!!
      *
@@ -97,12 +140,16 @@ class Fabrik2D {
      *
      * will only work for 4DOF, i.e. 4 joints or more and a rotational base
      */
-    bool solve2(float x, float y, float z, int* lengths);
+    uint8_t solve2(float x, float y, float z, int lengths[]);
 
     /* solve2(x, y, z, toolAngle, lengths)
-     * inputs: x, y and z positions of target, desired tool angle and lengths
+     *  
+     * Inputs: x, y and z positions of target, desired tool angle and lengths
      *         between each joint
-     * outputs: True if solvable, false if not solvable
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      *
      * !!! tool angle is in radians !!!
      *
@@ -116,13 +163,18 @@ class Fabrik2D {
      * from the plane
      *
      * will only work for 4DOF, i.e. 4 joints or more and a rotational base
+     * 
      */
-    bool solve2(float x, float y, float z, float toolAngle, int* lengths);
+    uint8_t solve2(float x, float y, float z, float toolAngle, int lengths[]);
 
     /* solve2(x, y, z, angle, offset, lengths)
-     * inputs: x, y and z positions of target, desired tool angle, gripping
+     *  
+     * Inputs: x, y and z positions of target, desired tool angle, gripping
                offset and lengths between each joint
-     * outputs: True if solvable, false if not solvable
+     * Returns:
+     *  0 if FABRIK could not converge
+     *  1 if FABRIK converged to the set threshold
+     *  2 if FABRIK converged with a higher tolerance value
      *
      * !!! tool angle is in radians !!!
      *
@@ -137,11 +189,11 @@ class Fabrik2D {
      *
      * will only work for 4DOF, i.e. 4 joints or more and a rotational base
      */
-    bool solve2(
+    uint8_t solve2(
         float x, float y, float z,
         float toolAngle,
         float grippingOffset,
-        int* lengths);
+        int lengths[]);
 
     /* getX(joint)
      * inputs: joint number
@@ -155,10 +207,14 @@ class Fabrik2D {
      */
     float getY(int joint);
 
-    /* getZ()
+    /* getZ(joint)
+     * inputs: (optional) joint number
      * outputs: z offset of the chain from the plane
+     * 
+     * Passing the joint argument will not do anything.
+     * It is just there for consistency with getX and getY.
      */
-    float getZ();
+    float getZ(int joint = 0);
 
     /* getAngle(joint)
      * inputs: joint number
@@ -191,7 +247,7 @@ class Fabrik2D {
      * manually sets the joint angles and updates their position using
      * forward kinematics
      */
-    void setJoints(float* angles, int* lengths);
+    void setJoints(float angles[], int lengths[]);
 
  private:
     // Joint struct
@@ -203,24 +259,26 @@ class Fabrik2D {
 
     // Chain struct
     typedef struct {
-      Joint* joints;  // list of joints
+      Joint* joints = NULL;  // list of joints
       float z;  // z position defining the offset of the chain from the plane
       float angle;  // base (plane) rotation
     } Chain;
 
     // Number of joints in the chain
-    int numJoints;
+    int _numJoints;
     // Tolerance of distance between end effector and target
-    float tolerance;
+    float _tolerance;
     // The chain containing joints
-    Chain* chain;
+    Chain* _chain = NULL;
+    // Number of iterations to converge for last run (debugging only)
+    int _num_iterations = 0;
 
-    /* createChain(lengths)
+    /* _createChain(lengths)
      * inputs: lengths
      *
      * length size should always be one lesser than the number of joints
      */
-    void createChain(int* lengths);
+    void _createChain(int* lengths);
 
     /* distance(x1,y1,x2,y2)
      * inputs: coordinates
@@ -228,7 +286,7 @@ class Fabrik2D {
      *
      * Uses euclidean distance
      */
-    float distance(float x1, float y1, float x2, float y2);
+    float _distance(float x1, float y1, float x2, float y2);
 };
 
 #endif  // SRC_FABRIK2D_H_
