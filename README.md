@@ -139,5 +139,4 @@ It is recommended that you implement your own acceleration and velocity function
 Todo
 ------------
 * Implement templates for all methods with default type as single precision float. Make calculations work for arbitrary-precision integers and floating point numbers.
-* Add runtime performance stats, like memory and cpu usage, as well as solver speed at different precision levels.
 * Add support for 6 DOF with a perpendicular rotating joint between the elbow and the wrist joints. Hint: Divide the problem into two IK chains with a rotating "base".
