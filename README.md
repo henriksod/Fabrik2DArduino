@@ -3,7 +3,7 @@
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 ![C++](https://img.shields.io/badge/Langauge-C++-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
+[![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/test_runner.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/test_runner.yml)
 [![Spell Check](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml)
 
 A fast forward- and inverse kinematics solver for Arduino based on the FABRIK algorithm.
