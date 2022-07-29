@@ -33,7 +33,7 @@ jobs:
       - run: |
           g++ -v
           gem install arduino_ci
-          arduino_ci.rb
+          arduino_ci.rb --skip-examples-compilation
   compile:
     runs-on: ubuntu-latest
     strategy:
