@@ -89,7 +89,7 @@ unittest(test_constructor)
   // Test different tolerance
   Fabrik2D fabrik2D_4_tolerance_1(4, lengths_4_joints, 1);
   assertEqual(1, fabrik2D_4_tolerance_1.getTolerance());
-  fabrik2D_4_tolerance_1.setTolerance(20)
+  fabrik2D_4_tolerance_1.setTolerance(20);
   assertEqual(20, fabrik2D_4_tolerance_1.getTolerance());
   
   // Test begin
