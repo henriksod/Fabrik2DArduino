@@ -59,17 +59,6 @@ void Fabrik2D::_createChain(int lengths[]) {
     Chain* chain = new Chain();
     chain->joints = new Joint[this->_numJoints];
 
-    // If we already have a chain, deallocate it
-    if (this->_chain->joints) {
-        delete[] this->_chain->joints;
-        this->_chain->joints = NULL;
-    }
-
-    if (this->_chain) {
-        delete this->_chain;
-        this->_chain = NULL;
-    }
-
     this->_chain = chain;
 
     _resetChain(lengths);
