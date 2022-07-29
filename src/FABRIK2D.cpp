@@ -37,14 +37,14 @@ Fabrik2D::Fabrik2D(int numJoints, int lengths[], float tolerance) {
 }
 
 Fabrik2D::~Fabrik2D() {
-    if (_chain->joints) {
-        delete[] _chain->joints;
-        _chain->joints = NULL;
+    if (this->_chain->joints) {
+        delete[] this->_chain->joints;
+        this->_chain->joints = NULL;
     }
 
-    if (_chain) {
-        delete _chain;
-        _chain = NULL;
+    if (this->_chain) {
+        delete this->_chain;
+        this->_chain = NULL;
     }
 }
 
@@ -59,6 +59,23 @@ void Fabrik2D::_createChain(int lengths[]) {
     Chain* chain = new Chain();
     chain->joints = new Joint[this->_numJoints];
 
+    // If we already have a chain, deallocate it
+    if (this->_chain->joints) {
+        delete[] this->_chain->joints;
+        this->_chain->joints = NULL;
+    }
+
+    if (this->_chain) {
+        delete this->_chain;
+        this->_chain = NULL;
+    }
+    
+    this->_chain = chain;
+    
+    _resetChain(lengths);
+}
+
+void Fabrik2D::_resetChain(int lengths[]) {
     chain->joints[0].x = 0;
     chain->joints[0].y = 0;
     chain->joints[0].angle = 0;
@@ -70,8 +87,6 @@ void Fabrik2D::_createChain(int lengths[]) {
         chain->joints[i].y = sumLengths;
         chain->joints[i].angle = 0;
     }
-
-    this->_chain = chain;
 }
 
 uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
@@ -106,6 +121,7 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
                 (1-lambda_i)*jy + lambda_i*y);
         }
 
+       _resetChain(lengths);
        return 0;
     } else {
         // The target is reachable; this, set as (bx,by) the initial
@@ -131,8 +147,10 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
                 tolerance *= 1.1;
                 // If increased tolerance is higher than 2x the desired
                 // tolerance report failed to converge
-                if (tolerance > this->_tolerance*2)
+                if (tolerance > this->_tolerance*2) {
+                    _resetChain(lengths);
                     return 0;
+                }
             }
 
             prevDist = dist;

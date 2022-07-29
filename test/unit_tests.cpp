@@ -152,18 +152,18 @@ unittest(test_solve)
     fabrik2D_3_2DOF.setJoints(angles, lengths_3_joints);
     assertEqualFloat(100, fabrik2D_3_2DOF.getX(2), 1e-3);
     assertEqualFloat(100, fabrik2D_3_2DOF.getY(2), 1e-3);
-    
+
     // Test Solve Fail
     fprintf(stderr, "Test Solve Fail\n");
     success = fabrik2D_3_2DOF.solve(1000, 1000, lengths_3_joints);
     assertEqual(0, success);
-    
+
     // Test Solve too far away
     fprintf(stderr, "Test Solve too far away\n");
-    fabrik2D_3_2DOF.setTolerance(2);
-    success = fabrik2D_3_2DOF.solve(201, 201, lengths_3_joints);
+    fabrik2D_3_2DOF.setTolerance(1);
+    success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
     assertEqual(2, success);
-    
+
     // Solve 4 joints, 3DOF
     fprintf(stderr, "Solve 4 joints, 3DOF (tool angle)\n");
     Fabrik2D fabrik2D_3_3DOF(4, lengths_4_joints, 10);

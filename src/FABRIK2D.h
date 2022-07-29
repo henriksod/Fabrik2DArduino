@@ -289,9 +289,20 @@ class Fabrik2D {
     /* _createChain(lengths)
      * inputs: lengths
      *
+     * Creates a new chain and attaches it to the Farbik2D object
+     *
      * length size should always be one lesser than the number of joints
      */
     void _createChain(int* lengths);
+    
+    /* _resetChain(lengths)
+     * inputs: lengths
+     *
+     * Resets the chain to initial configuration
+     *
+     * length size should always be one lesser than the number of joints
+     */
+    _resetChain(int lengths[]);
 
     /* distance(x1,y1,x2,y2)
      * inputs: coordinates
