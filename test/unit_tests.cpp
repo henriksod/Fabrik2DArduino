@@ -128,7 +128,7 @@ unittest(test_solve)
     float s_phi = sqrt(1 - c_phi*c_phi);
     
     // Assign the angles for shoulder and elbow.
-    float a1 = atan2(oc[1], oc[0]) + atan2(
+    float a1 = atan2(100, 100) + atan2(
         lengths_3_joints[1]*s_phi,
         lengths_3_joints[0]+lengths_3_joints[1]*c_phi);
     float a2 = -atan2(s_phi, c_phi);
