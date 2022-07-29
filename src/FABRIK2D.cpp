@@ -375,7 +375,7 @@ void Fabrik2D::setTolerance(float tolerance) {
     this->_tolerance = tolerance;
 }
 
-void Fabrik2D::setJoints(float angles[], int lengths[]) { (a1, a2) (l1, l2)
+void Fabrik2D::setJoints(float angles[], int lengths[]) {
     float accAng = angles[0];
     float accX = 0;
     float accY = 0;
