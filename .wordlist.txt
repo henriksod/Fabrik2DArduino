@@ -40,3 +40,5 @@ runtime
 destructor
 getTolerance
 resetChain
+deleteChain
+Deallocates

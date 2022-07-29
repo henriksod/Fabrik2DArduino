@@ -303,7 +303,7 @@ class Fabrik2D {
      * length size should always be one lesser than the number of joints
      */
     void _resetChain(int lengths[]);
-    
+
     /* _deleteChain()
      *
      * Deallocates _chain from memory
