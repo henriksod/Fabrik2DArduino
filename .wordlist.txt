@@ -39,3 +39,4 @@ cpu
 runtime
 destructor
 getTolerance
+resetChain

@@ -76,16 +76,16 @@ void Fabrik2D::_createChain(int lengths[]) {
 }
 
 void Fabrik2D::_resetChain(int lengths[]) {
-    chain->joints[0].x = 0;
-    chain->joints[0].y = 0;
-    chain->joints[0].angle = 0;
+    this->_chain->joints[0].x = 0;
+    this->_chain->joints[0].y = 0;
+    this->_chain->joints[0].angle = 0;
 
     int sumLengths = 0;
     for (int i = 1; i < this->_numJoints; i++) {
         sumLengths = sumLengths + lengths[i-1];
-        chain->joints[i].x = 0;
-        chain->joints[i].y = sumLengths;
-        chain->joints[i].angle = 0;
+        this->_chain->joints[i].x = 0;
+        this->_chain->joints[i].y = sumLengths;
+        this->_chain->joints[i].angle = 0;
     }
 }
 

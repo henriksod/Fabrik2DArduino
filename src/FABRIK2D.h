@@ -289,7 +289,7 @@ class Fabrik2D {
     /* _createChain(lengths)
      * inputs: lengths
      *
-     * Creates a new chain and attaches it to the Farbik2D object
+     * Creates a new chain and attaches it to the Fabrik2D object
      *
      * length size should always be one lesser than the number of joints
      */
