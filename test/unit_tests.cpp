@@ -160,7 +160,7 @@ unittest(test_solve)
     
     // Test Solve too far away
     fprintf(stderr, "Test Solve too far away\n");
-    fabrik2D_3_2DOF.setTolerance(1);
+    fabrik2D_3_2DOF.setTolerance(2);
     success = fabrik2D_3_2DOF.solve(201, 201, lengths_3_joints);
     assertEqual(2, success);
     

@@ -357,14 +357,14 @@ void Fabrik2D::setBaseAngle(float baseAngle) {
     this->_chain->angle = baseAngle;
 
     if (this->_numJoints >= 4) {
+        // Update end effector Z value based on base rotation
+        this->_chain->z =
+            this->_chain->joints[this->_numJoints-1].x * sin(angle_diff);
         // Update joint X values based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
             this->_chain->joints[i].x =
                 this->_chain->joints[i].x * cos(angle_diff);
         }
-        // Update end effector Z value based on base rotation
-        this->_chain->z =
-            this->_chain->joints[this->_numJoints-1].x * sin(angle_diff);
     }
 }
 
