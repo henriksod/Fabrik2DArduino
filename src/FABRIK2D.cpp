@@ -382,10 +382,10 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
     this->_chain->joints[0].angle = angles[0];
 
     for (int i = 1; i < this->_numJoints-1; i++) {
-        accAng += angles[i];
         this->_chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
         this->_chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
         this->_chain->joints[i].angle = angles[i];
+        accAng += angles[i];
         accX = this->_chain->joints[i].x;
         accY = this->_chain->joints[i].y;
     }
