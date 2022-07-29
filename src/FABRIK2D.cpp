@@ -38,7 +38,7 @@ Fabrik2D::Fabrik2D(int numJoints, int lengths[], float tolerance) {
 
 Fabrik2D::~Fabrik2D() {
     if (_chain->joints) {
-        delete _chain->joints;
+        delete[] _chain->joints;
         _chain->joints = NULL;
     }
 
