@@ -32,6 +32,20 @@
 
 class Fabrik2D {
  public:
+    // Joint struct
+    typedef struct {
+        float x = 0;  // x position of joint relative to origin
+        float y = 0;  // y position of joint relative to origin
+        float angle = 0;  // angle of joint
+    } Joint;
+
+    // Chain struct
+    typedef struct {
+      Joint* joints = NULL;  // list of joints
+      float z = 0;  // z position defining the offset of the chain from the plane
+      float angle = 0;  // base (plane) rotation
+    } Chain;
+ 
     /* Fabrik2D()
      *  
      *  Default constructor. Call begin(numJoints, lengths) to initialize
@@ -261,20 +275,6 @@ class Fabrik2D {
     Chain* getChain();
 
  private:
-    // Joint struct
-    typedef struct {
-        float x = 0;  // x position of joint relative to origin
-        float y = 0;  // y position of joint relative to origin
-        float angle = 0;  // angle of joint
-    } Joint;
-
-    // Chain struct
-    typedef struct {
-      Joint* joints = NULL;  // list of joints
-      float z = 0;  // z position defining the offset of the chain from the plane
-      float angle = 0;  // base (plane) rotation
-    } Chain;
-
     // Number of joints in the chain
     int _numJoints;
     // Tolerance of distance between end effector and target
