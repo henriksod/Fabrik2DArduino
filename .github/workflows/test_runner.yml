@@ -31,6 +31,7 @@ jobs:
         with:
           ruby-version: 2.6
       - run: |
+          g++ -v
           gem install arduino_ci
           arduino_ci.rb
   compile:
