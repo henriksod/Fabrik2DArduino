@@ -148,27 +148,27 @@ unittest(test_solve)
     
     // Solve 3 joints, 3DOF
     fprintf(stderr, "Solve 3 joints, 3DOF\n");
-    Fabrik2D fabrik2D_3_3DOF(3, lengths_3_joints, 1);
-    success = fabrik2D_3_3DOF.solve(100, 0, -HALF_PI, lengths_3_joints);
+    Fabrik2D fabrik2D_3_3DOF(3, lengths_3_joints, 10);
+    success = fabrik2D_3_3DOF.solve(341, 141, 0, lengths_3_joints);
     assertEqual(1, success);
     
-    assertEqualFloat(100, fabrik2D_3_3DOF.getX(3), fabrik2D_3_3DOF.getTolerance());
-    assertEqualFloat(0, fabrik2D_3_3DOF.getY(3), fabrik2D_3_3DOF.getTolerance());
+    assertEqualFloat(341, fabrik2D_3_3DOF.getX(3), fabrik2D_3_3DOF.getTolerance());
+    assertEqualFloat(141, fabrik2D_3_3DOF.getY(3), fabrik2D_3_3DOF.getTolerance());
     
-    assertEqualFloat(100, fabrik2D_3_3DOF.getX(2), fabrik2D_3_3DOF.getTolerance());
-    assertEqualFloat(200, fabrik2D_3_3DOF.getY(2), fabrik2D_3_3DOF.getTolerance());
+    assertEqualFloat(141, fabrik2D_3_3DOF.getX(2), fabrik2D_3_3DOF.getTolerance());
+    assertEqualFloat(141, fabrik2D_3_3DOF.getY(2), fabrik2D_3_3DOF.getTolerance());
     
     // Solve 3 joints, 3DOF, Gripping offset
     fprintf(stderr, "Solve 3 joints, 3DOF, Gripping offset\n");
     Fabrik2D fabrik2D_3_3DOF_GO(3, lengths_3_joints, 1);
-    success = fabrik2D_3_3DOF_GO.solve(100, 0, -HALF_PI, 10, lengths_3_joints);
+    success = fabrik2D_3_3DOF_GO.solve(150, 50, -HALF_PI, 10, lengths_3_joints);
     assertEqual(1, success);
     
-    assertEqualFloat(100, fabrik2D_3_3DOF_GO.getX(3), fabrik2D_3_3DOF_GO.getTolerance());
-    assertEqualFloat(10, fabrik2D_3_3DOF_GO.getY(3), fabrik2D_3_3DOF_GO.getTolerance());
+    assertEqualFloat(150, fabrik2D_3_3DOF_GO.getX(3), fabrik2D_3_3DOF_GO.getTolerance());
+    assertEqualFloat(60, fabrik2D_3_3DOF_GO.getY(3), fabrik2D_3_3DOF_GO.getTolerance());
     
-    assertEqualFloat(100, fabrik2D_3_3DOF_GO.getX(2), fabrik2D_3_3DOF_GO.getTolerance());
-    assertEqualFloat(210, fabrik2D_3_3DOF_GO.getY(2), fabrik2D_3_3DOF_GO.getTolerance());
+    assertEqualFloat(150, fabrik2D_3_3DOF_GO.getX(2), fabrik2D_3_3DOF_GO.getTolerance());
+    assertEqualFloat(260, fabrik2D_3_3DOF_GO.getY(2), fabrik2D_3_3DOF_GO.getTolerance());
     
     // Solve 4 joints, 3DOF
     fprintf(stderr, "Solve 4 joints, 3DOF\n");
@@ -187,28 +187,28 @@ unittest(test_solve)
     // Solve 4 joints, 4DOF
     fprintf(stderr, "Solve 4 joints, 4DOF\n");
     Fabrik2D fabrik2D_4_4DOF(4, lengths_4_joints, 1);
-    success = fabrik2D_4_4DOF.solve2(100, 0, 100, -HALF_PI, lengths_4_joints);
+    success = fabrik2D_4_4DOF.solve2(150, 50, 100, -HALF_PI, lengths_4_joints);
     assertEqual(1, success);
     
-    assertEqualFloat(100, fabrik2D_4_4DOF.getX(3), fabrik2D_4_4DOF.getTolerance());
-    assertEqualFloat(0, fabrik2D_4_4DOF.getY(3), fabrik2D_4_4DOF.getTolerance());
+    assertEqualFloat(150, fabrik2D_4_4DOF.getX(3), fabrik2D_4_4DOF.getTolerance());
+    assertEqualFloat(50, fabrik2D_4_4DOF.getY(3), fabrik2D_4_4DOF.getTolerance());
     assertEqualFloat(100, fabrik2D_4_4DOF.getZ(3), fabrik2D_4_4DOF.getTolerance());
     
-    assertEqualFloat(100, fabrik2D_4_4DOF.getX(2), fabrik2D_4_4DOF.getTolerance());
-    assertEqualFloat(200, fabrik2D_4_4DOF.getY(2), fabrik2D_4_4DOF.getTolerance());
+    assertEqualFloat(150, fabrik2D_4_4DOF.getX(2), fabrik2D_4_4DOF.getTolerance());
+    assertEqualFloat(250, fabrik2D_4_4DOF.getY(2), fabrik2D_4_4DOF.getTolerance());
     
     // Solve 4 joints, 4DOF, Gripping offset
     fprintf(stderr, "Solve 4 joints, 4DOF, Gripping offset\n");
     Fabrik2D fabrik2D_4_4DOF_GO(4, lengths_4_joints, 1);
-    success = fabrik2D_4_4DOF_GO.solve(100, 0, -HALF_PI, 10, lengths_4_joints);
+    success = fabrik2D_4_4DOF_GO.solve(150, 50, -HALF_PI, 10, lengths_4_joints);
     assertEqual(1, success);
     
-    assertEqualFloat(100, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
-    assertEqualFloat(10, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());
+    assertEqualFloat(150, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
+    assertEqualFloat(60, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());
     assertEqualFloat(100, fabrik2D_4_4DOF_GO.getZ(3), fabrik2D_4_4DOF_GO.getTolerance());
     
-    assertEqualFloat(100, fabrik2D_4_4DOF_GO.getX(2), fabrik2D_4_4DOF_GO.getTolerance());
-    assertEqualFloat(210, fabrik2D_4_4DOF_GO.getY(2), fabrik2D_4_4DOF_GO.getTolerance());
+    assertEqualFloat(150, fabrik2D_4_4DOF_GO.getX(2), fabrik2D_4_4DOF_GO.getTolerance());
+    assertEqualFloat(260, fabrik2D_4_4DOF_GO.getY(2), fabrik2D_4_4DOF_GO.getTolerance());
 }
 
 
