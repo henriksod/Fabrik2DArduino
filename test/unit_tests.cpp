@@ -158,10 +158,10 @@ unittest(test_solve)
     success = fabrik2D_3_2DOF.solve(1000, 1000, lengths_3_joints);
     assertEqual(0, success);
     
-    // Test Solve Too Low Tolerance
-    fprintf(stderr, "Test Solve Too Low Tolerance\n");
-    fabrik2D_3_2DOF.setTolerance(0.01);
-    success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
+    // Test Solve too far away
+    fprintf(stderr, "Test Solve too far away\n");
+    fabrik2D_3_2DOF.setTolerance(1);
+    success = fabrik2D_3_2DOF.solve(201, 201, lengths_3_joints);
     assertEqual(2, success);
     
     // Solve 4 joints, 3DOF
