@@ -386,8 +386,8 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
         this->_chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
         this->_chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
         this->_chain->joints[i].angle = angles[i];
-        accX += this->_chain->joints[i].x;
-        accY += this->_chain->joints[i].y;
+        accX = this->_chain->joints[i].x;
+        accY = this->_chain->joints[i].y;
     }
 
     // Update end effector x and y
