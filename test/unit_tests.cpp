@@ -200,7 +200,7 @@ unittest(test_solve)
     // Solve 4 joints, 4DOF, Gripping offset
     fprintf(stderr, "Solve 4 joints, 4DOF, Gripping offset\n");
     Fabrik2D fabrik2D_4_4DOF_GO(4, lengths_4_joints, 1);
-    success = fabrik2D_4_4DOF_GO.solve(150, 50, -HALF_PI, 10, lengths_4_joints);
+    success = fabrik2D_4_4DOF_GO.solve(150, 50, 100, -HALF_PI, 10, lengths_4_joints);
     assertEqual(1, success);
     
     assertEqualFloat(150, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());

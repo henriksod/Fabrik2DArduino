@@ -220,7 +220,7 @@ uint8_t Fabrik2D::solve2(
     if (this->_numJoints >= 4) {
         // Solve in 2D plane
         float r = _distance(0, 0, x, z);
-        
+
         // Find wrist center by moving from the desired position with
         // tool angle and link length
         float oc_r = r - (
@@ -272,7 +272,7 @@ uint8_t Fabrik2D::solve2(
             // Save base angle
             this->_chain->z = z;
             this->_chain->angle = atan2(z, x);
-            
+
             // Update joint X values based on base rotation
             for (int i = 0; i <= this->_numJoints-1; i++) {
                 this->_chain->joints[i].x =
@@ -304,7 +304,7 @@ uint8_t Fabrik2D::solve2(float x, float y, float z, int lengths[]) {
     if (result_status == 1) {
         this->_chain->z = z;
         this->_chain->angle = atan2(z, x);
-        
+
         // Update joint X values based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
             this->_chain->joints[i].x =
