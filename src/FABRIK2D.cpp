@@ -37,12 +37,12 @@ Fabrik2D::Fabrik2D(int numJoints, int lengths[], float tolerance) {
 }
 
 Fabrik2D::~Fabrik2D() {
-    if (this->_chain->joints) {
+    if (this->_chain->joints != NULL) {
         delete[] this->_chain->joints;
         this->_chain->joints = NULL;
     }
 
-    if (this->_chain) {
+    if (this->_chain != NULL) {
         delete this->_chain;
         this->_chain = NULL;
     }
@@ -58,6 +58,17 @@ void Fabrik2D::begin(int numJoints, int lengths[], float tolerance) {
 void Fabrik2D::_createChain(int lengths[]) {
     Chain* chain = new Chain();
     chain->joints = new Joint[this->_numJoints];
+
+    // If we already have a chain, deallocate it
+    if (this->_chain->joints != NULL) {
+        delete[] this->_chain->joints;
+        this->_chain->joints = NULL;
+    }
+
+    if (this->_chain != NULL) {
+        delete this->_chain;
+        this->_chain = NULL;
+    }
 
     this->_chain = chain;
 

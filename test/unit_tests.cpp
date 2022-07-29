@@ -158,9 +158,9 @@ unittest(test_solve)
     success = fabrik2D_3_2DOF.solve(1000, 1000, lengths_3_joints);
     assertEqual(0, success);
 
-    // Test Solve too far away
-    fprintf(stderr, "Test Solve too far away\n");
-    fabrik2D_3_2DOF.setTolerance(1);
+    // Test Solve tolerance too low
+    fprintf(stderr, "Test Solve tolerance too low\n");
+    fabrik2D_3_2DOF.setTolerance(0.01);
     success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
     assertEqual(2, success);
 
