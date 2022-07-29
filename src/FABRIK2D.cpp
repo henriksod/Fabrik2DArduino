@@ -218,9 +218,12 @@ uint8_t Fabrik2D::solve2(
     uint8_t result_status = 0;
 
     if (this->_numJoints >= 4) {
+        // Solve in 2D plane
+        float r = _distance(0, 0, x, z);
+        
         // Find wrist center by moving from the desired position with
         // tool angle and link length
-        float oc_x = x - (
+        float oc_r = r - (
             lengths[this->_numJoints-2]+grippingOffset)*cos(toolAngle);
 
         float oc_y = y - (
@@ -230,7 +233,7 @@ uint8_t Fabrik2D::solve2(
         int tmp = this->_numJoints;
         this->_numJoints = this->_numJoints-1;
 
-        result_status = solve(oc_x, oc_y, lengths);
+        result_status = solve(oc_r, oc_y, lengths);
 
         this->_numJoints = tmp;
 
@@ -266,10 +269,14 @@ uint8_t Fabrik2D::solve2(
             // Save tool angle
             this->_chain->joints[this->_numJoints-1].angle = toolAngle;
 
-            // Save base angle (if z different from zero)
-            if (z != 0) {
-                this->_chain->z = z;
-                this->_chain->angle = atan2(z, x);
+            // Save base angle
+            this->_chain->z = z;
+            this->_chain->angle = atan2(z, x);
+            
+            // Update joint X values based on base rotation
+            for (int i = 0; i <= this->_numJoints-1; i++) {
+                this->_chain->joints[i].x =
+                    this->_chain->joints[i].x * cos(-this->_chain->angle);
             }
         }
     }
@@ -297,6 +304,12 @@ uint8_t Fabrik2D::solve2(float x, float y, float z, int lengths[]) {
     if (result_status == 1) {
         this->_chain->z = z;
         this->_chain->angle = atan2(z, x);
+        
+        // Update joint X values based on base rotation
+        for (int i = 0; i <= this->_numJoints-1; i++) {
+            this->_chain->joints[i].x =
+                this->_chain->joints[i].x * cos(-this->_chain->angle);
+        }
     }
 
     return result_status;
