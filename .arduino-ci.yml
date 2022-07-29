@@ -1,0 +1,5 @@
+unittest:
+  platforms:
+    - uno
+    - mega2560
+    - due

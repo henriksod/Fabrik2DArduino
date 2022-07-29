@@ -31,6 +31,7 @@
 // Defined epsilon value which is considered as 0
 #define EPSILON_VALUE 0.001
 
+
 Fabrik2D::Fabrik2D(int numJoints, int lengths[], float tolerance) {
     begin(numJoints, lengths, tolerance);
 }
@@ -342,6 +343,10 @@ void Fabrik2D::setBaseAngle(float baseAngle) {
     this->_chain->angle = baseAngle;
 }
 
+float Fabrik2D::getTolerance() {
+    return this->_tolerance
+}
+
 void Fabrik2D::setTolerance(float tolerance) {
     this->_tolerance = tolerance;
 }
@@ -360,6 +365,14 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
          accX = this->_chain->joints[i].x;
          accY = this->_chain->joints[i].y;
      }
+}
+
+int numJoints() {
+    return this->_numJoints;
+}
+
+Chain* getChain() {
+    return this->_chain;
 }
 
 float Fabrik2D::_distance(float x1, float y1, float x2, float y2) {
