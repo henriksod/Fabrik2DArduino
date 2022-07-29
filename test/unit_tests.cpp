@@ -160,7 +160,7 @@ unittest(test_solve)
 
     // Test Solve tolerance too low
     fprintf(stderr, "Test Solve tolerance too low\n");
-    fabrik2D_3_2DOF.setTolerance(0.01);
+    fabrik2D_3_2DOF.setTolerance(0.001);
     success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
     assertEqual(2, success);
 
