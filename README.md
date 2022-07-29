@@ -3,7 +3,7 @@
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Fabrik2D.svg?)](https://www.ardu-badge.com/Fabrik2D)
 ![C++](https://img.shields.io/badge/Langauge-C++-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/compile_benchmark.yml)
+[![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/test_runner.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/test_runner.yml)
 [![Spell Check](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml)
 
 A fast forward- and inverse kinematics solver for Arduino based on the FABRIK algorithm.
@@ -139,5 +139,4 @@ It is recommended that you implement your own acceleration and velocity function
 Todo
 ------------
 * Implement templates for all methods with default type as single precision float. Make calculations work for arbitrary-precision integers and floating point numbers.
-* Add runtime performance stats, like memory and cpu usage, as well as solver speed at different precision levels.
-* Add support for 6 DOF with a perpendicular rotating joint between the elbow and the wrist joints. Hint: Divide the problem into two IK chains with a rotating "base".
+* Add support for 6 DOF with a perpendicular rotating joint between the elbow and the wrist joints. Hint: Divide the problem into two IK chains with a rotating "base". In essence, attach a Fabrik2D object onto another Fabrik2D object.

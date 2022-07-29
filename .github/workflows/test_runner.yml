@@ -19,10 +19,21 @@ jobs:
   cpplint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
     - run: pip install cpplint
     - run: cpplint --recursive ./src
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - run: |
+          g++ -v
+          gem install arduino_ci
+          arduino_ci.rb --skip-examples-compilation
   compile:
     runs-on: ubuntu-latest
     strategy:
