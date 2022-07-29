@@ -160,7 +160,7 @@ unittest(test_solve)
     
     // Test Solve Too Low Tolerance
     fprintf(stderr, "Test Solve Too Low Tolerance\n");
-    fabrik2D_3_2DOF.setTolerance(0.0001);
+    fabrik2D_3_2DOF.setTolerance(0.01);
     success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
     assertEqual(2, success);
     
@@ -230,6 +230,7 @@ unittest(test_solve)
     
     // Test Set Base Angle
     fprintf(stderr, "Test Set Base Angle\n");
+    fprintf(stderr, "Test Set Base Angle %f\n", HALF_PI - this->_chain->angle);
     fabrik2D_4_4DOF_GO.setBaseAngle(HALF_PI);
     assertEqualFloat(0, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
     assertEqualFloat(60, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());
@@ -251,8 +252,8 @@ unittest(test_getters_setters)
     assertEqual(0, fabrik2D.getZ());
     assertEqual(0, fabrik2D.getAngle(0));
     assertEqual(0, fabrik2D.getAngle(1));
-    assertEqual(200, fabrik2D.getY(0));
-    assertEqual(400, fabrik2D.getY(1));
+    assertEqual(200, fabrik2D.getY(1));
+    assertEqual(400, fabrik2D.getY(2));
     assertEqual(0, fabrik2D.getX(0));
     assertEqual(0, fabrik2D.getX(1));
 }
