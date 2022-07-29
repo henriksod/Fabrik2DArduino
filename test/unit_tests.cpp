@@ -148,9 +148,21 @@ unittest(test_solve)
     
     // Test Set Joints
     float angles[] = {a1, a2};
+    fprintf(stderr, "Test Set Joints\n");
     fabrik2D_3_2DOF.setJoints(angles, lengths_3_joints);
     assertEqualFloat(100, fabrik2D_3_2DOF.getX(2), 1e-3);
     assertEqualFloat(100, fabrik2D_3_2DOF.getY(2), 1e-3);
+    
+    // Test Solve Fail
+    fprintf(stderr, "Test Solve Fail\n");
+    success = fabrik2D_3_2DOF.solve(1000, 1000, lengths_3_joints);
+    assertEqual(0, success);
+    
+    // Test Solve Too Low Tolerance
+    fprintf(stderr, "Test Solve Too Low Tolerance\n");
+    fabrik2D_3_2DOF.setTolerance(0.0001);
+    success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
+    assertEqual(2, success);
     
     // Solve 4 joints, 3DOF
     fprintf(stderr, "Solve 4 joints, 3DOF (tool angle)\n");
@@ -234,7 +246,7 @@ unittest(test_getters_setters)
     assertEqual(20, fabrik2D.getTolerance());
     
     fabrik2D.setBaseAngle(HALF_PI);
-    assertEqual(HALF_PI, fabrik2D.getBaseAngle());
+    assertEqualFloat(HALF_PI, fabrik2D.getBaseAngle(), 1e-3);
     
     assertEqual(0, fabrik2D.getZ());
     assertEqual(0, fabrik2D.getAngle(0));
