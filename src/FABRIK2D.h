@@ -303,6 +303,13 @@ class Fabrik2D {
      * length size should always be one lesser than the number of joints
      */
     void _resetChain(int lengths[]);
+    
+    /* _deleteChain()
+     *
+     * Deallocates _chain from memory
+     *
+     */
+    void _deleteChain();
 
     /* distance(x1,y1,x2,y2)
      * inputs: coordinates
