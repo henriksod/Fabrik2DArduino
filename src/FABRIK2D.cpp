@@ -69,9 +69,9 @@ void Fabrik2D::_createChain(int lengths[]) {
         delete this->_chain;
         this->_chain = NULL;
     }
-    
+
     this->_chain = chain;
-    
+
     _resetChain(lengths);
 }
 
