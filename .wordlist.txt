@@ -38,3 +38,4 @@ Todo
 cpu
 runtime
 destructor
+getTolerance

@@ -42,10 +42,10 @@ class Fabrik2D {
     // Chain struct
     typedef struct {
       Joint* joints = NULL;  // list of joints
-      float z = 0;  // z position defining the offset of the chain from the plane
+      float z = 0;  // z position defining the chain offset from the plane
       float angle = 0;  // base (plane) rotation
     } Chain;
- 
+
     /* Fabrik2D()
      *  
      *  Default constructor. Call begin(numJoints, lengths) to initialize
@@ -245,7 +245,7 @@ class Fabrik2D {
      * inputs: base angle (radians) of chain to set
      */
     void setBaseAngle(float baseAngle);
-    
+
     /* getTolerance()
      * outputs: end effector tolerance of chain
      */
@@ -267,10 +267,10 @@ class Fabrik2D {
      * forward kinematics
      */
     void setJoints(float angles[], int lengths[]);
-    
+
     // Gets the number of joints of the chain
     int numJoints();
-    
+
     // Gets the IK chain object
     Chain* getChain();
 

@@ -344,7 +344,7 @@ void Fabrik2D::setBaseAngle(float baseAngle) {
 }
 
 float Fabrik2D::getTolerance() {
-    return this->_tolerance
+    return this->_tolerance;
 }
 
 void Fabrik2D::setTolerance(float tolerance) {
