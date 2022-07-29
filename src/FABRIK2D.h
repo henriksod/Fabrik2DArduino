@@ -41,7 +41,7 @@ class Fabrik2D {
 
     // Chain struct
     typedef struct {
-      Joint* joints = NULL;  // list of joints
+      Joint* joints = nullptr;  // list of joints
       float z = 0;  // z position defining the chain offset from the plane
       float angle = 0;  // base (plane) rotation
     } Chain;
@@ -260,8 +260,10 @@ class Fabrik2D {
     void setTolerance(float tolerance);
 
     /* setJoints(angles, lengths)
-     * inputs: New joint angles(in radians) and list of lengths
+     * inputs: New joint angles (in radians) and list of lengths
      *         between each joint
+     *
+     * Angles must be equal to the number of joints - 1
      * 
      * manually sets the joint angles and updates their position using
      * forward kinematics
@@ -280,16 +282,34 @@ class Fabrik2D {
     // Tolerance of distance between end effector and target
     float _tolerance;
     // The chain containing joints
-    Chain* _chain = NULL;
+    Chain* _chain = nullptr;
     // Number of iterations to converge for last run (debugging only)
     int _num_iterations = 0;
 
     /* _createChain(lengths)
      * inputs: lengths
      *
+     * Creates a new chain and attaches it to the Fabrik2D object
+     *
      * length size should always be one lesser than the number of joints
      */
     void _createChain(int* lengths);
+
+    /* _resetChain(lengths)
+     * inputs: lengths
+     *
+     * Resets the chain to initial configuration
+     *
+     * length size should always be one lesser than the number of joints
+     */
+    void _resetChain(int lengths[]);
+
+    /* _deleteChain()
+     *
+     * Deallocates _chain from memory
+     *
+     */
+    void _deleteChain();
 
     /* distance(x1,y1,x2,y2)
      * inputs: coordinates

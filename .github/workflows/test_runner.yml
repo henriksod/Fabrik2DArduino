@@ -39,7 +39,8 @@ jobs:
       matrix:
         fqbn:
           - "arduino:avr:uno"
-          - "arduino:samd:mkrzero"
+          - "arduino:avr:mega"
+          - "arduino:sam:arduino_due_x_dbg"
     steps:
       - uses: actions/checkout@v2
       - uses: arduino/compile-sketches@v1
