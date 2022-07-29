@@ -278,7 +278,7 @@ uint8_t Fabrik2D::solve2(
 }
 
 uint8_t Fabrik2D::solve(float x, float y, float toolAngle, int lengths[]) {
-    return 0; // Makes no sense to solve this, remove in the future
+    return solve2(x, y, 0, toolAngle, 0, lengths);
 }
 
 uint8_t Fabrik2D::solve(
@@ -287,7 +287,7 @@ uint8_t Fabrik2D::solve(
     float grippingOffset,
     int lengths[]
 ) {
-    return 0; // Makes no sense to solve this, remove in the future
+    return solve2(x, y, 0, toolAngle, grippingOffset, lengths);
 }
 
 uint8_t Fabrik2D::solve2(float x, float y, float z, int lengths[]) {
