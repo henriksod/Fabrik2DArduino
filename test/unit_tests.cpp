@@ -230,7 +230,7 @@ unittest(test_solve)
     
     // Test Set Base Angle
     fprintf(stderr, "Test Set Base Angle\n");
-    fprintf(stderr, "Test Set Base Angle %f\n", HALF_PI - this->_chain->angle);
+    fprintf(stderr, "Test Set Base Angle %f\n", HALF_PI - fabrik2D_4_4DOF_GO.getChain()->angle);
     fabrik2D_4_4DOF_GO.setBaseAngle(HALF_PI);
     assertEqualFloat(0, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
     assertEqualFloat(60, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());
