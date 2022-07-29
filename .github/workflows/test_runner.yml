@@ -39,7 +39,7 @@ jobs:
       matrix:
         fqbn:
           - "arduino:avr:uno"
-          - "arduino:avr:atmega2560"
+          - "arduino:avr:mega"
           - "arduino:samd:due"
     steps:
       - uses: actions/checkout@v2
