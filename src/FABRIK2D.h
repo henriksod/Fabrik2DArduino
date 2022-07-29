@@ -41,7 +41,7 @@ class Fabrik2D {
 
     // Chain struct
     typedef struct {
-      Joint* joints = NULL;  // list of joints
+      Joint* joints = nullptr;  // list of joints
       float z = 0;  // z position defining the chain offset from the plane
       float angle = 0;  // base (plane) rotation
     } Chain;
@@ -282,7 +282,7 @@ class Fabrik2D {
     // Tolerance of distance between end effector and target
     float _tolerance;
     // The chain containing joints
-    Chain* _chain = NULL;
+    Chain* _chain = nullptr;
     // Number of iterations to converge for last run (debugging only)
     int _num_iterations = 0;
 
