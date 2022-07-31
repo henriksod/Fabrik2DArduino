@@ -122,7 +122,7 @@ class VectorInt16 {
         cv.x = v.y * this->z - v.z * this->y;
         cv.y = -(v.x * this->z - v.z * this->x);
         cv.z = v.x * this->y - v.y * this->x;
-        
+
         return cv
     }
 
