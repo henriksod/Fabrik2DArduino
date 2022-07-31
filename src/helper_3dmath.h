@@ -159,7 +159,7 @@ class VectorInt16 {
     }
 
     // Gets the quaternion from vector v to this vector
-    Quaternion getRotationFrom(VectorInt16 *v) const {
+    Quaternion getRotationFrom(const VectorInt16& v) const {
         VectorInt16 a = this->crossProduct(v);
 
         float fromLength = v->getMagnitude();
