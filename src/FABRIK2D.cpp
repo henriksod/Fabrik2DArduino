@@ -26,7 +26,7 @@
 
 
 #include "FABRIK2D.h"
-#include "src/helper_3dmath.h"
+#include "helper_3dmath.h"  // NOLINT
 
 // Defined epsilon value which is considered as 0
 #define EPSILON_VALUE 0.001
