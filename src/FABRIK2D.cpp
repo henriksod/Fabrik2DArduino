@@ -67,7 +67,6 @@ void Fabrik2D<T>::_createChain(int lengths[]) {
 }
 
 void Fabrik2D<T>::_resetChain(int lengths[]) {
-
     *(this->_chain->p) = T();
     *(this->_chain->q) = Quaternion();
 
@@ -433,7 +432,7 @@ void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
 
     for (int i = 1; i < this->_numJoints-1; i++) {
         Quaternion q(angles[i], 0, 0, 1);
-        
+
         *this->_chain->joints[i]->q = q;
     }
 

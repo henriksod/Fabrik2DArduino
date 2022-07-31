@@ -29,7 +29,7 @@
 #define SRC_FABRIK2D_H_
 
 #include "Arduino.h"
-#include "helper_3dmath.h"
+#include "src/helper_3dmath.h"
 
 template<typename T = VectorFloat>
 class Fabrik2D {
@@ -291,7 +291,7 @@ class Fabrik2D {
     Chain* _chain = nullptr;
     // Number of iterations to converge for last run (debugging only)
     int _num_iterations = 0;
-    
+
     T _origin();
 
     /* _createChain(lengths)
