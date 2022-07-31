@@ -282,7 +282,7 @@ uint8_t Fabrik2D<T>::solve2(
         int tmp = this->_numJoints;
         this->_numJoints = this->_numJoints-1;
 
-        result_status = solve(oc_r, oc_y, lengths);
+        result_status = solve(oc.x, oc.y, lengths);
 
         this->_numJoints = tmp;
 
@@ -399,10 +399,10 @@ template<typename T>
 float Fabrik2D<T>::getAngle(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
       Quaternion q = *(this->_chain->joints[joint].q);
-      return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q -> w.2*q.z*q.z - 1);
+      return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q.w.2*q.z*q.z - 1);
   }
   Quaternion q = *(this->_chain->joints[this->_numJoints-1].q);
-  return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q -> w.2*q.z*q.z - 1);
+  return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q.w.2*q.z*q.z - 1);
 }
 
 template<typename T>
