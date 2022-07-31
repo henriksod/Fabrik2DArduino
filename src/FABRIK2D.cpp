@@ -482,3 +482,6 @@ float Fabrik2D<T>::_distance(float x1, float y1, float x2, float y2) {
     float yDiff = y2 - y1;
     return sqrt(xDiff*xDiff + yDiff*yDiff);
 }
+
+template class Fabrik2D<VectorFloat>;
+template class Fabrik2D<VectorInt16>;
