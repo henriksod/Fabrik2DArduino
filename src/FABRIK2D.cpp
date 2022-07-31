@@ -238,7 +238,7 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
 
     // Calculate quaternions from result positions
     T from = this->_chain->joints[0].p->getNormalized();
-    *(this->_chain->joints[0].q) = from.getRotationFrom(&_origin);
+    *(this->_chain->joints[0].q) = from.getRotationFrom(_origin);
     for (int i = 1; i < this->_numJoints; i++) {
         T to = (
             this->_chain->joints[i].p->getNormalized() - from).getNormalized();
@@ -308,7 +308,7 @@ uint8_t Fabrik2D<T>::solve2(
 
             // Save base angle
             T desiredPlaneVector(x, 0, z);
-            *this->_chain->q = desiredPlaneVector.getRotationFrom(&_origin);
+            *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
 
             // Update joint positions based on base rotation
             for (int i = 0; i <= this->_numJoints-1; i++) {
@@ -345,7 +345,7 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
     if (result_status == 1) {
         // Save base angle
         T desiredPlaneVector(x, 0, z);
-        *this->_chain->q = desiredPlaneVector.getRotationFrom(&_origin);
+        *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
 
         // Update joint positions based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
