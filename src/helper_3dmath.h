@@ -123,7 +123,7 @@ class VectorInt16 {
         cv.y = -(v.x * this->z - v.z * this->x);
         cv.z = v.x * this->y - v.y * this->x;
 
-        return cv
+        return cv;
     }
 
     // Gets the dot product between vector v and this vector
@@ -226,7 +226,7 @@ class VectorFloat {
         cv.y = -(v.x * this->z - v.z * this->x);
         cv.z = v.x * this->y - v.y * this->x;
 
-        return cv
+        return cv;
     }
 
     // Gets the dot product between vector v and this vector
