@@ -413,10 +413,6 @@ float Fabrik2D<T>::getBaseAngle() {
 
 template<typename T>
 void Fabrik2D<T>::setBaseAngle(float baseAngle) {
-    // Save base angle
-    T desiredPlaneVector(x, 0, z);
-    *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
-
     // Rotate back joints from previous base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
         this->_chain->joints[i].p =
