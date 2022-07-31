@@ -308,7 +308,7 @@ uint8_t Fabrik2D<T>::solve2(
 
             // Save base angle
             T desiredPlaneVector(x, 0, z);
-            *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
+            *this->_chain->q = desiredPlaneVector.getRotationFrom(&_origin);
 
             // Update joint positions based on base rotation
             for (int i = 0; i <= this->_numJoints-1; i++) {
@@ -345,7 +345,7 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
     if (result_status == 1) {
         // Save base angle
         T desiredPlaneVector(x, 0, z);
-        *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
+        *this->_chain->q = desiredPlaneVector.getRotationFrom(&_origin);
 
         // Update joint positions based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
