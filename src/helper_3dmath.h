@@ -45,7 +45,7 @@ class Quaternion {
         z = nz;
     }
 
-    Quaternion getProduct(const Quaternion& q) {
+    Quaternion getProduct(const Quaternion& q) const {
         // Quaternion multiplication is defined by:
         //     (Q1 * Q2).w = (w1w2 - x1x2 - y1y2 - z1z2)
         //     (Q1 * Q2).x = (w1x2 + x1w2 + y1z2 - z1y2)
@@ -58,11 +58,11 @@ class Quaternion {
             w*q.z + x*q.y - y*q.x + z*q.w);  // new z
     }
 
-    Quaternion getConjugate() {
+    Quaternion getConjugate() const {
         return Quaternion(w, -x, -y, -z);
     }
 
-    float getMagnitude() {
+    float getMagnitude() const {
         return sqrt(w*w + x*x + y*y + z*z);
     }
 
@@ -74,7 +74,7 @@ class Quaternion {
         z /= m;
     }
 
-    Quaternion getNormalized() {
+    Quaternion getNormalized() const {
         Quaternion r(w, x, y, z);
         r.normalize();
         return r;
@@ -99,7 +99,7 @@ class VectorInt16 {
         z = nz;
     }
 
-    float getMagnitude() {
+    float getMagnitude() const {
         return sqrt(x*x + y*y + z*z);
     }
 
@@ -110,14 +110,14 @@ class VectorInt16 {
         z /= m;
     }
 
-    VectorInt16 getNormalized() {
+    VectorInt16 getNormalized() const {
         VectorInt16 r(x, y, z);
         r.normalize();
         return r;
     }
 
     // Gets the cross product between vector v and this vector
-    VectorFloat crossProduct(const VectorInt16& v) {
+    VectorInt16 crossProduct(const VectorInt16& v) const {
         VectorInt16 cv();
         cv.x = v.y * this->z - v.z * this->y;
         cv.y = -(v.x * this->z - v.z * this->x);
@@ -127,7 +127,7 @@ class VectorInt16 {
     }
 
     // Gets the dot product between vector v and this vector
-    VectorInt16 dotProduct(const VectorInt16& v) {
+    float dotProduct(const VectorInt16& v) const {
         return v.x*this-> x + v.y*this->y + v.z*this->z;
     }
 
@@ -152,14 +152,14 @@ class VectorInt16 {
         z = p.z;
     }
 
-    VectorInt16 getRotated(const Quaternion& q) {
+    VectorInt16 getRotated(const Quaternion& q) const {
         VectorInt16 r(x, y, z);
         r.rotate(q);
         return r;
     }
 
     // Gets the quaternion from vector v to this vector
-    Quaternion getRotationFrom(VectorInt16 *v) {
+    Quaternion getRotationFrom(VectorInt16 *v) const {
         VectorInt16 a = this->crossProduct(v);
 
         float fromLength = v->getMagnitude();
@@ -202,7 +202,7 @@ class VectorFloat {
         z = nz;
     }
 
-    float getMagnitude() {
+    float getMagnitude() const {
         return sqrt(x*x + y*y + z*z);
     }
 
@@ -213,14 +213,14 @@ class VectorFloat {
         z /= m;
     }
 
-    VectorFloat getNormalized() {
+    VectorFloat getNormalized() const {
         VectorFloat r(x, y, z);
         r.normalize();
         return r;
     }
 
     // Gets the cross product between vector v and this vector
-    VectorFloat crossProduct(const VectorFloat& v) {
+    VectorFloat crossProduct(const VectorFloat& v) const {
         VectorFloat cv();
         cv.x = v.y * this->z - v.z * this->y;
         cv.y = -(v.x * this->z - v.z * this->x);
@@ -230,7 +230,7 @@ class VectorFloat {
     }
 
     // Gets the dot product between vector v and this vector
-    VectorFloat dotProduct(const VectorFloat& v) {
+    float dotProduct(const VectorFloat& v) const {
         return v.x*this-> x + v.y*this->y + v.z*this->z;
     }
 
@@ -249,14 +249,14 @@ class VectorFloat {
         z = p.z;
     }
 
-    VectorFloat getRotated(const Quaternion& q) {
+    VectorFloat getRotated(const Quaternion& q) const {
         VectorFloat r(x, y, z);
         r.rotate(q);
         return r;
     }
 
     // Gets the quaternion from vector v to this vector
-    Quaternion getRotationFrom(const VectorFloat& v) {
+    Quaternion getRotationFrom(const VectorFloat& v) const {
         VectorFloat a = this->crossProduct(v);
 
         float fromLength = v.getMagnitude();
