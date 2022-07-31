@@ -56,37 +56,19 @@ unittest(test_constructor)
   Fabrik2D fabrik2D_4(4, lengths_4_joints);
   assertEqual(4, fabrik2D_4.numJoints());
   assertEqual(10, fabrik2D_4.getTolerance());
-  assertEqual(0, fabrik2D_4.getChain()->angle);
-  assertEqual(0, fabrik2D_4.getChain()->z);
-  assertEqual(0, fabrik2D_4.getChain()->joints[0].x);
-  assertEqual(0, fabrik2D_4.getChain()->joints[0].y);
-  assertEqual(0, fabrik2D_4.getChain()->joints[0].angle);
-  assertEqual(0, fabrik2D_4.getChain()->joints[1].x);
-  assertEqual(190, fabrik2D_4.getChain()->joints[1].y);
-  assertEqual(0, fabrik2D_4.getChain()->joints[1].angle);
-  assertEqual(0, fabrik2D_4.getChain()->joints[2].x);
-  assertEqual(190+200, fabrik2D_4.getChain()->joints[2].y);
-  assertEqual(0, fabrik2D_4.getChain()->joints[2].angle);
-  assertEqual(0, fabrik2D_4.getChain()->joints[3].x);
-  assertEqual(190+200+270, fabrik2D_4.getChain()->joints[3].y);
-  assertEqual(0, fabrik2D_4.getChain()->joints[3].angle);
+  assertEqual(0, fabrik2D_4.getChain()->joints[0]->p.y);
+  assertEqual(190, fabrik2D_4.getChain()->joints[1]->p.y);
+  assertEqual(190+200, fabrik2D_4.getChain()->joints[2]->p.y);
+  assertEqual(190+200+270, fabrik2D_4.getChain()->joints[3]->p.y);
   
   // Test 3 joints init
   fprintf(stderr, "Test 3 joints init\n");
   Fabrik2D fabrik2D_3(3, lengths_3_joints);
   assertEqual(3, fabrik2D_3.numJoints());
   assertEqual(10, fabrik2D_3.getTolerance());
-  assertEqual(0, fabrik2D_3.getChain()->angle);
-  assertEqual(0, fabrik2D_3.getChain()->z);
-  assertEqual(0, fabrik2D_3.getChain()->joints[0].x);
-  assertEqual(0, fabrik2D_3.getChain()->joints[0].y);
-  assertEqual(0, fabrik2D_3.getChain()->joints[0].angle);
-  assertEqual(0, fabrik2D_3.getChain()->joints[1].x);
-  assertEqual(190, fabrik2D_3.getChain()->joints[1].y);
-  assertEqual(0, fabrik2D_3.getChain()->joints[1].angle);
-  assertEqual(0, fabrik2D_3.getChain()->joints[2].x);
-  assertEqual(190+200, fabrik2D_3.getChain()->joints[2].y);
-  assertEqual(0, fabrik2D_3.getChain()->joints[2].angle);
+  assertEqual(0, fabrik2D_3.getChain()->joints[0]->p.y);
+  assertEqual(190, fabrik2D_3.getChain()->joints[1]->p.y);
+  assertEqual(190+200, fabrik2D_3.getChain()->joints[2]->p.y);
   
   // Test different tolerance
   fprintf(stderr, "Test different tolerance\n");
@@ -101,17 +83,9 @@ unittest(test_constructor)
   fabrik2D_3_begin_init.begin(3, lengths_3_joints);
   assertEqual(3, fabrik2D_3_begin_init.numJoints());
   assertEqual(10, fabrik2D_3_begin_init.getTolerance());
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->angle);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->z);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[0].x);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[0].y);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[0].angle);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[1].x);
-  assertEqual(190, fabrik2D_3_begin_init.getChain()->joints[1].y);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[1].angle);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[2].x);
-  assertEqual(190+200, fabrik2D_3_begin_init.getChain()->joints[2].y);
-  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[2].angle);
+  assertEqual(0, fabrik2D_3_begin_init.getChain()->joints[0]->p.y);
+  assertEqual(190, fabrik2D_3_begin_init.getChain()->joints[1]->p.y);
+  assertEqual(190+200, fabrik2D_3_begin_init.getChain()->joints[2]->p.y);
 }
 
 unittest(test_solve)
@@ -230,7 +204,6 @@ unittest(test_solve)
     
     // Test Set Base Angle
     fprintf(stderr, "Test Set Base Angle\n");
-    fprintf(stderr, "Test Set Base Angle %f\n", HALF_PI - fabrik2D_4_4DOF_GO.getChain()->angle);
     fabrik2D_4_4DOF_GO.setBaseAngle(HALF_PI);
     assertEqualFloat(0, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
     assertEqualFloat(60, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());

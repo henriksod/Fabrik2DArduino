@@ -29,22 +29,28 @@
 #define SRC_FABRIK2D_H_
 
 #include "Arduino.h"
+#include "helper_3dmath.h"
 
+template<typename T = VectorFloat>
 class Fabrik2D {
  public:
     // Joint struct
-    typedef struct {
-        float x = 0;  // x position of joint relative to origin
-        float y = 0;  // y position of joint relative to origin
-        float angle = 0;  // angle of joint
-    } Joint;
+    struct Joint {
+        // vector representing joint position relative to origin
+        T* p = nullptr;
+        // quaternion representing the joint rotation
+        Quaternion* q = nullptr;
+    };
 
     // Chain struct
-    typedef struct {
-      Joint* joints = nullptr;  // list of joints
-      float z = 0;  // z position defining the chain offset from the plane
-      float angle = 0;  // base (plane) rotation
-    } Chain;
+    struct Chain {
+      // array of joints
+      Joint* joints = nullptr;
+      // vector representing chain position relative to origin
+      T* p = nullptr;
+      // quaternion representing the chain rotation
+      Quaternion* q = nullptr;
+    };
 
     /* Fabrik2D()
      *  
@@ -213,13 +219,13 @@ class Fabrik2D {
      * inputs: joint number
      * outputs: x position of joint
      */
-    float getX(int joint);
+    float getX(int joint = -1);
 
     /* getY(joint)
      * inputs: joint number
      * outputs: y position of joint
      */
-    float getY(int joint);
+    float getY(int joint = -1);
 
     /* getZ(joint)
      * inputs: (optional) joint number
@@ -228,7 +234,7 @@ class Fabrik2D {
      * Passing the joint argument will not do anything.
      * It is just there for consistency with getX and getY.
      */
-    float getZ(int joint = 0);
+    float getZ(int joint = -1);
 
     /* getAngle(joint)
      * inputs: joint number
@@ -285,6 +291,8 @@ class Fabrik2D {
     Chain* _chain = nullptr;
     // Number of iterations to converge for last run (debugging only)
     int _num_iterations = 0;
+    
+    T _origin();
 
     /* _createChain(lengths)
      * inputs: lengths
