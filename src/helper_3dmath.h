@@ -179,8 +179,18 @@ class VectorInt16 {
         return VectorInt16(this->x-v.x, this->y-v.y, this->z-v.z);
     }
 
+    // Produces the difference of this vector and v.
+    VectorInt16 operator-=(const VectorInt16& v) const {
+        return VectorInt16(this->x-v.x, this->y-v.y, this->z-v.z);
+    }
+
     // Produces the sum of this vector and v.
     VectorInt16 operator+(const VectorInt16& v) const {
+        return VectorInt16(this->x+v.x, this->y+v.y, this->z+v.z);
+    }
+
+    // Produces the sum of this vector and v.
+    VectorInt16 operator+=(const VectorInt16& v) const {
         return VectorInt16(this->x+v.x, this->y+v.y, this->z+v.z);
     }
 };
@@ -277,6 +287,11 @@ class VectorFloat {
         return VectorFloat(this->x-v.x, this->y-v.y, this->z-v.z);
     }
 
+    // Produces the difference of this vector and v.
+    VectorFloat operator-=(const VectorFloat& v) const {
+        return VectorFloat(this->x-v.x, this->y-v.y, this->z-v.z);
+    }
+
     // Produces the sum of this vector and v.
     VectorFloat operator+(const VectorFloat& v) const {
         return VectorFloat(this->x+v.x, this->y+v.y, this->z+v.z);
@@ -285,6 +300,11 @@ class VectorFloat {
     // Produces the dot product of this vector and v.
     float operator*(const VectorFloat& v) const {
       return this->dotProduct(v);
+    }
+
+    // Produces the sum of this vector and v.
+    VectorFloat operator+=(const VectorFloat& v) const {
+        return VectorFloat(this->x+v.x, this->y+v.y, this->z+v.z);
     }
 };
 
