@@ -29,7 +29,7 @@
 #define SRC_FABRIK2D_H_
 
 #include "Arduino.h"
-#include "src/helper_3dmath.h"
+#include "helper_3dmath.h"
 
 template<typename T = VectorFloat>
 class Fabrik2D {
