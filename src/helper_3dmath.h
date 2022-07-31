@@ -118,7 +118,7 @@ class VectorInt16 {
 
     // Gets the cross product between vector v and this vector
     VectorInt16 crossProduct(const VectorInt16& v) const {
-        VectorInt16 cv();
+        VectorInt16 cv;
         cv.x = v.y * this->z - v.z * this->y;
         cv.y = -(v.x * this->z - v.z * this->x);
         cv.z = v.x * this->y - v.y * this->x;
@@ -221,7 +221,7 @@ class VectorFloat {
 
     // Gets the cross product between vector v and this vector
     VectorFloat crossProduct(const VectorFloat& v) const {
-        VectorFloat cv();
+        VectorFloat cv;
         cv.x = v.y * this->z - v.z * this->y;
         cv.y = -(v.x * this->z - v.z * this->x);
         cv.z = v.x * this->y - v.y * this->x;

@@ -269,7 +269,7 @@ uint8_t Fabrik2D<T>::solve2(
 
         // Find wrist center by moving from the desired position with
         // tool angle and link length
-        T oc();
+        T oc;
         oc.x = -(lengths[this->_numJoints-2] + grippingOffset);
 
         Quaternion toolRotation(toolAngle, 0, 0, 1);
@@ -287,7 +287,7 @@ uint8_t Fabrik2D<T>::solve2(
         this->_numJoints = tmp;
 
         if (result_status == 1) {
-            T oc_to_end();
+            T oc_to_end;
             oc_to_end.x = lengths[this->_numJoints-2];
             oc_to_end.rotate(toolRotation);
 
@@ -458,8 +458,8 @@ void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
         *this->_chain->joints[i]->q = q;
     }
 
-    T accumVector();
-    Quaternion accumQuaternion();
+    T accumVector;
+    Quaternion accumQuaternion;
 
     for (int i = 1; i < this->_numJoints; i++) {
         T v(lengths[i-1], 0, 0);
