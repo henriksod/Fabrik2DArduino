@@ -162,13 +162,14 @@ class VectorInt16 {
     Quaternion getRotationFrom(const VectorInt16& v) const {
         VectorInt16 a = this->crossProduct(v);
 
-        float fromLength = v->getMagnitude();
+        float fromLength = v.getMagnitude();
         float toLength = this->getMagnitude();
 
         float w = sqrt(fromLength*fromLength + toLength*toLength)
             + this->dotProduct(v);
 
         Quaternion q(w, a.x, a.y, a.z);
+        q.normalize();
 
         return q;
     }

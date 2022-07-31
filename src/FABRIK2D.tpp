@@ -60,14 +60,14 @@ void Fabrik2D<T>::_createChain(int lengths[]) {
     this->_chain->p = new T();
     this->_chain->q = new Quaternion();
 
-    this->_chain->joints[0]->p = new T();
-    this->_chain->joints[0]->q = new Quaternion();
+    this->_chain->joints[0].p = new T();
+    this->_chain->joints[0].q = new Quaternion();
 
     int sumLengths = 0;
     for (int i = 1; i < this->_numJoints; i++) {
         sumLengths = sumLengths + lengths[i-1];
-        this->_chain->joints[i]->p = new T(0, sumLengths, 0);
-        this->_chain->joints[i]->q = new Quaternion();
+        this->_chain->joints[i].p = new T(0, sumLengths, 0);
+        this->_chain->joints[i].q = new Quaternion();
     }
 }
 
@@ -76,14 +76,14 @@ void Fabrik2D<T>::_resetChain(int lengths[]) {
     *(this->_chain->p) = T();
     *(this->_chain->q) = Quaternion();
 
-    *(this->_chain->joints[0]->p) = T();
-    *(this->_chain->joints[0]->q) = Quaternion();
+    *(this->_chain->joints[0].p) = T();
+    *(this->_chain->joints[0].q) = Quaternion();
 
     int sumLengths = 0;
     for (int i = 1; i < this->_numJoints; i++) {
         sumLengths = sumLengths + lengths[i-1];
-        *(this->_chain->joints[i]->p) = T(0, sumLengths, 0);
-        *(this->_chain->joints[i]->q) = Quaternion();
+        *(this->_chain->joints[i].p) = T(0, sumLengths, 0);
+        *(this->_chain->joints[i].q) = Quaternion();
     }
 }
 
@@ -91,13 +91,13 @@ template<typename T = VectorFloat>
 void Fabrik2D<T>::_deleteChain() {
     if (this->_chain->joints != nullptr) {
         for (int i = 0; i < this->_numJoints; i++) {
-            if (this->_chain->joints[i]->p != nullptr) {
-                delete this->_chain->joints[i]->p;
-                this->_chain->joints[i]->p = nullptr;
+            if (this->_chain->joints[i].p != nullptr) {
+                delete this->_chain->joints[i].p;
+                this->_chain->joints[i].p = nullptr;
             }
-            if (this->_chain->joints[i]->q != nullptr) {
-                delete this->_chain->joints[i]->q;
-                this->_chain->joints[i]->q = nullptr;
+            if (this->_chain->joints[i].q != nullptr) {
+                delete this->_chain->joints[i].q;
+                this->_chain->joints[i].q = nullptr;
             }
         }
         delete[] this->_chain->joints;
@@ -139,15 +139,15 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
         for (int i = 0; i < this->_numJoints-1; i++) {
             // Find the distance r_i between the target (x,y) and the
             // joint i position (jx,jy)
-            float jx = this->_chain->joints[i]->p.x;
-            float jy = this->_chain->joints[i]->p.y;
+            float jx = this->_chain->joints[i].p.x;
+            float jy = this->_chain->joints[i].p.y;
             float r_i = _distance(jx, jy, x, y);
             float lambda_i = static_cast<float>(lengths[i])/r_i;
 
             // Find the new joint positions
-            this->_chain->joints[i+1]->p.x = static_cast<float>(
+            this->_chain->joints[i+1].p.x = static_cast<float>(
                 (1-lambda_i)*jx + lambda_i*x);
-            this->_chain->joints[i+1]->p.y = static_cast<float>(
+            this->_chain->joints[i+1].p.y = static_cast<float>(
                 (1-lambda_i)*jy + lambda_i*y);
         }
 
@@ -156,13 +156,13 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
     } else {
         // The target is reachable; this, set as (bx,by) the initial
         // position of the joint i
-        float bx = this->_chain->joints[0]->p.x;
-        float by = this->_chain->joints[0]->p.y;
+        float bx = this->_chain->joints[0].p.x;
+        float by = this->_chain->joints[0].p.y;
 
         // Check whether the distance between the end effector
         // joint n (ex,ey) and the target is greater than a tolerance
-        float ex = this->_chain->joints[this->_numJoints-1]->p.x;
-        float ey = this->_chain->joints[this->_numJoints-1]->p.y;
+        float ex = this->_chain->joints[this->_numJoints-1].p.x;
+        float ey = this->_chain->joints[this->_numJoints-1].p.y;
         float dist = _distance(ex, ey, x, y);
 
         float prevDist = 0;
@@ -187,65 +187,65 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
 
             // STAGE 1: FORWARD REACHING
             // Set the end effector as target
-            this->_chain->joints[this->_numJoints-1]->p.x = x;
-            this->_chain->joints[this->_numJoints-1]->p.y = y;
+            this->_chain->joints[this->_numJoints-1].p.x = x;
+            this->_chain->joints[this->_numJoints-1].p.y = y;
 
             for (int i = this->_numJoints-2; i >= 0; i--) {
                 // Find the distance r_i between the new joint position
                 // i+1 (nx,ny) and the joint i (jx,jy)
-                float jx = this->_chain->joints[i]->p.x;
-                float jy = this->_chain->joints[i]->p.y;
-                float nx = this->_chain->joints[i+1]->p.x;
-                float ny = this->_chain->joints[i+1]->p.y;
+                float jx = this->_chain->joints[i].p.x;
+                float jy = this->_chain->joints[i].p.y;
+                float nx = this->_chain->joints[i+1].p.x;
+                float ny = this->_chain->joints[i+1].p.y;
                 float r_i = _distance(jx, jy, nx, ny);
                 float lambda_i = static_cast<float>(lengths[i])/r_i;
 
                 // Find the new joint positions
-                this->_chain->joints[i]->p.x = static_cast<float>(
+                this->_chain->joints[i].p.x = static_cast<float>(
                     (1-lambda_i)*nx + lambda_i*jx);
-                this->_chain->joints[i]->p.y = static_cast<float>(
+                this->_chain->joints[i].p.y = static_cast<float>(
                     (1-lambda_i)*ny + lambda_i*jy);
             }
 
             // STAGE 2: BACKWARD REACHING
             // Set the root at its initial position
-            this->_chain->joints[0]->p.x = bx;
-            this->_chain->joints[0]->p.y = by;
+            this->_chain->joints[0].p.x = bx;
+            this->_chain->joints[0].p.y = by;
 
             for (int i = 0; i < this->_numJoints-1; i++) {
                 // Find the distance r_i between the new joint position
                 // i (nx,ny) and the joint i+1 (jx,jy)
-                float jx = this->_chain->joints[i+1]->p.x;
-                float jy = this->_chain->joints[i+1]->p.y;
-                float nx = this->_chain->joints[i]->p.x;
-                float ny = this->_chain->joints[i]->p.y;
+                float jx = this->_chain->joints[i+1].p.x;
+                float jy = this->_chain->joints[i+1].p.y;
+                float nx = this->_chain->joints[i].p.x;
+                float ny = this->_chain->joints[i].p.y;
                 float r_i = _distance(jx, jy, nx, ny);
                 float lambda_i = static_cast<float>(lengths[i])/r_i;
 
                 // Find the new joint positions
-                this->_chain->joints[i+1]->p.x = static_cast<float>(
+                this->_chain->joints[i+1].p.x = static_cast<float>(
                     (1-lambda_i)*nx + lambda_i*jx);
-                this->_chain->joints[i+1]->p.y = static_cast<float>(
+                this->_chain->joints[i+1].p.y = static_cast<float>(
                     (1-lambda_i)*ny + lambda_i*jy);
             }
 
             // Update distance between end effector and target
-            ex = this->_chain->joints[this->_numJoints-1]->p.x;
-            ey = this->_chain->joints[this->_numJoints-1]->p.y;
+            ex = this->_chain->joints[this->_numJoints-1].p.x;
+            ey = this->_chain->joints[this->_numJoints-1].p.y;
             dist = _distance(ex, ey, x, y);
         }
     }
 
     // Calculate quaternions from result positions
-    *(this->_chain->joints[0]->q) = this->_chain->joints[0]->p->getNormalized()
+    *(this->_chain->joints[0].q) = this->_chain->joints[0].p->getNormalized()
                                         .getRotationFrom(_origin);
 
-    T from = this->_chain->joints[0]->p->getNormalized();
+    T from = this->_chain->joints[0].p->getNormalized();
     for (int i = 1; i < this->_numJoints; i++) {
         T to = (
-            this->_chain->joints[i]->p->getNormalized() - from).getNormalized();
+            this->_chain->joints[i].p->getNormalized() - from).getNormalized();
 
-        *this->_chain->joints[i]->q =
+        *this->_chain->joints[i].q =
             to.getNormalized().getRotationFrom(from);
 
         from = to;
@@ -292,19 +292,19 @@ uint8_t Fabrik2D<T>::solve2(
             oc_to_end.rotate(toolRotation);
 
             // Update the end effector position to preserve tool angle
-            *this->_chain->joints[this->_numJoints-1]->p =
-                *this->_chain->joints[this->_numJoints-2]->p + oc_to_end;
+            *this->_chain->joints[this->_numJoints-1].p =
+                *this->_chain->joints[this->_numJoints-2].p + oc_to_end;
 
             // Calculate quaternions from result positions
-            *this->_chain->joints[0]->q = this->_chain->joints[0]->p->
+            *this->_chain->joints[0].q = this->_chain->joints[0].p->
                                     getNormalized().getRotationFrom(_origin);
 
-            T from = this->_chain->joints[0]->p->getNormalized();
+            T from = this->_chain->joints[0].p->getNormalized();
             for (int i = 1; i < this->_numJoints; i++) {
-                T to = (this->_chain->joints[i]->p->getNormalized()
+                T to = (this->_chain->joints[i].p->getNormalized()
                         - from).getNormalized();
 
-                *this->_chain->joints[i]->q =
+                *this->_chain->joints[i].q =
                     to.getNormalized().getRotationFrom(from);
 
                 from = to;
@@ -316,8 +316,8 @@ uint8_t Fabrik2D<T>::solve2(
 
             // Update joint positions based on base rotation
             for (int i = 0; i <= this->_numJoints-1; i++) {
-                this->_chain->joints[i]->p =
-                    this->_chain->joints[i]->p->
+                this->_chain->joints[i].p =
+                    this->_chain->joints[i].p->
                         getRotated(*this->_chain->q);
             }
         }
@@ -353,8 +353,8 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
 
         // Update joint positions based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
-            this->_chain->joints[i]->p =
-                this->_chain->joints[i]->p->
+            this->_chain->joints[i].p =
+                this->_chain->joints[i].p->
                     getRotated(*this->_chain->q);
         }
     }
@@ -374,34 +374,34 @@ uint8_t Fabrik2D<T>::solve2(
 template<typename T = VectorFloat>
 float Fabrik2D<T>::getX(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint]->p.x;
+      return this->_chain->joints[joint].p.x;
   }
-  return this->_chain->joints[this->_numJoints-1]->p.x;
+  return this->_chain->joints[this->_numJoints-1].p.x;
 }
 
 template<typename T = VectorFloat>
 float Fabrik2D<T>::getY(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint]->p.y;
+      return this->_chain->joints[joint].p.y;
   }
-  return this->_chain->joints[this->_numJoints-1]->p.y;
+  return this->_chain->joints[this->_numJoints-1].p.y;
 }
 
 template<typename T = VectorFloat>
 float Fabrik2D<T>::getZ(int joint) {
     if (joint >= 0 && joint < this->_numJoints) {
-        return this->_chain->joints[joint]->p.z;
+        return this->_chain->joints[joint].p.z;
     }
-    return this->_chain->joints[this->_numJoints-1]->p.z;
+    return this->_chain->joints[this->_numJoints-1].p.z;
 }
 
 template<typename T = VectorFloat>
 float Fabrik2D<T>::getAngle(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      Quaternion q = *(this->_chain->joints[joint]->q);
+      Quaternion q = *(this->_chain->joints[joint].q);
       return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q -> w.2*q.z*q.z - 1);
   }
-  Quaternion q = *(this->_chain->joints[this->_numJoints-1]->q);
+  Quaternion q = *(this->_chain->joints[this->_numJoints-1].q);
   return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q -> w.2*q.z*q.z - 1);
 }
 
@@ -419,8 +419,8 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
 
     // Rotate back joints from previous base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
-        this->_chain->joints[i]->p =
-            this->_chain->joints[i]->p->
+        this->_chain->joints[i].p =
+            this->_chain->joints[i].p->
                 getRotated(*this->_chain->q->getConjugate());
     }
 
@@ -430,8 +430,8 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
 
     // Rotate joints to new base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
-        this->_chain->joints[i]->p =
-            this->_chain->joints[i]->p->
+        this->_chain->joints[i].p =
+            this->_chain->joints[i].p->
                 getRotated(*this->_chain->q);
     }
 }
@@ -450,12 +450,12 @@ template<typename T = VectorFloat>
 void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     // Calculate quaternions from input angles
     Quaternion q0(angles[0], 0, 0, 1);
-    *this->_chain->joints[0]->q = q0;
+    *this->_chain->joints[0].q = q0;
 
     for (int i = 1; i < this->_numJoints-1; i++) {
         Quaternion q(angles[i], 0, 0, 1);
 
-        *this->_chain->joints[i]->q = q;
+        *this->_chain->joints[i].q = q;
     }
 
     T accumVector;
@@ -463,10 +463,10 @@ void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
 
     for (int i = 1; i < this->_numJoints; i++) {
         T v(lengths[i-1], 0, 0);
-        accumQuaternion.getProduct(*this->_chain->joints[i-1]->q);
+        accumQuaternion.getProduct(*this->_chain->joints[i-1].q);
         v.rotate(accumQuaternion);
         accumVector += v;
-        *this->_chain->joints[i]->p = accumVector;
+        *this->_chain->joints[i].p = accumVector;
     }
 }
 
