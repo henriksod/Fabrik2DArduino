@@ -472,7 +472,7 @@ int Fabrik2D<T>::numJoints() {
 }
 
 template<typename T>
-Fabrik2D<T>::Chain* Fabrik2D<T>::getChain() {
+Chain* Fabrik2D<T>::getChain() {
     return this->_chain;
 }
 
