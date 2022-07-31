@@ -238,7 +238,7 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
 
     // Calculate quaternions from result positions
     T from = this->_chain->joints[0].p->getNormalized();
-    *(this->_chain->joints[0].q) = from.getRotationFrom(_origin);
+    *(this->_chain->joints[0].q) = from.getRotationFrom(&_origin);
     for (int i = 1; i < this->_numJoints; i++) {
         T to = (
             this->_chain->joints[i].p->getNormalized() - from).getNormalized();
