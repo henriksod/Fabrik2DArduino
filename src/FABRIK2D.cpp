@@ -139,15 +139,15 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
         for (int i = 0; i < this->_numJoints-1; i++) {
             // Find the distance r_i between the target (x,y) and the
             // joint i position (jx,jy)
-            float jx = this->_chain->joints[i].p.x;
-            float jy = this->_chain->joints[i].p.y;
+            float jx = this->_chain->joints[i].p->x;
+            float jy = this->_chain->joints[i].p->y;
             float r_i = _distance(jx, jy, x, y);
             float lambda_i = static_cast<float>(lengths[i])/r_i;
 
             // Find the new joint positions
-            this->_chain->joints[i+1].p.x = static_cast<float>(
+            this->_chain->joints[i+1].p->x = static_cast<float>(
                 (1-lambda_i)*jx + lambda_i*x);
-            this->_chain->joints[i+1].p.y = static_cast<float>(
+            this->_chain->joints[i+1].p->y = static_cast<float>(
                 (1-lambda_i)*jy + lambda_i*y);
         }
 
@@ -156,13 +156,13 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
     } else {
         // The target is reachable; this, set as (bx,by) the initial
         // position of the joint i
-        float bx = this->_chain->joints[0].p.x;
-        float by = this->_chain->joints[0].p.y;
+        float bx = this->_chain->joints[0].p->x;
+        float by = this->_chain->joints[0].p->y;
 
         // Check whether the distance between the end effector
         // joint n (ex,ey) and the target is greater than a tolerance
-        float ex = this->_chain->joints[this->_numJoints-1].p.x;
-        float ey = this->_chain->joints[this->_numJoints-1].p.y;
+        float ex = this->_chain->joints[this->_numJoints-1].p->x;
+        float ey = this->_chain->joints[this->_numJoints-1].p->y;
         float dist = _distance(ex, ey, x, y);
 
         float prevDist = 0;
@@ -187,51 +187,51 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
 
             // STAGE 1: FORWARD REACHING
             // Set the end effector as target
-            this->_chain->joints[this->_numJoints-1].p.x = x;
-            this->_chain->joints[this->_numJoints-1].p.y = y;
+            this->_chain->joints[this->_numJoints-1].p->x = x;
+            this->_chain->joints[this->_numJoints-1].p->y = y;
 
             for (int i = this->_numJoints-2; i >= 0; i--) {
                 // Find the distance r_i between the new joint position
                 // i+1 (nx,ny) and the joint i (jx,jy)
-                float jx = this->_chain->joints[i].p.x;
-                float jy = this->_chain->joints[i].p.y;
-                float nx = this->_chain->joints[i+1].p.x;
-                float ny = this->_chain->joints[i+1].p.y;
+                float jx = this->_chain->joints[i].p->x;
+                float jy = this->_chain->joints[i].p->y;
+                float nx = this->_chain->joints[i+1].p->x;
+                float ny = this->_chain->joints[i+1].p->y;
                 float r_i = _distance(jx, jy, nx, ny);
                 float lambda_i = static_cast<float>(lengths[i])/r_i;
 
                 // Find the new joint positions
-                this->_chain->joints[i].p.x = static_cast<float>(
+                this->_chain->joints[i].p->x = static_cast<float>(
                     (1-lambda_i)*nx + lambda_i*jx);
-                this->_chain->joints[i].p.y = static_cast<float>(
+                this->_chain->joints[i].p->y = static_cast<float>(
                     (1-lambda_i)*ny + lambda_i*jy);
             }
 
             // STAGE 2: BACKWARD REACHING
             // Set the root at its initial position
-            this->_chain->joints[0].p.x = bx;
-            this->_chain->joints[0].p.y = by;
+            this->_chain->joints[0].p->x = bx;
+            this->_chain->joints[0].p->y = by;
 
             for (int i = 0; i < this->_numJoints-1; i++) {
                 // Find the distance r_i between the new joint position
                 // i (nx,ny) and the joint i+1 (jx,jy)
-                float jx = this->_chain->joints[i+1].p.x;
-                float jy = this->_chain->joints[i+1].p.y;
-                float nx = this->_chain->joints[i].p.x;
-                float ny = this->_chain->joints[i].p.y;
+                float jx = this->_chain->joints[i+1].p->x;
+                float jy = this->_chain->joints[i+1].p->y;
+                float nx = this->_chain->joints[i].p->x;
+                float ny = this->_chain->joints[i].p->y;
                 float r_i = _distance(jx, jy, nx, ny);
                 float lambda_i = static_cast<float>(lengths[i])/r_i;
 
                 // Find the new joint positions
-                this->_chain->joints[i+1].p.x = static_cast<float>(
+                this->_chain->joints[i+1].p->x = static_cast<float>(
                     (1-lambda_i)*nx + lambda_i*jx);
-                this->_chain->joints[i+1].p.y = static_cast<float>(
+                this->_chain->joints[i+1].p->y = static_cast<float>(
                     (1-lambda_i)*ny + lambda_i*jy);
             }
 
             // Update distance between end effector and target
-            ex = this->_chain->joints[this->_numJoints-1].p.x;
-            ey = this->_chain->joints[this->_numJoints-1].p.y;
+            ex = this->_chain->joints[this->_numJoints-1].p->x;
+            ey = this->_chain->joints[this->_numJoints-1].p->y;
             dist = _distance(ex, ey, x, y);
         }
     }
@@ -374,25 +374,25 @@ uint8_t Fabrik2D<T>::solve2(
 template<typename T>
 float Fabrik2D<T>::getX(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint].p.x;
+      return this->_chain->joints[joint].p->x;
   }
-  return this->_chain->joints[this->_numJoints-1].p.x;
+  return this->_chain->joints[this->_numJoints-1].p->x;
 }
 
 template<typename T>
 float Fabrik2D<T>::getY(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint].p.y;
+      return this->_chain->joints[joint].p->y;
   }
-  return this->_chain->joints[this->_numJoints-1].p.y;
+  return this->_chain->joints[this->_numJoints-1].p->y;
 }
 
 template<typename T>
 float Fabrik2D<T>::getZ(int joint) {
     if (joint >= 0 && joint < this->_numJoints) {
-        return this->_chain->joints[joint].p.z;
+        return this->_chain->joints[joint].p->z;
     }
-    return this->_chain->joints[this->_numJoints-1].p.z;
+    return this->_chain->joints[this->_numJoints-1].p->z;
 }
 
 template<typename T>
