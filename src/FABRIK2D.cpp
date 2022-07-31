@@ -350,8 +350,7 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
         // Update joint positions based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
             this->_chain->joints[i].p =
-                this->_chain->joints[i].p->
-                    getRotated(*this->_chain->q);
+                this->_chain->joints[i]->p->getRotated(*this->_chain->q);
         }
     }
 
