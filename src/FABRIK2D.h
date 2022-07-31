@@ -292,7 +292,7 @@ class Fabrik2D {
     // Number of iterations to converge for last run (debugging only)
     int _num_iterations = 0;
 
-    static T _origin();
+    T _origin();
 
     /* _createChain(lengths)
      * inputs: lengths
