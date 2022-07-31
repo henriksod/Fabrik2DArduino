@@ -32,17 +32,17 @@
 #define EPSILON_VALUE 0.001
 
 
-template<typename T = VectorFloat>
+template<typename T>
 Fabrik2D<T>::Fabrik2D(int numJoints, int lengths[], float tolerance) {
     begin(numJoints, lengths, tolerance);
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 Fabrik2D<T>::~Fabrik2D() {
     _deleteChain();
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::begin(int numJoints, int lengths[], float tolerance) {
     this->_numJoints = numJoints;
     _createChain(lengths);
@@ -50,7 +50,7 @@ void Fabrik2D<T>::begin(int numJoints, int lengths[], float tolerance) {
     this->_tolerance = tolerance;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::_createChain(int lengths[]) {
     Chain* chain = new Chain();
     chain->joints = new Joint[this->_numJoints];
@@ -71,7 +71,7 @@ void Fabrik2D<T>::_createChain(int lengths[]) {
     }
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::_resetChain(int lengths[]) {
     *(this->_chain->p) = T();
     *(this->_chain->q) = Quaternion();
@@ -87,7 +87,7 @@ void Fabrik2D<T>::_resetChain(int lengths[]) {
     }
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::_deleteChain() {
     if (this->_chain->joints != nullptr) {
         for (int i = 0; i < this->_numJoints; i++) {
@@ -118,7 +118,7 @@ void Fabrik2D<T>::_deleteChain() {
     }
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
     uint8_t result_status = 1;
     _num_iterations = 0;  // Used for debugging
@@ -254,7 +254,7 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
     return result_status;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 uint8_t Fabrik2D<T>::solve2(
     float x, float y, float z,
     float toolAngle,
@@ -326,12 +326,12 @@ uint8_t Fabrik2D<T>::solve2(
     return result_status;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 uint8_t Fabrik2D<T>::solve(float x, float y, float toolAngle, int lengths[]) {
     return solve2(x, y, 0, toolAngle, 0, lengths);
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 uint8_t Fabrik2D<T>::solve(
     float x, float y,
     float toolAngle,
@@ -341,7 +341,7 @@ uint8_t Fabrik2D<T>::solve(
     return solve2(x, y, 0, toolAngle, grippingOffset, lengths);
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
     float r = _distance(0, 0, x, z);
 
@@ -362,7 +362,7 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
     return result_status;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 uint8_t Fabrik2D<T>::solve2(
     float x, float y, float z,
     float toolAngle,
@@ -371,7 +371,7 @@ uint8_t Fabrik2D<T>::solve2(
     return solve2(x, y, z, toolAngle, 0, lengths);
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::getX(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
       return this->_chain->joints[joint].p.x;
@@ -379,7 +379,7 @@ float Fabrik2D<T>::getX(int joint) {
   return this->_chain->joints[this->_numJoints-1].p.x;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::getY(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
       return this->_chain->joints[joint].p.y;
@@ -387,7 +387,7 @@ float Fabrik2D<T>::getY(int joint) {
   return this->_chain->joints[this->_numJoints-1].p.y;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::getZ(int joint) {
     if (joint >= 0 && joint < this->_numJoints) {
         return this->_chain->joints[joint].p.z;
@@ -395,7 +395,7 @@ float Fabrik2D<T>::getZ(int joint) {
     return this->_chain->joints[this->_numJoints-1].p.z;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::getAngle(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
       Quaternion q = *(this->_chain->joints[joint].q);
@@ -405,13 +405,13 @@ float Fabrik2D<T>::getAngle(int joint) {
   return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q -> w.2*q.z*q.z - 1);
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::getBaseAngle() {
     Quaternion q = *(this->_chain->q);
     return -asin(2*q.x*q.z + 2*q.w*q.y);
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::setBaseAngle(float baseAngle) {
     // Save base angle
     T desiredPlaneVector(x, 0, z);
@@ -436,17 +436,17 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
     }
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::getTolerance() {
     return this->_tolerance;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::setTolerance(float tolerance) {
     this->_tolerance = tolerance;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     // Calculate quaternions from input angles
     Quaternion q0(angles[0], 0, 0, 1);
@@ -470,17 +470,17 @@ void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     }
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 int Fabrik2D<T>::numJoints() {
     return this->_numJoints;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 Fabrik2D<T>::Chain* Fabrik2D<T>::getChain() {
     return this->_chain;
 }
 
-template<typename T = VectorFloat>
+template<typename T>
 float Fabrik2D<T>::_distance(float x1, float y1, float x2, float y2) {
     float xDiff = x2 - x1;
     float yDiff = y2 - y1;
