@@ -42,3 +42,6 @@ getTolerance
 resetChain
 deleteChain
 Deallocates
+DMATH
+Rowberg
+Cdev

@@ -53,7 +53,7 @@ unittest(test_constructor)
   
   // Test 4 joints init
   fprintf(stderr, "Test 4 joints init\n");
-  Fabrik2D fabrik2D_4(4, lengths_4_joints);
+  Fabrik2D<> fabrik2D_4(4, lengths_4_joints);
   assertEqual(4, fabrik2D_4.numJoints());
   assertEqual(10, fabrik2D_4.getTolerance());
   assertEqual(0, fabrik2D_4.getChain()->joints[0]->p.y);
@@ -63,7 +63,7 @@ unittest(test_constructor)
   
   // Test 3 joints init
   fprintf(stderr, "Test 3 joints init\n");
-  Fabrik2D fabrik2D_3(3, lengths_3_joints);
+  Fabrik2D<> fabrik2D_3(3, lengths_3_joints);
   assertEqual(3, fabrik2D_3.numJoints());
   assertEqual(10, fabrik2D_3.getTolerance());
   assertEqual(0, fabrik2D_3.getChain()->joints[0]->p.y);
@@ -72,14 +72,14 @@ unittest(test_constructor)
   
   // Test different tolerance
   fprintf(stderr, "Test different tolerance\n");
-  Fabrik2D fabrik2D_4_tolerance_1(4, lengths_4_joints, 1);
+  Fabrik2D<> fabrik2D_4_tolerance_1(4, lengths_4_joints, 1);
   assertEqual(1, fabrik2D_4_tolerance_1.getTolerance());
   fabrik2D_4_tolerance_1.setTolerance(20);
   assertEqual(20, fabrik2D_4_tolerance_1.getTolerance());
   
   // Test begin
   fprintf(stderr, "Test begin\n");
-  Fabrik2D fabrik2D_3_begin_init;
+  Fabrik2D<> fabrik2D_3_begin_init;
   fabrik2D_3_begin_init.begin(3, lengths_3_joints);
   assertEqual(3, fabrik2D_3_begin_init.numJoints());
   assertEqual(10, fabrik2D_3_begin_init.getTolerance());
@@ -96,7 +96,7 @@ unittest(test_solve)
     
     // Solve 3 joints, 2DOF
     fprintf(stderr, "Solve 3 joints, 2DOF\n");
-    Fabrik2D fabrik2D_3_2DOF(3, lengths_3_joints, 1);
+    Fabrik2D<> fabrik2D_3_2DOF(3, lengths_3_joints, 1);
     success = fabrik2D_3_2DOF.solve(100, 100, lengths_3_joints);
     assertEqual(1, success);
     
@@ -140,7 +140,7 @@ unittest(test_solve)
 
     // Solve 4 joints, 3DOF
     fprintf(stderr, "Solve 4 joints, 3DOF (tool angle)\n");
-    Fabrik2D fabrik2D_3_3DOF(4, lengths_4_joints, 10);
+    Fabrik2D<> fabrik2D_3_3DOF(4, lengths_4_joints, 10);
     success = fabrik2D_3_3DOF.solve(50, 50, -HALF_PI, lengths_4_joints);
     assertEqual(1, success);
     
@@ -152,7 +152,7 @@ unittest(test_solve)
     
     // Solve 4 joints, 3DOF (tool angle), Gripping offset
     fprintf(stderr, "Solve 4 joints, 3DOF, Gripping offset\n");
-    Fabrik2D fabrik2D_3_3DOF_GO(4, lengths_4_joints, 1);
+    Fabrik2D<> fabrik2D_3_3DOF_GO(4, lengths_4_joints, 1);
     success = fabrik2D_3_3DOF_GO.solve(50, 50, -HALF_PI, 10, lengths_4_joints);
     assertEqual(1, success);
     
@@ -164,7 +164,7 @@ unittest(test_solve)
     
     // Solve 4 joints, 3DOF
     fprintf(stderr, "Solve 4 joints, 3DOF\n");
-    Fabrik2D fabrik2D_4_3DOF(4, lengths_4_joints, 1);
+    Fabrik2D<> fabrik2D_4_3DOF(4, lengths_4_joints, 1);
     success = fabrik2D_4_3DOF.solve2(100, 100, 100, lengths_4_joints);
     assertEqual(1, success);
     
@@ -178,7 +178,7 @@ unittest(test_solve)
     
     // Solve 4 joints, 4DOF
     fprintf(stderr, "Solve 4 joints, 4DOF\n");
-    Fabrik2D fabrik2D_4_4DOF(4, lengths_4_joints, 1);
+    Fabrik2D<> fabrik2D_4_4DOF(4, lengths_4_joints, 1);
     success = fabrik2D_4_4DOF.solve2(150, 50, 100, -HALF_PI, lengths_4_joints);
     assertEqual(1, success);
     
@@ -191,7 +191,7 @@ unittest(test_solve)
     
     // Solve 4 joints, 4DOF, Gripping offset
     fprintf(stderr, "Solve 4 joints, 4DOF, Gripping offset\n");
-    Fabrik2D fabrik2D_4_4DOF_GO(4, lengths_4_joints, 1);
+    Fabrik2D<> fabrik2D_4_4DOF_GO(4, lengths_4_joints, 1);
     success = fabrik2D_4_4DOF_GO.solve2(150, 50, 0, -HALF_PI, 10, lengths_4_joints);
     assertEqual(1, success);
     
@@ -214,7 +214,7 @@ unittest(test_solve)
 unittest(test_getters_setters)
 {
     int lengths[] = {200, 200};
-    Fabrik2D fabrik2D(3, lengths);
+    Fabrik2D<> fabrik2D(3, lengths);
 
     fabrik2D.setTolerance(20);
     assertEqual(20, fabrik2D.getTolerance());

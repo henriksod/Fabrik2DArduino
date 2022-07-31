@@ -8,7 +8,7 @@
 #include <FABRIK2D.h>
 
 int lengths[] = {225, 150}; // 2DOF arm where shoulder to elbow is 225mm and elbow to end effector is 150mm.
-Fabrik2D fabrik2D(3, lengths); // This arm has 3 joints; one in the origin, the elbow and the end effector.
+Fabrik2D<> fabrik2D(3, lengths); // This arm has 3 joints; one in the origin, the elbow and the end effector.
 
 float y = 0;
 int toggle_y = 0;

@@ -54,7 +54,7 @@ void Fabrik2D::_createChain(int lengths[]) {
 
     this->_chain->p = new T();
     this->_chain->q = new Quaternion();
-    
+
     this->_chain->joints[0]->p = new T();
     this->_chain->joints[0]->q = new Quaternion();
 
@@ -67,10 +67,10 @@ void Fabrik2D::_createChain(int lengths[]) {
 }
 
 void Fabrik2D::_resetChain(int lengths[]) {
-    
+
     *(this->_chain->p) = T();
     *(this->_chain->q) = Quaternion();
-    
+
     *(this->_chain->joints[0]->p) = T();
     *(this->_chain->joints[0]->q) = Quaternion();
 
@@ -236,12 +236,11 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
     T from = this->_chain->joints[0]->p->getNormalized();
     for (int i = 1; i < this->_numJoints; i++) {
         T to = (
-            this->_chain->joints[i]->p->getNormalized() - from
-        ).getNormalized();
-        
+            this->_chain->joints[i]->p->getNormalized() - from).getNormalized();
+
         *this->_chain->joints[i]->q =
             to.getNormalized().getRotationFrom(from);
-        
+
         from = to;
     }
 
@@ -256,7 +255,6 @@ uint8_t Fabrik2D::solve2(
 ) {
     uint8_t result_status = 0;
 
-    // TODO: Convert to quaternion
     if (this->_numJoints >= 4) {
         // Solve in 2D plane
         float r = _distance(0, 0, x, z);
@@ -265,10 +263,10 @@ uint8_t Fabrik2D::solve2(
         // tool angle and link length
         T oc();
         oc.x = -(lengths[this->_numJoints-2] + grippingOffset);
-        
+
         Quaternion toolRotation(toolAngle, 0, 0, 1);
         oc.rotate(toolRotation);
-        
+
         oc.x += r;
         oc.y += y;
 
@@ -284,7 +282,7 @@ uint8_t Fabrik2D::solve2(
             T oc_to_end();
             oc_to_end.x = lengths[this->_numJoints-2];
             oc_to_end.rotate(toolRotation);
-            
+
             // Update the end effector position to preserve tool angle
             *this->_chain->joints[this->_numJoints-1]->p =
                 *this->_chain->joints[this->_numJoints-2]->p + oc_to_end;
@@ -295,13 +293,12 @@ uint8_t Fabrik2D::solve2(
 
             T from = this->_chain->joints[0]->p->getNormalized();
             for (int i = 1; i < this->_numJoints; i++) {
-                T to = (
-                    this->_chain->joints[i]->p->getNormalized() - from
-                ).getNormalized();
-                
+                T to = (this->_chain->joints[i]->p->getNormalized()
+                        - from).getNormalized();
+
                 *this->_chain->joints[i]->q =
                     to.getNormalized().getRotationFrom(from);
-                
+
                 from = to;
             }
 
@@ -337,7 +334,6 @@ uint8_t Fabrik2D::solve(
 uint8_t Fabrik2D::solve2(float x, float y, float z, int lengths[]) {
     float r = _distance(0, 0, x, z);
 
-    // TODO: Convert to quaternion
     uint8_t result_status =  solve(r, y, lengths);
     if (result_status == 1) {
         // Save base angle
@@ -371,7 +367,6 @@ float Fabrik2D::getX(int joint) {
 }
 
 float Fabrik2D::getY(int joint) {
-  // TODO: Convert to quaternion
   if (joint >= 0 && joint < this->_numJoints) {
       return this->_chain->joints[joint]->p.y;
   }
@@ -386,7 +381,6 @@ float Fabrik2D::getZ(int joint) {
 }
 
 float Fabrik2D::getAngle(int joint) {
-  // TODO: Convert to quaternion
   if (joint >= 0 && joint < this->_numJoints) {
       Quaternion q = *(this->_chain->joints[joint]->q);
       return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q -> w.2*q.z*q.z - 1);
@@ -411,11 +405,11 @@ void Fabrik2D::setBaseAngle(float baseAngle) {
             this->_chain->joints[i]->p->
                 getRotated(*this->_chain->q->getConjugate());
     }
-    
+
     // Update base rotation
     Quaternion q(baseAngle, 0, 1, 0);
     *this->_chain->q = q;
-    
+
     // Rotate joints to new base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
         this->_chain->joints[i]->p =
@@ -442,10 +436,10 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
         
         *this->_chain->joints[i]->q = q;
     }
-    
+
     T accumVector();
     Quaternion accumQuaternion();
-    
+
     for (int i = 1; i < this->_numJoints; i++) {
         T v(lengths[i-1], 0, 0);
         accumQuaternion.getProduct(*this->_chain->joints[i-1]->q);
