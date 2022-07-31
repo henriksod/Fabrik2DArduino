@@ -312,7 +312,7 @@ uint8_t Fabrik2D<T>::solve2(
 
             // Update joint positions based on base rotation
             for (int i = 0; i <= this->_numJoints-1; i++) {
-                this->_chain->joints[i].p =
+                *this->_chain->joints[i].p =
                     this->_chain->joints[i].p->
                         getRotated(*this->_chain->q);
             }
@@ -349,7 +349,7 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
 
         // Update joint positions based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
-            this->_chain->joints[i].p =
+            *this->_chain->joints[i].p =
                 this->_chain->joints[i].p->getRotated(*this->_chain->q);
         }
     }
@@ -410,9 +410,9 @@ template<typename T>
 void Fabrik2D<T>::setBaseAngle(float baseAngle) {
     // Rotate back joints from previous base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
-        this->_chain->joints[i].p =
+        *this->_chain->joints[i].p =
             this->_chain->joints[i].p->
-                getRotated(*this->_chain->q->getConjugate());
+                getRotated(this->_chain->q->getConjugate());
     }
 
     // Update base rotation
@@ -421,7 +421,7 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
 
     // Rotate joints to new base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
-        this->_chain->joints[i].p =
+        *this->_chain->joints[i].p =
             this->_chain->joints[i].p->
                 getRotated(*this->_chain->q);
     }
