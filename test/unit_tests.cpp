@@ -98,24 +98,31 @@ unittest(test_helper_3d_math)
     assertEqual(0, q1.x);
     assertEqual(0, q1.y);
     assertEqual(0, q1.z);
-    
-    Vector<float> v1;
-    assertEqual(0, v1.x);
-    assertEqual(0, v1.y);
-    assertEqual(0, v1.z);
-    
+
     Quaternion q2(0.5, 0.5, 0.5, 0.5);
     Quaternion _q2 = q2.getConjugate();
     assertEqual(0.5, _q2.w);
     assertEqual(-0.5, _q2.x);
     assertEqual(-0.5, _q2.y);
     assertEqual(-0.5, _q2.z);
-    
+
     float expected_mag = sqrt(1);
     assertEqualFloat(expected_mag, q2.getMagnitude(), 1e-3);
     q2.normalize();
     assertEqualFloat(expected_mag, q2.getMagnitude(), 1e-3);
-    
+
+    Vector<float> v1(1, 0, 0);
+    assertEqual(1, v1.x);
+    assertEqual(0, v1.y);
+    assertEqual(0, v1.z);
+
+    Vector<float> v2(0, 1, 0);
+
+    Quaternion rot = v2.getRotationFrom(v1);
+    assertEqualFloat(cos(HALF_PI/2), rot.w, 1e-3);
+    assertEqualFloat(0, rot.x, 1e-3);
+    assertEqualFloat(0, rot.y, 1e-3);
+    assertEqualFloat(1, rot.z, 1e-3);
 }
 
 unittest(test_solve)
