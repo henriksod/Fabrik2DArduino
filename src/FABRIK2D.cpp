@@ -307,9 +307,8 @@ uint8_t Fabrik2D<T>::solve2(
             // Calculate quaternions from result positions
             Vector<T> from = _origin;
             for (int i = 1; i < this->_numJoints; i++) {
-                Vector<T> to = (
-                    this->_chain->joints[i].p->getNormalized() - from
-                ).getNormalized();
+                Vector<T> to = (this->_chain->joints[i].p->getNormalized()
+                    - from).getNormalized();
 
                 *this->_chain->joints[i-1].q =
                     this->_chain->joints[i-1].q->asRotationBetween(from, to);
