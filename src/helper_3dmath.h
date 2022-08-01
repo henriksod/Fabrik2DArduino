@@ -82,6 +82,14 @@ class Quaternion {
         r.normalize();
         return r;
     }
+
+    Quaternion fromAxis(float angle, float x, float y, float z) {
+        return Quaternion(
+            cos(angle/2),
+            x*sin(angle/2),
+            y*sin(angle/2),
+            z*sin(angle/2)).getNormalized();
+    }
 };
 
 template<typename T = float>
@@ -220,14 +228,6 @@ Vector<T> eulerFromQuaternion(const Quaternion& q) {
     r.z = atan2(siny_cosp, cosy_cosp);
 
     return r;
-}
-
-Quaternion quaternionFromAxis(float angle, float x, float y, float z) {
-    return Quaternion(
-        cos(angle/2),
-        x*sin(angle/2),
-        y*sin(angle/2),
-        z*sin(angle/2)).getNormalized();
 }
 }  // namespace helper_3dmath
 

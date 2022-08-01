@@ -35,7 +35,6 @@
 using helper_3dmath::Quaternion;
 using helper_3dmath::Vector;
 using helper_3dmath::eulerFromQuaternion;
-using helper_3dmath::quaternionFromAxis;
 
 template<typename T>
 Fabrik2D<T>::Fabrik2D(int numJoints, int lengths[], float tolerance) {
@@ -275,7 +274,8 @@ uint8_t Fabrik2D<T>::solve2(
         Vector<T> oc;
         oc.x = -(lengths[this->_numJoints-2] + grippingOffset);
 
-        Quaternion toolRotation = quaternionFromAxis(toolAngle, 0, 0, 1);
+        Quaternion toolRotation;
+        toolRotation = toolRotation.fromAxis(toolAngle, 0, 0, 1);
         oc.rotate(toolRotation);
 
         oc.x += r;
@@ -422,7 +422,7 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
     }
 
     // Update base rotation
-    *this->_chain->q = quaternionFromAxis(baseAngle, 0, 1, 0);
+    *this->_chain->q = this->_chain->q->fromAxis(baseAngle, 0, 1, 0);
 
     // Rotate joints to new base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
@@ -445,10 +445,10 @@ void Fabrik2D<T>::setTolerance(float tolerance) {
 template<typename T>
 void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     // Calculate quaternions from input angles
-    *this->_chain->joints[0].q = quaternionFromAxis(angles[0], 0, 0, 1);
+    *this->_chain->joints[0].q = this->_chain->joints[0].q->fromAxis(angles[0], 0, 0, 1);
 
     for (int i = 1; i < this->_numJoints-1; i++) {
-        *this->_chain->joints[i].q = quaternionFromAxis(angles[i], 0, 0, 1);
+        *this->_chain->joints[i].q = this->_chain->joints[i].q->fromAxis(angles[i], 0, 0, 1);
     }
 
     Vector<T> accumVector;
