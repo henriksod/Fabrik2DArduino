@@ -450,12 +450,12 @@ void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     }
 
     T accumVector;
-    math::Quaternion accummath::Quaternion;
+    math::Quaternion accumQuaternion;
 
     for (int i = 1; i < this->_numJoints; i++) {
         T v(lengths[i-1], 0, 0);
-        accummath::Quaternion.getProduct(*this->_chain->joints[i-1].q);
-        v.rotate(accummath::Quaternion);
+        accumQuaternion.getProduct(*this->_chain->joints[i-1].q);
+        v.rotate(accumQuaternion);
         accumVector += v;
         *this->_chain->joints[i].p = accumVector;
     }
