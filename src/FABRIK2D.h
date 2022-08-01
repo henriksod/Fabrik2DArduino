@@ -31,7 +31,9 @@
 #include "Arduino.h"
 #include "helper_3dmath.h"  // NOLINT
 
-template<typename T = VectorFloat>
+using namespace math;
+
+template<typename T = math::VectorFloat>
 class Fabrik2D {
  public:
     // Joint struct
@@ -39,7 +41,7 @@ class Fabrik2D {
         // vector representing joint position relative to origin
         T* p = nullptr;
         // quaternion representing the joint rotation
-        Quaternion* q = nullptr;
+        math::Quaternion* q = nullptr;
     };
 
     // Chain struct
@@ -49,7 +51,7 @@ class Fabrik2D {
       // vector representing chain position relative to origin
       T* p = nullptr;
       // quaternion representing the chain rotation
-      Quaternion* q = nullptr;
+      math::Quaternion* q = nullptr;
     };
 
     /* Fabrik2D()

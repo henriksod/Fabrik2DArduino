@@ -58,32 +58,32 @@ void Fabrik2D<T>::_createChain(int lengths[]) {
     this->_chain = chain;
 
     this->_chain->p = new T();
-    this->_chain->q = new Quaternion();
+    this->_chain->q = new math::Quaternion();
 
     this->_chain->joints[0].p = new T();
-    this->_chain->joints[0].q = new Quaternion();
+    this->_chain->joints[0].q = new math::Quaternion();
 
     int sumLengths = 0;
     for (int i = 1; i < this->_numJoints; i++) {
         sumLengths = sumLengths + lengths[i-1];
         this->_chain->joints[i].p = new T(0, sumLengths, 0);
-        this->_chain->joints[i].q = new Quaternion();
+        this->_chain->joints[i].q = new math::Quaternion();
     }
 }
 
 template<typename T>
 void Fabrik2D<T>::_resetChain(int lengths[]) {
     *(this->_chain->p) = T();
-    *(this->_chain->q) = Quaternion();
+    *(this->_chain->q) = math::Quaternion();
 
     *(this->_chain->joints[0].p) = T();
-    *(this->_chain->joints[0].q) = Quaternion();
+    *(this->_chain->joints[0].q) = math::Quaternion();
 
     int sumLengths = 0;
     for (int i = 1; i < this->_numJoints; i++) {
         sumLengths = sumLengths + lengths[i-1];
         *(this->_chain->joints[i].p) = T(0, sumLengths, 0);
-        *(this->_chain->joints[i].q) = Quaternion();
+        *(this->_chain->joints[i].q) = math::Quaternion();
     }
 }
 
@@ -270,7 +270,7 @@ uint8_t Fabrik2D<T>::solve2(
         T oc;
         oc.x = -(lengths[this->_numJoints-2] + grippingOffset);
 
-        Quaternion toolRotation(toolAngle, 0, 0, 1);
+        math::Quaternion toolRotation(toolAngle, 0, 0, 1);
         oc.rotate(toolRotation);
 
         oc.x += r;
@@ -393,16 +393,16 @@ float Fabrik2D<T>::getZ(int joint) {
 template<typename T>
 float Fabrik2D<T>::getAngle(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      Quaternion q = *(this->_chain->joints[joint].q);
+      math::Quaternion q = *(this->_chain->joints[joint].q);
       return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q.w + 2*q.z*q.z - 1);
   }
-  Quaternion q = *(this->_chain->joints[this->_numJoints-1].q);
+  math::Quaternion q = *(this->_chain->joints[this->_numJoints-1].q);
   return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q.w + 2*q.z*q.z - 1);
 }
 
 template<typename T>
 float Fabrik2D<T>::getBaseAngle() {
-    Quaternion q = *(this->_chain->q);
+    math::Quaternion q = *(this->_chain->q);
     return -asin(2*q.x*q.z + 2*q.w*q.y);
 }
 
@@ -416,7 +416,7 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
     }
 
     // Update base rotation
-    Quaternion q(baseAngle, 0, 1, 0);
+    math::Quaternion q(baseAngle, 0, 1, 0);
     *this->_chain->q = q;
 
     // Rotate joints to new base rotation
@@ -440,22 +440,22 @@ void Fabrik2D<T>::setTolerance(float tolerance) {
 template<typename T>
 void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     // Calculate quaternions from input angles
-    Quaternion q0(angles[0], 0, 0, 1);
+    math::Quaternion q0(angles[0], 0, 0, 1);
     *this->_chain->joints[0].q = q0;
 
     for (int i = 1; i < this->_numJoints-1; i++) {
-        Quaternion q(angles[i], 0, 0, 1);
+        math::Quaternion q(angles[i], 0, 0, 1);
 
         *this->_chain->joints[i].q = q;
     }
 
     T accumVector;
-    Quaternion accumQuaternion;
+    math::Quaternion accummath::Quaternion;
 
     for (int i = 1; i < this->_numJoints; i++) {
         T v(lengths[i-1], 0, 0);
-        accumQuaternion.getProduct(*this->_chain->joints[i-1].q);
-        v.rotate(accumQuaternion);
+        accummath::Quaternion.getProduct(*this->_chain->joints[i-1].q);
+        v.rotate(accummath::Quaternion);
         accumVector += v;
         *this->_chain->joints[i].p = accumVector;
     }

@@ -88,6 +88,15 @@ unittest(test_constructor)
   assertEqual(190+200, fabrik2D_3_begin_init.getChain()->joints[2].p->y);
 }
 
+unittest(test_helper_3d_math)
+{
+    math::Quaternion q;
+    assertEqual(1, q.w);
+    assertEqual(0, q.x);
+    assertEqual(0, q.y);
+    assertEqual(0, q.z);
+}
+
 unittest(test_solve)
 {
     int success = 0;
