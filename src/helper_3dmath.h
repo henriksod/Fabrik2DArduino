@@ -82,14 +82,6 @@ class Quaternion {
         r.normalize();
         return r;
     }
-
-    Quaternion fromAxis(float angle, float x, float y, float z) const {
-        return Quaternion(
-            cos(angle/2),
-            x*sin(angle/2),
-            y*sin(angle/2),
-            z*sin(angle/2)).getNormalized();
-    }
 };
 
 template<typename T = float>
@@ -173,26 +165,6 @@ class Vector {
                     .getNormalized();
     }
 
-    Vector eulerFromQuaternion(const Quaternion& q) const {
-        Vector r;
-
-        float sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
-        float cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
-        r.x = atan2(sinr_cosp, cosr_cosp);
-
-        float sinp = 2 * (q.w * q.y - q.z * q.x);
-        if (abs(sinp) >= 1)
-            r.y = (PI/2)*sinp/abs(sinp);
-        else
-            r.y = asin(sinp);
-
-        float siny_cosp = 2 * (q.w * q.z + q.x * q.y);
-        float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
-        r.z = atan2(siny_cosp, cosy_cosp);
-
-        return r;
-    }
-
     // Produces the difference of this vector and v.
     Vector operator-(const Vector& v) const {
         return Vector(this->x-v.x, this->y-v.y, this->z-v.z);
@@ -228,6 +200,35 @@ class Vector {
       return Vector(this->x*s, this->y*s, this->z*s);
     }
 };
+
+Quaternion quaternionFromAxis(float angle, float x, float y, float z) const {
+    return Quaternion(
+        cos(angle/2),
+        x*sin(angle/2),
+        y*sin(angle/2),
+        z*sin(angle/2)).getNormalized();
+}
+
+template<typename T = float>
+Vector<T> eulerFromQuaternion(const Quaternion& q) const {
+    Vector<T> r;
+
+    float sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+    float cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+    r.x = atan2(sinr_cosp, cosr_cosp);
+
+    float sinp = 2 * (q.w * q.y - q.z * q.x);
+    if (abs(sinp) >= 1)
+        r.y = (PI/2)*sinp/abs(sinp);
+    else
+        r.y = asin(sinp);
+
+    float siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+    float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+    r.z = atan2(siny_cosp, cosy_cosp);
+
+    return r;
+}
 }  // namespace helper_3dmath
 
 #endif  // SRC_HELPER_3DMATH_H_

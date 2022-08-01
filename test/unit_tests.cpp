@@ -37,6 +37,8 @@
 
 using helper_3dmath::Quaternion;
 using helper_3dmath::Vector;
+using helper_3dmath::eulerFromQuaternion;
+using helper_3dmath::quaternionFromAxis;
 
 
 unittest_setup()
@@ -121,15 +123,11 @@ unittest(test_helper_3d_math)
     Vector<float> actual_angles;
 
     Quaternion rot = v1.getRotationFrom(v2);
-    fprintf(stderr, "Quaternion z %f\n", rot.z);
-    fprintf(stderr, "Quaternion w %f\n", rot.w);
-    actual_angles = actual_angles.eulerFromQuaternion(rot);
+    actual_angles = eulerFromQuaternion<float>(rot);
     assertEqualFloat(-HALF_PI, actual_angles.z, 1e-3);
 
-    rot = rot.fromAxis(-HALF_PI, 0, 0, 1);
-    fprintf(stderr, "Quaternion z %f\n", rot.z);
-    fprintf(stderr, "Quaternion w %f\n", rot.w);
-    actual_angles = actual_angles.eulerFromQuaternion(rot);
+    rot = quaternionFromAxis(-HALF_PI, 0, 0, 1);
+    actual_angles = eulerFromQuaternion<float>(rot);
     assertEqualFloat(-HALF_PI, actual_angles.z, 1e-3);
 }
 

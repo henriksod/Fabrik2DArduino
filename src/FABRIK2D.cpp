@@ -34,6 +34,8 @@
 
 using helper_3dmath::Quaternion;
 using helper_3dmath::Vector;
+using helper_3dmath::eulerFromQuaternion;
+using helper_3dmath::quaternionFromAxis;
 
 template<typename T>
 Fabrik2D<T>::Fabrik2D(int numJoints, int lengths[], float tolerance) {
@@ -273,7 +275,7 @@ uint8_t Fabrik2D<T>::solve2(
         Vector<T> oc;
         oc.x = -(lengths[this->_numJoints-2] + grippingOffset);
 
-        Quaternion toolRotation(cos(toolAngle/2), 0, 0, 1);
+        Quaternion toolRotation = quaternionFromAxis(toolAngle, 0, 0, 1);
         oc.rotate(toolRotation);
 
         oc.x += r;
@@ -396,17 +398,18 @@ float Fabrik2D<T>::getZ(int joint) {
 template<typename T>
 float Fabrik2D<T>::getAngle(int joint) {
   if (joint >= 0 && joint < this->_numJoints) {
-      Quaternion q = *(this->_chain->joints[joint].q);
-      return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q.w + 2*q.z*q.z - 1);
+      Vector<T> v = eulerFromQuaternion<T>(*(this->_chain->joints[joint].q));
+      return v.z;
   }
-  Quaternion q = *(this->_chain->joints[this->_numJoints-1].q);
-  return atan2(2*q.y*q.z - 2*q.w*q.x, 2*q.w*q.w + 2*q.z*q.z - 1);
+  Vector<T> v =
+    eulerFromQuaternion<T>(*(this->_chain->joints[this->_numJoints-1].q));
+  return v.z;
 }
 
 template<typename T>
 float Fabrik2D<T>::getBaseAngle() {
-    Quaternion q = *(this->_chain->q);
-    return -asin(2*q.x*q.z + 2*q.w*q.y);
+    Vector<T> v = eulerFromQuaternion<T>(*(this->_chain->q));
+    return v.y;
 }
 
 template<typename T>
@@ -419,8 +422,7 @@ void Fabrik2D<T>::setBaseAngle(float baseAngle) {
     }
 
     // Update base rotation
-    Quaternion q(cos(baseAngle/2), 0, 1, 0);
-    *this->_chain->q = q;
+    *this->_chain->q = quaternionFromAxis(baseAngle, 0, 1, 0);
 
     // Rotate joints to new base rotation
     for (int i = 0; i <= this->_numJoints-1; i++) {
@@ -443,13 +445,10 @@ void Fabrik2D<T>::setTolerance(float tolerance) {
 template<typename T>
 void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     // Calculate quaternions from input angles
-    Quaternion q0(cos(angles[0]/2), 0, 0, 1);
-    *this->_chain->joints[0].q = q0;
+    *this->_chain->joints[0].q = quaternionFromAxis(angles[0], 0, 0, 1);
 
     for (int i = 1; i < this->_numJoints-1; i++) {
-        Quaternion q(cos(angles[i]/2), 0, 0, 1);
-
-        *this->_chain->joints[i].q = q;
+        *this->_chain->joints[i].q = quaternionFromAxis(angles[i], 0, 0, 1);
     }
 
     Vector<T> accumVector;
