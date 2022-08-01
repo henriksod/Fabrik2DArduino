@@ -27,6 +27,12 @@
 #include "Arduino.h"
 
 namespace helper_3dmath {
+
+template<typename T = float>
+class Vector;
+
+class Quaternion;
+
 class Quaternion {
  public:
     float w;
@@ -71,10 +77,12 @@ class Quaternion {
 
     void normalize() {
         float m = getMagnitude();
-        w /= m;
-        x /= m;
-        y /= m;
-        z /= m;
+        if (m > 0) {
+            w /= m;
+            x /= m;
+            y /= m;
+            z /= m;
+        }
     }
 
     Quaternion getNormalized() const {
@@ -83,16 +91,39 @@ class Quaternion {
         return r;
     }
 
-    Quaternion fromAxis(float angle, float x, float y, float z) {
-        return Quaternion(
-            cos(angle/2),
-            x*sin(angle/2),
-            y*sin(angle/2),
-            z*sin(angle/2)).getNormalized();
+    Quaternion& fromAxis(float angle, float x, float y, float z) {
+        this->w = cos(angle/2);
+        this->x = x*sin(angle/2);
+        this->y = y*sin(angle/2);
+        this->z = z*sin(angle/2);
+        this->normalize();
+        return *this;
+    }
+
+    // Gets the quaternion from vector v1 to v2
+    template<typename T = float>
+    Quaternion& asRotationBetween(const Vector<T>& v1, const Vector<T>& v2) {
+        float d = v2.dotProduct(v1);
+        Vector<T> w = v2.crossProduct(v1);
+
+        this->w = d + sqrt(d * d + w * w);
+        this->x = w.x;
+        this->y = w.y;
+        this->z = w.z;
+        this->normalize();
+
+        if (this->getMagnitude() == 0) {
+            this->w = 1;
+            this->x = 0;
+            this->y = 0;
+            this->z = 0;
+        }
+
+        return *this;
     }
 };
 
-template<typename T = float>
+template<typename T>
 class Vector {
  public:
     T x;
@@ -117,9 +148,11 @@ class Vector {
 
     void normalize() {
         float m = getMagnitude();
-        x /= m;
-        y /= m;
-        z /= m;
+        if (m > 0) {
+            x /= m;
+            y /= m;
+            z /= m;
+        }
     }
 
     Vector getNormalized() const {
@@ -164,18 +197,12 @@ class Vector {
         return r;
     }
 
-    // Gets the quaternion from vector v to this vector
-    Quaternion getRotationFrom(const Vector& v) const {
-        float d = this->dotProduct(v);
-        Vector w = this->crossProduct(v);
-
-        return Quaternion(d + sqrt(d * d + w * w), w.x, w.y, w.z)
-                    .getNormalized();
-    }
-
     // Produces the difference of this vector and v.
-    Vector operator-(const Vector& v) const {
-        return Vector(this->x-v.x, this->y-v.y, this->z-v.z);
+    Vector& operator-(const Vector& v) {
+        this->x -= v.x;
+        this->y -= v.y;
+        this->z -= v.z;
+        return *this;
     }
 
     // Produces the difference of this vector and v.
@@ -187,8 +214,11 @@ class Vector {
     }
 
     // Produces the sum of this vector and v.
-    Vector operator+(const Vector& v) const {
-        return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
+    Vector& operator+(const Vector& v) {
+        this->x += v.x;
+        this->y += v.y;
+        this->z += v.z;
+        return *this;
     }
 
     // Produces the sum of this vector and v.
@@ -200,13 +230,16 @@ class Vector {
     }
 
     // Produces the dot product of this vector and v.
-    float operator*(const Vector& v) const {
+    float operator*(const Vector& v) {
         return this->dotProduct(v);
     }
 
     // Produces the scaled vector with s.
-    Vector operator*(const float& s) const {
-        return Vector(this->x*s, this->y*s, this->z*s);
+    Vector& operator*(const float& s) {
+        this->x *= s;
+        this->y *= s;
+        this->z *= s;
+        return *this;
     }
 
     // Produces the scaled vector with s.

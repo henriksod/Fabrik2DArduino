@@ -241,14 +241,13 @@ uint8_t Fabrik2D<T>::solve(float x, float y, int lengths[]) {
     }
 
     // Calculate quaternions from result positions
-    Vector<T> from = this->_chain->joints[0].p->getNormalized();
-    *(this->_chain->joints[0].q) = from.getRotationFrom(_origin);
+    Vector<T> from = _origin;
     for (int i = 1; i < this->_numJoints; i++) {
         Vector<T> to = (
             this->_chain->joints[i].p->getNormalized() - from).getNormalized();
 
-        *this->_chain->joints[i].q =
-            to.getNormalized().getRotationFrom(from);
+        *this->_chain->joints[i-1].q =
+            this->_chain->joints[i-1].q->asRotationBetween(from, to);
 
         from = to;
     }
@@ -266,6 +265,13 @@ uint8_t Fabrik2D<T>::solve2(
     uint8_t result_status = 0;
 
     if (this->_numJoints >= 4) {
+        // Rotate back joints from previous base rotation
+        for (int i = 0; i <= this->_numJoints-1; i++) {
+            *this->_chain->joints[i].p =
+                this->_chain->joints[i].p->
+                    getRotated(this->_chain->q->getConjugate());
+        }
+      
         // Solve in 2D plane
         float r = _distance(0, 0, x, z);
 
@@ -299,21 +305,21 @@ uint8_t Fabrik2D<T>::solve2(
                 *this->_chain->joints[this->_numJoints-2].p + oc_to_end;
 
             // Calculate quaternions from result positions
-            Vector<T> from = this->_chain->joints[0].p->getNormalized();
-            *this->_chain->joints[0].q = from.getRotationFrom(_origin);
+            Vector<T> from = _origin;
             for (int i = 1; i < this->_numJoints; i++) {
-                Vector<T> to = (this->_chain->joints[i].p->getNormalized()
-                        - from).getNormalized();
-
-                *this->_chain->joints[i].q =
-                    to.getNormalized().getRotationFrom(from);
-
+                Vector<T> to = (
+                    this->_chain->joints[i].p->getNormalized() - from).getNormalized();
+        
+                *this->_chain->joints[i-1].q =
+                    this->_chain->joints[i-1].q->asRotationBetween(from, to);
+        
                 from = to;
             }
 
             // Save base angle
             Vector<T> desiredPlaneVector(x, 0, z);
-            *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
+            *this->_chain->q =
+                this->_chain->q->asRotationBetween(_origin, desiredPlaneVector);
 
             // Update joint positions based on base rotation
             for (int i = 0; i <= this->_numJoints-1; i++) {
@@ -344,13 +350,21 @@ uint8_t Fabrik2D<T>::solve(
 
 template<typename T>
 uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
+    // Rotate back joints from previous base rotation
+    for (int i = 0; i <= this->_numJoints-1; i++) {
+        *this->_chain->joints[i].p =
+            this->_chain->joints[i].p->
+                getRotated(this->_chain->q->getConjugate());
+    }
+  
     float r = _distance(0, 0, x, z);
 
     uint8_t result_status =  solve(r, y, lengths);
     if (result_status == 1) {
         // Save base angle
         Vector<T> desiredPlaneVector(x, 0, z);
-        *this->_chain->q = desiredPlaneVector.getRotationFrom(_origin);
+        *this->_chain->q =
+            this->_chain->q->asRotationBetween(_origin, desiredPlaneVector);
 
         // Update joint positions based on base rotation
         for (int i = 0; i <= this->_numJoints-1; i++) {
