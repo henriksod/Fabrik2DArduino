@@ -162,6 +162,33 @@ unittest(test_solve)
     assertEqualFloat(100, fabrik2D_3_2DOF.getX(2), fabrik2D_3_2DOF.getTolerance());
     assertEqualFloat(100, fabrik2D_3_2DOF.getY(2), fabrik2D_3_2DOF.getTolerance());
     
+    //////// Test set joints
+    fprintf(stderr, "Test Set Joints algo\n");
+    for (int i = 0; i < this->_numJoints-1; i++) {
+        *this->_chain->joints[i].q =
+            this->_chain->joints[i].q->fromAxis(angles[i], 0, 0, 1);
+        fprintf(stderr, "%d %f %f %f %f\n", i,
+            fabrik2D_3_2DOF.getChain()->joints[i].q->w,
+            fabrik2D_3_2DOF.getChain()->joints[i].q->x,
+            fabrik2D_3_2DOF.getChain()->joints[i].q->y,
+            fabrik2D_3_2DOF.getChain()->joints[i].q->z);
+    }
+
+    Vector<T> accumVector;
+    Quaternion accumQuaternion;
+
+    for (int i = 1; i < 3; i++) {
+        Vector<T> v(lengths_3_joints[i-1], 0, 0);
+        accumQuaternion.getProduct(*fabrik2D_3_2DOF.getChain()->joints[i].q);
+        v.rotate(accumQuaternion);
+        accumVector += v;
+        *fabrik2D_3_2DOF.getChain()->joints[i].p = accumVector;
+        fprintf(stderr, "%d %f %f %f\n", i,
+            fabrik2D_3_2DOF.getChain()->joints[i].p->x,
+            fabrik2D_3_2DOF.getChain()->joints[i].p->y,
+            fabrik2D_3_2DOF.getChain()->joints[i].p->z);
+    }
+    
     // Test Set Joints
     float angles[] = {a1, a2};
     fprintf(stderr, "Test Set Joints\n");
