@@ -24,6 +24,8 @@
 #ifndef SRC_HELPER_3DMATH_H_
 #define SRC_HELPER_3DMATH_H_
 
+#include "Arduino.h"
+
 namespace helper_3dmath {
 class Quaternion {
  public:
