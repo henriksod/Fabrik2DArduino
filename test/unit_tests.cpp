@@ -250,6 +250,10 @@ unittest(test_solve)
     assertEqualFloat(0, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
     assertEqualFloat(60, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());
     assertEqualFloat(150, fabrik2D_4_4DOF_GO.getZ(3), fabrik2D_4_4DOF_GO.getTolerance());
+    fabrik2D_4_4DOF_GO.setBaseAngle(0);
+    assertEqualFloat(150, fabrik2D_4_4DOF_GO.getX(3), fabrik2D_4_4DOF_GO.getTolerance());
+    assertEqualFloat(60, fabrik2D_4_4DOF_GO.getY(3), fabrik2D_4_4DOF_GO.getTolerance());
+    assertEqualFloat(0, fabrik2D_4_4DOF_GO.getZ(3), fabrik2D_4_4DOF_GO.getTolerance());
     
 }
 
@@ -267,8 +271,8 @@ unittest(test_getters_setters)
     assertEqual(0, fabrik2D.getZ());
     assertEqual(0, fabrik2D.getAngle(0));
     assertEqual(0, fabrik2D.getAngle(1));
-    assertEqual(200, fabrik2D.getY(1));
-    assertEqual(400, fabrik2D.getY(2));
+    assertEqualFloat(200, fabrik2D.getY(1), 1e-3);
+    assertEqualFloat(400, fabrik2D.getY(2), 1e-3);
     assertEqual(0, fabrik2D.getX(0));
     assertEqual(0, fabrik2D.getX(1));
 }
