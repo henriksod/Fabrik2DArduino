@@ -84,19 +84,20 @@ class Quaternion {
     }
 };
 
-class VectorInt16 {
+template<typename T = float>
+class Vector {
  public:
-    int16_t x;
-    int16_t y;
-    int16_t z;
+    T x;
+    T y;
+    T z;
 
-    VectorInt16() {
+    Vector() {
         x = 0;
         y = 0;
         z = 0;
     }
 
-    VectorInt16(int16_t nx, int16_t ny, int16_t nz) {
+    Vector(T nx, T ny, T nz) {
         x = nx;
         y = ny;
         z = nz;
@@ -113,15 +114,15 @@ class VectorInt16 {
         z /= m;
     }
 
-    VectorInt16 getNormalized() const {
-        VectorInt16 r(x, y, z);
+    Vector getNormalized() const {
+        Vector r(x, y, z);
         r.normalize();
         return r;
     }
 
     // Gets the cross product between vector v and this vector
-    VectorInt16 crossProduct(const VectorInt16& v) const {
-        VectorInt16 cv;
+    Vector crossProduct(const Vector& v) const {
+        Vector cv;
         cv.x = v.y * this->z - v.z * this->y;
         cv.y = -(v.x * this->z - v.z * this->x);
         cv.z = v.x * this->y - v.y * this->x;
@@ -130,121 +131,7 @@ class VectorInt16 {
     }
 
     // Gets the dot product between vector v and this vector
-    float dotProduct(const VectorInt16& v) const {
-        return v.x*this-> x + v.y*this->y + v.z*this->z;
-    }
-
-    void rotate(const Quaternion& q) {
-        // P_out = q * P_in * conj(q)
-        // - P_out is the output vector
-        // - q is the orientation quaternion
-        // - P_in is the input vector (a*aReal)
-        // - conj(q) is the conjugate of the orientation
-        //   quaternion (q=[w,x,y,z], q*=[w,-x,-y,-z])
-        Quaternion p(0, x, y, z);
-
-        // quaternion multiplication: q * p, stored back in p
-        p = q.getProduct(p);
-
-        // quaternion multiplication: p * conj(q), stored back in p
-        p = p.getProduct(q.getConjugate());
-
-        // p quaternion is now [0, x', y', z']
-        x = p.x;
-        y = p.y;
-        z = p.z;
-    }
-
-    VectorInt16 getRotated(const Quaternion& q) const {
-        VectorInt16 r(x, y, z);
-        r.rotate(q);
-        return r;
-    }
-
-    // Gets the quaternion from vector v to this vector
-    Quaternion getRotationFrom(const VectorInt16& v) const {
-        VectorInt16 a = this->crossProduct(v);
-
-        float fromLength = v.getMagnitude();
-        float toLength = this->getMagnitude();
-
-        float w = sqrt(fromLength*fromLength + toLength*toLength)
-            + this->dotProduct(v);
-
-        Quaternion q(w, a.x, a.y, a.z);
-        q.normalize();
-
-        return q;
-    }
-
-    // Produces the difference of this vector and v.
-    VectorInt16 operator-(const VectorInt16& v) const {
-        return VectorInt16(this->x-v.x, this->y-v.y, this->z-v.z);
-    }
-
-    // Produces the difference of this vector and v.
-    VectorInt16 operator-=(const VectorInt16& v) const {
-        return VectorInt16(this->x-v.x, this->y-v.y, this->z-v.z);
-    }
-
-    // Produces the sum of this vector and v.
-    VectorInt16 operator+(const VectorInt16& v) const {
-        return VectorInt16(this->x+v.x, this->y+v.y, this->z+v.z);
-    }
-
-    // Produces the sum of this vector and v.
-    VectorInt16 operator+=(const VectorInt16& v) const {
-        return VectorInt16(this->x+v.x, this->y+v.y, this->z+v.z);
-    }
-};
-
-class VectorFloat {
- public:
-    float x;
-    float y;
-    float z;
-
-    VectorFloat() {
-        x = 0;
-        y = 0;
-        z = 0;
-    }
-
-    VectorFloat(float nx, float ny, float nz) {
-        x = nx;
-        y = ny;
-        z = nz;
-    }
-
-    float getMagnitude() const {
-        return sqrt(x*x + y*y + z*z);
-    }
-
-    void normalize() {
-        float m = getMagnitude();
-        x /= m;
-        y /= m;
-        z /= m;
-    }
-
-    VectorFloat getNormalized() const {
-        VectorFloat r(x, y, z);
-        r.normalize();
-        return r;
-    }
-
-    // Gets the cross product between vector v and this vector
-    VectorFloat crossProduct(const VectorFloat& v) const {
-        VectorFloat cv;
-        cv.x = v.y * this->z - v.z * this->y;
-        cv.y = -(v.x * this->z - v.z * this->x);
-        cv.z = v.x * this->y - v.y * this->x;
-
-        return cv;
-    }
-
-    // Gets the dot product between vector v and this vector
-    float dotProduct(const VectorFloat& v) const {
+    float dotProduct(const Vector& v) const {
         return v.x*this-> x + v.y*this->y + v.z*this->z;
     }
 
@@ -263,15 +150,15 @@ class VectorFloat {
         z = p.z;
     }
 
-    VectorFloat getRotated(const Quaternion& q) const {
-        VectorFloat r(x, y, z);
+    Vector getRotated(const Quaternion& q) const {
+        Vector r(x, y, z);
         r.rotate(q);
         return r;
     }
 
     // Gets the quaternion from vector v to this vector
-    Quaternion getRotationFrom(const VectorFloat& v) const {
-        VectorFloat a = this->crossProduct(v);
+    Quaternion getRotationFrom(const Vector& v) const {
+        Vector a = this->crossProduct(v);
 
         float fromLength = v.getMagnitude();
         float toLength = this->getMagnitude();
@@ -286,28 +173,28 @@ class VectorFloat {
     }
 
     // Produces the difference of this vector and v.
-    VectorFloat operator-(const VectorFloat& v) const {
-        return VectorFloat(this->x-v.x, this->y-v.y, this->z-v.z);
+    Vector operator-(const Vector& v) const {
+        return Vector(this->x-v.x, this->y-v.y, this->z-v.z);
     }
 
     // Produces the difference of this vector and v.
-    VectorFloat operator-=(const VectorFloat& v) const {
-        return VectorFloat(this->x-v.x, this->y-v.y, this->z-v.z);
+    Vector operator-=(const VectorFloat& v) const {
+        return Vector(this->x-v.x, this->y-v.y, this->z-v.z);
     }
 
     // Produces the sum of this vector and v.
-    VectorFloat operator+(const VectorFloat& v) const {
-        return VectorFloat(this->x+v.x, this->y+v.y, this->z+v.z);
+    Vector operator+(const Vector& v) const {
+        return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
     }
 
     // Produces the dot product of this vector and v.
-    float operator*(const VectorFloat& v) const {
+    float operator*(const Vector& v) const {
       return this->dotProduct(v);
     }
 
     // Produces the sum of this vector and v.
-    VectorFloat operator+=(const VectorFloat& v) const {
-        return VectorFloat(this->x+v.x, this->y+v.y, this->z+v.z);
+    Vector operator+=(const Vector& v) const {
+        return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
     }
 };
 }  // namespace helper_3dmath

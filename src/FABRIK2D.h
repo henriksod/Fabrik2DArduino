@@ -32,16 +32,15 @@
 
 namespace fabrik2d_internal {
 using helper_3dmath::Quaternion;
-using helper_3dmath::VectorFloat;
-using helper_3dmath::VectorInt16;
+using helper_3dmath::Vector;
 
-template<typename T = VectorFloat>
+template<typename T = float>
 class Fabrik2D {
  public:
     // Joint struct
     struct Joint {
         // vector representing joint position relative to origin
-        T* p = nullptr;
+        Vector<T>* p = nullptr;
         // quaternion representing the joint rotation
         Quaternion* q = nullptr;
     };
@@ -51,7 +50,7 @@ class Fabrik2D {
       // array of joints
       Joint* joints = nullptr;
       // vector representing chain position relative to origin
-      T* p = nullptr;
+      Vector<T>* p = nullptr;
       // quaternion representing the chain rotation
       Quaternion* q = nullptr;
     };
@@ -296,7 +295,7 @@ class Fabrik2D {
     // Number of iterations to converge for last run (debugging only)
     int _num_iterations = 0;
 
-    T _origin;
+    Vector<T> _origin;
 
     /* _createChain(lengths)
      * inputs: lengths
