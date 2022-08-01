@@ -179,8 +179,11 @@ class Vector {
     }
 
     // Produces the difference of this vector and v.
-    Vector operator-=(const Vector& v) const {
-        return Vector(this->x-v.x, this->y-v.y, this->z-v.z);
+    Vector& operator-=(const Vector& v) const {
+        this->x -= v.x;
+        this->y -= v.y;
+        this->z -= v.z;
+        return *this;
     }
 
     // Produces the sum of this vector and v.
@@ -189,23 +192,29 @@ class Vector {
     }
 
     // Produces the sum of this vector and v.
-    Vector operator+=(const Vector& v) const {
-        return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
+    Vector& operator+=(const Vector& v) const {
+        this->x += v.x;
+        this->y += v.y;
+        this->z += v.z;
+        return *this;
     }
 
     // Produces the dot product of this vector and v.
     float operator*(const Vector& v) const {
-      return this->dotProduct(v);
+        return this->dotProduct(v);
     }
 
     // Produces the scaled vector with s.
-    Vector operator*(float s) const {
-      return Vector(this->x*s, this->y*s, this->z*s);
+    Vector operator*(const float& s) const {
+        return Vector(this->x*s, this->y*s, this->z*s);
     }
 
     // Produces the scaled vector with s.
-    Vector operator*=(float s) const {
-      return Vector(this->x*s, this->y*s, this->z*s);
+    Vector& operator*=(const float& s) const {
+        this->x *= s;
+        this->y *= s;
+        this->z *= s;
+        return *this;
     }
 };
 
