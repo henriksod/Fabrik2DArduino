@@ -158,17 +158,13 @@ class Vector {
 
     // Gets the quaternion from vector v to this vector
     Quaternion getRotationFrom(const Vector& v) const {
-        Vector v1 = v.getNormalized();
-        Vector v2 = this->getNormalized();
-        Vector a = v2.crossProduct(v1);
+        Vector a = this->crossProduct(v);
+        Vector a_norm = a.getNormalized();
 
-        float fromLength = v2.getMagnitude();
-        float toLength = v1.getMagnitude();
+        float theta = atan2(a.getMagnitude(), this->dotProduct(v));
+        a *= sin(theta/2);
 
-        float w = sqrt(fromLength*fromLength + toLength*toLength)
-            + v2.dotProduct(v1);
-
-        Quaternion q(w, a.x, a.y, a.z);
+        Quaternion q(cos(theta/2), a.x, a.y, a.z);
         q.normalize();
 
         return q;
@@ -188,15 +184,25 @@ class Vector {
     Vector operator+(const Vector& v) const {
         return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
     }
+    
+    // Produces the sum of this vector and v.
+    Vector operator+=(const Vector& v) const {
+        return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
+    }
 
     // Produces the dot product of this vector and v.
     float operator*(const Vector& v) const {
       return this->dotProduct(v);
     }
-
-    // Produces the sum of this vector and v.
-    Vector operator+=(const Vector& v) const {
-        return Vector(this->x+v.x, this->y+v.y, this->z+v.z);
+    
+    // Produces the scaled vector with s.
+    Vector operator*(float s) const {
+      return Vector(this->x*s, this->y*s, this->z*s);
+    }
+    
+    // Produces the scaled vector with s.
+    Vector operator*=(float s) const {
+      return Vector(this->x*s, this->y*s, this->z*s);
     }
 };
 }  // namespace helper_3dmath
