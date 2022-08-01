@@ -35,6 +35,9 @@
 #include "Arduino.h"
 #include "FABRIK2D.h"
 
+using helper_3dmath::Quaternion;
+using helper_3dmath::Vector;
+
 
 unittest_setup()
 {
@@ -90,7 +93,7 @@ unittest(test_constructor)
 
 unittest(test_helper_3d_math)
 {
-    math::Quaternion q;
+    Quaternion q;
     assertEqual(1, q.w);
     assertEqual(0, q.x);
     assertEqual(0, q.y);
