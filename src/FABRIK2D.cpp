@@ -445,10 +445,12 @@ void Fabrik2D<T>::setTolerance(float tolerance) {
 template<typename T>
 void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
     // Calculate quaternions from input angles
-    *this->_chain->joints[0].q = this->_chain->joints[0].q->fromAxis(angles[0], 0, 0, 1);
+    *this->_chain->joints[0].q =
+        this->_chain->joints[0].q->fromAxis(angles[0], 0, 0, 1);
 
     for (int i = 1; i < this->_numJoints-1; i++) {
-        *this->_chain->joints[i].q = this->_chain->joints[i].q->fromAxis(angles[i], 0, 0, 1);
+        *this->_chain->joints[i].q =
+            this->_chain->joints[i].q->fromAxis(angles[i], 0, 0, 1);
     }
 
     Vector<T> accumVector;
@@ -456,7 +458,7 @@ void Fabrik2D<T>::setJoints(float angles[], int lengths[]) {
 
     for (int i = 1; i < this->_numJoints; i++) {
         Vector<T> v(lengths[i-1], 0, 0);
-        accumQuaternion.getProduct(*this->_chain->joints[i-1].q);
+        accumQuaternion.getProduct(*this->_chain->joints[i].q);
         v.rotate(accumQuaternion);
         accumVector += v;
         *this->_chain->joints[i].p = accumVector;
