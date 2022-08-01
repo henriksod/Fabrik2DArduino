@@ -30,8 +30,6 @@
 
 #include "helper_3dmath.h"  // NOLINT
 
-using fabrik2d_internal::Fabrik2D;
-
 namespace fabrik2d_internal {
 using helper_3dmath::Quaternion;
 using helper_3dmath::VectorFloat;
@@ -334,5 +332,7 @@ class Fabrik2D {
     float _distance(float x1, float y1, float x2, float y2);
 };
 }  // namespace fabrik2d_internal
+
+using fabrik2d_internal::Fabrik2D;
 
 #endif  // SRC_FABRIK2D_H_
