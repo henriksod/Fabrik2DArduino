@@ -93,11 +93,29 @@ unittest(test_constructor)
 
 unittest(test_helper_3d_math)
 {
-    Quaternion q;
-    assertEqual(1, q.w);
-    assertEqual(0, q.x);
-    assertEqual(0, q.y);
-    assertEqual(0, q.z);
+    Quaternion q1;
+    assertEqual(1, q1.w);
+    assertEqual(0, q1.x);
+    assertEqual(0, q1.y);
+    assertEqual(0, q1.z);
+    
+    Vector<float> v1;
+    assertEqual(0, v1.x);
+    assertEqual(0, v1.y);
+    assertEqual(0, v1.z);
+    
+    Quaternion q2(0.5, 0.5, 0.5, 0.5);
+    Quaternion _q2 = q2.getConjugate();
+    assertEqual(0.5, _q2.w);
+    assertEqual(-0.5, _q2.x);
+    assertEqual(-0.5, _q2.y);
+    assertEqual(-0.5, _q2.z);
+    
+    float expected_mag = sqrt(1);
+    assertEqualFloat(expected_mag, q2.getMagnitude(), 1e-3);
+    q2.normalize();
+    assertEqualFloat(expected_mag, q2.getMagnitude(), 1e-3);
+    
 }
 
 unittest(test_solve)
