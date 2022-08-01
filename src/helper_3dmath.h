@@ -178,7 +178,7 @@ class Vector {
     }
 
     // Produces the difference of this vector and v.
-    Vector operator-=(const VectorFloat& v) const {
+    Vector operator-=(const Vector& v) const {
         return Vector(this->x-v.x, this->y-v.y, this->z-v.z);
     }
 
