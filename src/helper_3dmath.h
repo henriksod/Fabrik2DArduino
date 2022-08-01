@@ -82,6 +82,14 @@ class Quaternion {
         r.normalize();
         return r;
     }
+    
+    Quaternion fromAxis(float angle, float x, float y, float z) const {
+        return Quaternion(
+            cos(angle/2),
+            x*sin(angle/2),
+            y*sin(angle/2),
+            z*sin(angle/2)).getNormalized();
+    }
 };
 
 template<typename T = float>

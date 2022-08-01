@@ -122,6 +122,11 @@ unittest(test_helper_3d_math)
     float actual_angle = atan2(
         2*rot.y*rot.z - 2*rot.w*rot.x, 2*rot.w*rot.w + 2*rot.z*rot.z - 1);
     assertEqualFloat(-HALF_PI, actual_angle, 1e-3);
+    
+    rot = rot.fromAxis(-HALF_PI, 0, 0, 1);
+    actual_angle = atan2(
+        2*rot.y*rot.z - 2*rot.w*rot.x, 2*rot.w*rot.w + 2*rot.z*rot.z - 1);
+    assertEqualFloat(-HALF_PI, actual_angle, 1e-3);
 }
 
 unittest(test_solve)
