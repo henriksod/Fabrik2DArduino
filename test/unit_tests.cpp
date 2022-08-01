@@ -164,40 +164,6 @@ unittest(test_solve)
     
     // Test Set Joints
     float angles[] = {a1, a2};
-    
-    //////// Test set joints
-    fprintf(stderr, "Test Set Joints algo\n");
-    for (int i = 0; i < 3-1; i++) {
-        *fabrik2D_3_2DOF.getChain()->joints[i].q =
-            fabrik2D_3_2DOF.getChain()->joints[i].q->fromAxis(angles[i], 0, 0, 1);
-        fprintf(stderr, "%d %f %f %f %f\n", i,
-            fabrik2D_3_2DOF.getChain()->joints[i].q->w,
-            fabrik2D_3_2DOF.getChain()->joints[i].q->x,
-            fabrik2D_3_2DOF.getChain()->joints[i].q->y,
-            fabrik2D_3_2DOF.getChain()->joints[i].q->z);
-    }
-
-    Vector<float> accumVector;
-    Quaternion accumQuaternion;
-
-    for (int i = 1; i < 3; i++) {
-        Vector<float> v(lengths_3_joints[i-1], 0, 0);
-        accumQuaternion = accumQuaternion.getProduct(
-            *fabrik2D_3_2DOF.getChain()->joints[i-1].q);
-        v.rotate(accumQuaternion);
-        accumVector += v;
-        *fabrik2D_3_2DOF.getChain()->joints[i].p = accumVector;
-        fprintf(stderr, "v %d %f %f %f\n", i,
-            v.x,
-            v.y,
-            v.z);
-        fprintf(stderr, "accumVector %d %f %f %f\n", i,
-            accumVector.x,
-            accumVector.y,
-            accumVector.z);
-    }
-    
-    
     fprintf(stderr, "Test Set Joints\n");
     fabrik2D_3_2DOF.setJoints(angles, lengths_3_joints);
     assertEqualFloat(100, fabrik2D_3_2DOF.getX(2), 1e-3);
