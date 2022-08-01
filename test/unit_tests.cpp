@@ -183,7 +183,7 @@ unittest(test_solve)
     for (int i = 1; i < 3; i++) {
         Vector<float> v(lengths_3_joints[i-1], 0, 0);
         accumQuaternion = accumQuaternion.getProduct(
-            *fabrik2D_3_2DOF.getChain()->joints[i].q);
+            *fabrik2D_3_2DOF.getChain()->joints[i-1].q);
         v.rotate(accumQuaternion);
         accumVector += v;
         *fabrik2D_3_2DOF.getChain()->joints[i].p = accumVector;
