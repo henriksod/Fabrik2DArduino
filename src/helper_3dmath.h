@@ -158,13 +158,15 @@ class Vector {
 
     // Gets the quaternion from vector v to this vector
     Quaternion getRotationFrom(const Vector& v) const {
-        Vector a = this->crossProduct(v);
+        Vector v1 = v.getNormalized();
+        Vector v2 = this->getNormalized();
+        Vector a = v2.crossProduct(v1);
 
-        float fromLength = v.getMagnitude();
-        float toLength = this->getMagnitude();
+        float fromLength = v2.getMagnitude();
+        float toLength = v1.getMagnitude();
 
         float w = sqrt(fromLength*fromLength + toLength*toLength)
-            + this->dotProduct(v);
+            + v2.dotProduct(v1);
 
         Quaternion q(w, a.x, a.y, a.z);
         q.normalize();

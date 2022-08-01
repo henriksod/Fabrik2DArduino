@@ -119,7 +119,7 @@ unittest(test_helper_3d_math)
     Vector<float> v2(0, 1, 0);
 
     Quaternion rot = v2.getRotationFrom(v1);
-    assertEqualFloat(cos(HALF_PI/2), rot.w, 1e-3);
+    assertEqualFloat(-cos(HALF_PI/2), rot.w, 1e-3);
     assertEqualFloat(0, rot.x, 1e-3);
     assertEqualFloat(0, rot.y, 1e-3);
     assertEqualFloat(1, rot.z, 1e-3);
