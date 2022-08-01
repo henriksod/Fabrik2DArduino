@@ -82,7 +82,7 @@ class Quaternion {
         r.normalize();
         return r;
     }
-    
+
     Quaternion fromAxis(float angle, float x, float y, float z) const {
         return Quaternion(
             cos(angle/2),

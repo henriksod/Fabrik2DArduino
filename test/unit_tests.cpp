@@ -118,11 +118,11 @@ unittest(test_helper_3d_math)
 
     Vector<float> v2(0, 1, 0);
 
-    Quaternion rot = v1.getRotationFrom(v2);
+    Quaternion rot = v2.getRotationFrom(v1);
     float actual_angle = atan2(
         2*rot.y*rot.z - 2*rot.w*rot.x, 2*rot.w*rot.w + 2*rot.z*rot.z - 1);
     assertEqualFloat(-HALF_PI, actual_angle, 1e-3);
-    
+
     rot = rot.fromAxis(-HALF_PI, 0, 0, 1);
     actual_angle = atan2(
         2*rot.y*rot.z - 2*rot.w*rot.x, 2*rot.w*rot.w + 2*rot.z*rot.z - 1);
