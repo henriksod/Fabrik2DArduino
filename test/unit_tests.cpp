@@ -118,16 +118,18 @@ unittest(test_helper_3d_math)
 
     Vector<float> v2(0, 1, 0);
 
+    Vector<float> actual_angles;
+
     Quaternion rot = v1.getRotationFrom(v2);
     fprintf(stderr, "Quaternion z %f\n", rot.z);
     fprintf(stderr, "Quaternion w %f\n", rot.w);
-    Vector<float> actual_angles = eulerFromQuaternion(rot);
+    actual_angles = actual_angles.eulerFromQuaternion(rot);
     assertEqualFloat(-HALF_PI, actual_angles.z, 1e-3);
 
     rot = rot.fromAxis(-HALF_PI, 0, 0, 1);
     fprintf(stderr, "Quaternion z %f\n", rot.z);
     fprintf(stderr, "Quaternion w %f\n", rot.w);
-    actual_angles = eulerFromQuaternion(rot);
+    actual_angles = actual_angles.eulerFromQuaternion(rot);
     assertEqualFloat(-HALF_PI, actual_angles.z, 1e-3);
 }
 
