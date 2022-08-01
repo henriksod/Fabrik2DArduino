@@ -33,7 +33,6 @@
 #define EPSILON_VALUE 0.001
 
 using math::Quaternion;
-using fabrik2d_internal::Fabrik2D;
 
 template<typename T>
 Fabrik2D<T>::Fabrik2D(int numJoints, int lengths[], float tolerance) {
