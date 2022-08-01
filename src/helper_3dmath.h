@@ -179,7 +179,7 @@ class Vector {
     }
 
     // Produces the difference of this vector and v.
-    Vector& operator-=(const Vector& v) const {
+    Vector& operator-=(const Vector& v) {
         this->x -= v.x;
         this->y -= v.y;
         this->z -= v.z;
@@ -192,7 +192,7 @@ class Vector {
     }
 
     // Produces the sum of this vector and v.
-    Vector& operator+=(const Vector& v) const {
+    Vector& operator+=(const Vector& v) {
         this->x += v.x;
         this->y += v.y;
         this->z += v.z;
@@ -210,7 +210,7 @@ class Vector {
     }
 
     // Produces the scaled vector with s.
-    Vector& operator*=(const float& s) const {
+    Vector& operator*=(const float& s) {
         this->x *= s;
         this->y *= s;
         this->z *= s;
