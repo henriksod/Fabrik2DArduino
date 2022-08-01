@@ -201,7 +201,7 @@ class Vector {
     }
 };
 
-Quaternion quaternionFromAxis(float angle, float x, float y, float z) const {
+Quaternion quaternionFromAxis(float angle, float x, float y, float z) {
     return Quaternion(
         cos(angle/2),
         x*sin(angle/2),
@@ -210,7 +210,7 @@ Quaternion quaternionFromAxis(float angle, float x, float y, float z) const {
 }
 
 template<typename T = float>
-Vector<T> eulerFromQuaternion(const Quaternion& q) const {
+Vector<T> eulerFromQuaternion(const Quaternion& q) {
     Vector<T> r;
 
     float sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
