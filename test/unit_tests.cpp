@@ -121,7 +121,8 @@ unittest(test_helper_3d_math)
 
     Vector<float> actual_angles;
 
-    Quaternion rot = v1.getRotationFrom(v2);
+    Quaternion rot;
+    rot = rot.asRotationBetween(v2, v1);
     actual_angles = eulerFromQuaternion<float>(rot);
     assertEqualFloat(-HALF_PI, actual_angles.z, 1e-3);
 

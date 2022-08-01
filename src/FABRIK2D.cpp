@@ -271,7 +271,7 @@ uint8_t Fabrik2D<T>::solve2(
                 this->_chain->joints[i].p->
                     getRotated(this->_chain->q->getConjugate());
         }
-      
+
         // Solve in 2D plane
         float r = _distance(0, 0, x, z);
 
@@ -308,11 +308,12 @@ uint8_t Fabrik2D<T>::solve2(
             Vector<T> from = _origin;
             for (int i = 1; i < this->_numJoints; i++) {
                 Vector<T> to = (
-                    this->_chain->joints[i].p->getNormalized() - from).getNormalized();
-        
+                    this->_chain->joints[i].p->getNormalized() - from
+                ).getNormalized();
+
                 *this->_chain->joints[i-1].q =
                     this->_chain->joints[i-1].q->asRotationBetween(from, to);
-        
+
                 from = to;
             }
 
@@ -356,7 +357,7 @@ uint8_t Fabrik2D<T>::solve2(float x, float y, float z, int lengths[]) {
             this->_chain->joints[i].p->
                 getRotated(this->_chain->q->getConjugate());
     }
-  
+
     float r = _distance(0, 0, x, z);
 
     uint8_t result_status =  solve(r, y, lengths);
