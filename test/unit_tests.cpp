@@ -187,10 +187,14 @@ unittest(test_solve)
         v.rotate(accumQuaternion);
         accumVector += v;
         *fabrik2D_3_2DOF.getChain()->joints[i].p = accumVector;
-        fprintf(stderr, "%d %f %f %f\n", i,
-            fabrik2D_3_2DOF.getChain()->joints[i].p->x,
-            fabrik2D_3_2DOF.getChain()->joints[i].p->y,
-            fabrik2D_3_2DOF.getChain()->joints[i].p->z);
+        fprintf(stderr, "v %d %f %f %f\n", i,
+            v.x,
+            v.y,
+            v.z);
+        fprintf(stderr, "accumVector %d %f %f %f\n", i,
+            accumVector.x,
+            accumVector.y,
+            accumVector.z);
     }
     
     
