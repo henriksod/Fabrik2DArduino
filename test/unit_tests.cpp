@@ -121,7 +121,7 @@ unittest(test_helper_3d_math)
     Quaternion rot = v1.getRotationFrom(v2);
     float actual_angle = atan2(
         2*rot.y*rot.z - 2*rot.w*rot.x, 2*rot.w*rot.w + 2*rot.z*rot.z - 1);
-    assertEqualFloat(-cos(HALF_PI/2), actual_angle, 1e-3);
+    assertEqualFloat(-HALF_PI, actual_angle, 1e-3);
 }
 
 unittest(test_solve)
