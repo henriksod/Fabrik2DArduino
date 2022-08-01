@@ -27,6 +27,8 @@
 #include "Arduino.h"
 
 namespace helper_3dmath {
+Quaternion quaternionFromAxis(float angle, float x, float y, float z);
+
 class Quaternion {
  public:
     float w;
