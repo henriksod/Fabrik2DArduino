@@ -34,7 +34,7 @@ Usage
 #include <FABRIK2D.h>
 #include <Servo.h>
 
-// For a 2DOF arm, we have 2 links and 2+1 joints, 
+// A 2DOF arm, where we have 2 links and 2+1 joints, 
 // where the end effector counts as one joint in this case.
 int lengths[] = {225, 150}; // Length of shoulder and elbow in mm.
 Fabrik2D fabrik2D(3, lengths); // 3 Joints in total
