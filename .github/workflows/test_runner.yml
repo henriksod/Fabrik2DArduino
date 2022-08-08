@@ -51,7 +51,7 @@ jobs:
           sketch-paths: |
             - ./examples/example_2DOFMoveUpAndDown/example_2DOFMoveUpAndDown.ino
             - ./examples/example_3DOFGrippingOffset/example_3DOFGrippingOffset.ino
-            - ./examples/example_3DOFMoveCircle/example_3DOFMoveCircle.ino
+            - ./examples/example_2DOFMoveCircle/example_2DOFMoveCircle.ino
             - ./examples/example_3DOFToolAngle/example_3DOFToolAngle.ino
             - ./examples/example_3DOFToolAngle/example_3DOFToolAngle.ino
             - ./examples/example_4DOF/example_4DOF.ino

@@ -1,5 +1,5 @@
 /********************************************************
- * FABRIK2D 3DOF example
+ * FABRIK2D 2DOF example
  * Creating the FABRIK object and moving the end effector in a circular motion.
  * You can use whichever unit you want for coordinates, lengths and tolerances as long as you are consistent.
  * Default unit is millimeters.
@@ -7,7 +7,7 @@
 
 #include <FABRIK2D.h>
 
-int lengths[] = {225, 150, 100}; // 3DOF arm where shoulder to elbow is 225mm, elbow to wrist is 150mm and wrist to end effector is 100mm.
+int lengths[] = {225, 150, 100}; // 2DOF arm where shoulder to elbow is 225mm, elbow to wrist is 150mm and wrist to end effector is 100mm.
 Fabrik2D fabrik2D(4, lengths); // This arm has 4 joints; one in the origin, the elbow, the wrist and the end effector.
 
 float ang = 0;
