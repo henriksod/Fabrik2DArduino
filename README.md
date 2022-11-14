@@ -6,9 +6,7 @@
 [![Tests](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/test_runner.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/test_runner.yml)
 [![Spell Check](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml/badge.svg)](https://github.com/henriksod/Fabrik2DArduino/actions/workflows/spell-check.yml)
 
-A fast forward- and inverse kinematics solver for Arduino based on the FABRIK algorithm.
-
-The library is based on an iterative inverse kinematics algorithm called [FABRIK](http://www.andreasaristidou.com/FABRIK.html).
+A fast forward- and inverse kinematics solver for Arduino based on the [FABRIK algorithm](http://www.andreasaristidou.com/FABRIK.html).
 
 * This solver is simple to use.
 
