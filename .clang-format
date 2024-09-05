@@ -1,0 +1,10 @@
+BasedOnStyle: Google
+AccessModifierOffset: -3
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+ColumnLimit: 100
+IndentWidth: 4
+Language: Cpp
+# Force pointers to the type for C++.
+DerivePointerAlignment: false
+PointerAlignment: Left
