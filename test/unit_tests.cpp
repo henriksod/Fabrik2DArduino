@@ -210,8 +210,11 @@ unittest(test_solve) {
 unittest(test_solve_angular_constraint) {
     int success = 0;
     int lengths_4_joints[] = {200, 200, 200};
-    Fabrik2D::AngularConstraint angular_constraints[] =
-        [ {-M_PI / 2.0, -M_PI / 2.0}, {-2.0 * M_PI, 2.0 * M_PI}, {-2.0 * M_PI, 2.0 * M_PI} ];
+    Fabrik2D::AngularConstraint angular_constraints[] = [
+        Fabrik2D::AngularConstraint{-M_PI / 2.0, -M_PI / 2.0},
+        Fabrik2D::AngularConstraint{-2.0 * M_PI, 2.0 * M_PI},
+        Fabrik2D::AngularConstraint{-2.0 * M_PI, 2.0 * M_PI}
+    ];
 
     // Solve 4 joints, 3DOF, Angular Constraint
     fprintf(stderr, "Solve 4 joints, 3DOF\n");
