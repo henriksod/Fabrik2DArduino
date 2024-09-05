@@ -207,6 +207,28 @@ unittest(test_solve) {
     assertEqualFloat(150, fabrik2D_4_4DOF_GO.getZ(3), fabrik2D_4_4DOF_GO.getTolerance());
 }
 
+unittest(test_solve_angular_constraint) {
+    int success = 0;
+    int lengths_4_joints[] = {200, 200, 200};
+    Fabrik2D::AngularConstraint angular_constraints[] =
+        [ {-M_PI / 2.0, -M_PI / 2.0}, {-2.0 * M_PI, 2.0 * M_PI}, {-2.0 * M_PI, 2.0 * M_PI} ];
+
+    // Solve 4 joints, 3DOF, Angular Constraint
+    fprintf(stderr, "Solve 4 joints, 3DOF\n");
+    Fabrik2D fabrik2D(4, lengths_4_joints, angular_constraints, 1);
+    success = fabrik2D.solve2(100, 100, 100, lengths_4_joints);
+    assertEqual(1, success);
+
+    float base_angle = atan2(100, 100);
+
+    assertEqualFloat(base_angle, fabrik2D_4_3DOF.getBaseAngle(), 1e-3);
+
+    assertEqualFloat(100, fabrik2D_4_3DOF.getX(3), fabrik2D_4_3DOF.getTolerance());
+    assertEqualFloat(100, fabrik2D_4_3DOF.getY(3), fabrik2D_4_3DOF.getTolerance());
+    assertEqualFloat(100, fabrik2D_4_3DOF.getZ(3), fabrik2D_4_3DOF.getTolerance());
+    assertEqualFloat(-M_PI / 2.0, fabrik2D_4_3DOF.getAngle(1), M_PI / 50.0);
+}
+
 unittest(test_getters_setters) {
     int lengths[] = {200, 200};
     Fabrik2D fabrik2D(3, lengths);

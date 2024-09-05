@@ -339,8 +339,8 @@ class Fabrik2D {
      */
     float _angleBetween(float x1, float y1, float x2, float y2);
 
-    /* _applyAngularConstraints(parent_joint, joint, next_joint)
-     * inputs: parent_joint, joint
+    /* _applyAngularConstraints(parent_x, parent_y, joint, next_joint)
+     * inputs: joints
      *
      * Applies angular constraints to a joint, based on the position of parent_joint
      */

@@ -207,7 +207,11 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
                     static_cast<float>((1 - lambda_i) * ny + lambda_i * jy);
 
                 if (i > 0) {
+                    Joint const& parent_joint = this->_chain->joints[i - 1];
                     _applyAngularConstraints(this->_chain->joints[i - 1], this->_chain->joints[i],
+                                             this->_chain->joints[i + 1]);
+                } else {
+                    _applyAngularConstraints(this->_chain->joints[i], this->_chain->joints[i],
                                              this->_chain->joints[i + 1]);
                 }
             }
@@ -437,6 +441,11 @@ void Fabrik2D::_applyAngularConstraints(Joint const& parent_joint, Joint const& 
     float py = joint.y - parent_joint.y;
     float nx = next_joint.x - joint.x;
     float ny = next_joint.y - joint.y;
+
+    // If previous vector results in zero vector, make it a vector pointing in positive x
+    if (_distance(0.0, 0.0, px, py) == 0.0) {
+        px = 1.0;
+    }
 
     float current_angle = _angleBetween(px, py, nx, ny);
 
