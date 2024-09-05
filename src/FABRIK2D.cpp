@@ -119,14 +119,14 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
         for (int i = 0; i < this->_numJoints - 1; i++) {
             // Find the distance r_i between the target (x,y) and the
             // joint i position (jx,jy)
-            Joint const& current_joint{this->_chain->joints[i]};
+            Joint const& current_joint = this->_chain->joints[i];
             float jx = current_joint.x;
             float jy = current_joint.y;
             float r_i = _distance(jx, jy, x, y);
             float lambda_i = static_cast<float>(lengths[i]) / r_i;
 
             // Find the new joint positions
-            Joint& next_joint{this->_chain->joints[i + 1]};
+            Joint& next_joint = this->_chain->joints[i + 1];
             next_joint.x = static_cast<float>((1 - lambda_i) * jx + lambda_i * x);
             next_joint.y = static_cast<float>((1 - lambda_i) * jy + lambda_i * y);
         }
@@ -357,6 +357,7 @@ float Fabrik2D::getAngle(int joint) {
 }
 
 float Fabrik2D::getZ(int joint) {
+    static_cast<void>(joint);
     return this->_chain->z;
 }
 
