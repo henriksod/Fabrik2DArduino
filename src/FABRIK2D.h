@@ -333,6 +333,12 @@ class Fabrik2D {
      */
     float _distance(float x1, float y1, float x2, float y2);
 
+    /* _angleBetween(x1,y1,x2,y2)
+     * inputs: two vectors
+     * outputs: angle between vectors in radians
+     */
+    float _angleBetween(float x1, float y1, float x2, float y2);
+
     /* _applyAngularConstraints(parent_joint, joint, next_joint)
      * inputs: parent_joint, joint
      *

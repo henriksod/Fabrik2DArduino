@@ -16,13 +16,21 @@ jobs:
           compliance: strict
           recursive: true
           project-type: library
-  cpplint:
+  formatting-check:
+    name: Formatting Check
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path:
+          - 'src'
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-    - run: pip install cpplint
-    - run: cpplint --recursive ./src
+    - name: Run clang-format style check for C/C++/Protobuf programs.
+      uses: jidicula/clang-format-action@v4.13.0
+      with:
+        clang-format-version: '13'
+        check-path: ${{ matrix.path }}
+        fallback-style: 'Google' # optional
   unit:
     runs-on: ubuntu-latest
     steps:
