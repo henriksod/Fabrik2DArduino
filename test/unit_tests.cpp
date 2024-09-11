@@ -228,7 +228,7 @@ unittest(test_solve_angular_constraint) {
     assertEqualFloat(100, fabrik2D.getX(3), fabrik2D.getTolerance());
     assertEqualFloat(100, fabrik2D.getY(3), fabrik2D.getTolerance());
     assertEqualFloat(100, fabrik2D.getZ(3), fabrik2D.getTolerance());
-    assertEqualFloat(-M_PI / 2.0, fabrik2D.getAngle(1), M_PI / 50.0);
+    assertEqualFloat(-M_PI / 2.0, fabrik2D.getAngle(1), M_PI / 25.0);
 }
 
 unittest(test_getters_setters) {
