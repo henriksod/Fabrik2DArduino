@@ -24,36 +24,53 @@
  *
  **********************************************************************************************/
 
+#include "FABRIK2D.h"
 
 #include "Arduino.h"
-#include "FABRIK2D.h"
 
 // Defined epsilon value which is considered as 0
 #define EPSILON_VALUE 0.001
 
-
 Fabrik2D::Fabrik2D(int numJoints, int lengths[], float tolerance) {
-    begin(numJoints, lengths, tolerance);
-}
-
-Fabrik2D::~Fabrik2D() {
-    _deleteChain();
-}
-
-void Fabrik2D::begin(int numJoints, int lengths[], float tolerance) {
     this->_numJoints = numJoints;
     _createChain(lengths);
 
     this->_tolerance = tolerance;
 }
 
-void Fabrik2D::_createChain(int lengths[]) {
+Fabrik2D::Fabrik2D(int numJoints, int lengths[], AngularConstraint angular_constraints[],
+                   float tolerance) {
+    this->_numJoints = numJoints;
+    _createChain(lengths, angular_constraints);
+
+    this->_tolerance = tolerance;
+}
+
+Fabrik2D::~Fabrik2D() {
+    _deleteChain();
+}
+
+void Fabrik2D::_createChain(int* lengths) {
     Chain* chain = new Chain();
     chain->joints = new Joint[this->_numJoints];
 
     this->_chain = chain;
 
     _resetChain(lengths);
+}
+
+void Fabrik2D::_createChain(int* lengths, AngularConstraint* angular_constraints) {
+    Chain* chain = new Chain();
+    chain->joints = new Joint[this->_numJoints];
+
+    this->_chain = chain;
+
+    _resetChain(lengths);
+
+    for (int i = 1; i < this->_numJoints - 1; i++) {
+        this->_chain->joints[i].constraint.min_angle = angular_constraints[i].min_angle;
+        this->_chain->joints[i].constraint.max_angle = angular_constraints[i].max_angle;
+    }
 }
 
 void Fabrik2D::_resetChain(int lengths[]) {
@@ -63,7 +80,7 @@ void Fabrik2D::_resetChain(int lengths[]) {
 
     int sumLengths = 0;
     for (int i = 1; i < this->_numJoints; i++) {
-        sumLengths = sumLengths + lengths[i-1];
+        sumLengths = sumLengths + lengths[i - 1];
         this->_chain->joints[i].x = 0;
         this->_chain->joints[i].y = sumLengths;
         this->_chain->joints[i].angle = 0;
@@ -87,11 +104,11 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
     _num_iterations = 0;  // Used for debugging
 
     // Distance between root and target (root is always 0,0)
-    int origin_to_target = sqrt(x*x+y*y);
+    int origin_to_target = sqrt(x * x + y * y);
 
     // Total length of chain
     int totalLength = 0;
-    for (int i = 0; i < this->_numJoints-1; i++) {
+    for (int i = 0; i < this->_numJoints - 1; i++) {
         totalLength = totalLength + lengths[i];
     }
 
@@ -99,23 +116,23 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
     if (origin_to_target > totalLength) {
         // The target is unreachable
 
-        for (int i = 0; i < this->_numJoints-1; i++) {
+        for (int i = 0; i < this->_numJoints - 1; i++) {
             // Find the distance r_i between the target (x,y) and the
             // joint i position (jx,jy)
-            float jx = this->_chain->joints[i].x;
-            float jy = this->_chain->joints[i].y;
+            Joint const& current_joint = this->_chain->joints[i];
+            float jx = current_joint.x;
+            float jy = current_joint.y;
             float r_i = _distance(jx, jy, x, y);
-            float lambda_i = static_cast<float>(lengths[i])/r_i;
+            float lambda_i = static_cast<float>(lengths[i]) / r_i;
 
             // Find the new joint positions
-            this->_chain->joints[i+1].x = static_cast<float>(
-                (1-lambda_i)*jx + lambda_i*x);
-            this->_chain->joints[i+1].y = static_cast<float>(
-                (1-lambda_i)*jy + lambda_i*y);
+            Joint& next_joint = this->_chain->joints[i + 1];
+            next_joint.x = static_cast<float>((1 - lambda_i) * jx + lambda_i * x);
+            next_joint.y = static_cast<float>((1 - lambda_i) * jy + lambda_i * y);
         }
 
-       _resetChain(lengths);
-       return 0;
+        _resetChain(lengths);
+        return 0;
     } else {
         // The target is reachable; this, set as (bx,by) the initial
         // position of the joint i
@@ -124,8 +141,8 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
 
         // Check whether the distance between the end effector
         // joint n (ex,ey) and the target is greater than a tolerance
-        float ex = this->_chain->joints[this->_numJoints-1].x;
-        float ey = this->_chain->joints[this->_numJoints-1].y;
+        float ex = this->_chain->joints[this->_numJoints - 1].x;
+        float ey = this->_chain->joints[this->_numJoints - 1].y;
         float dist = _distance(ex, ey, x, y);
 
         float prevDist = 0;
@@ -140,7 +157,7 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
                 tolerance *= 1.1;
                 // If increased tolerance is higher than 2x the desired
                 // tolerance report failed to converge
-                if (tolerance > this->_tolerance*2) {
+                if (tolerance > this->_tolerance * 2) {
                     _resetChain(lengths);
                     return 0;
                 }
@@ -150,24 +167,22 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
 
             // STAGE 1: FORWARD REACHING
             // Set the end effector as target
-            this->_chain->joints[this->_numJoints-1].x = x;
-            this->_chain->joints[this->_numJoints-1].y = y;
+            this->_chain->joints[this->_numJoints - 1].x = x;
+            this->_chain->joints[this->_numJoints - 1].y = y;
 
-            for (int i = this->_numJoints-2; i >= 0; i--) {
+            for (int i = this->_numJoints - 2; i >= 0; i--) {
                 // Find the distance r_i between the new joint position
                 // i+1 (nx,ny) and the joint i (jx,jy)
                 float jx = this->_chain->joints[i].x;
                 float jy = this->_chain->joints[i].y;
-                float nx = this->_chain->joints[i+1].x;
-                float ny = this->_chain->joints[i+1].y;
+                float nx = this->_chain->joints[i + 1].x;
+                float ny = this->_chain->joints[i + 1].y;
                 float r_i = _distance(jx, jy, nx, ny);
-                float lambda_i = static_cast<float>(lengths[i])/r_i;
+                float lambda_i = static_cast<float>(lengths[i]) / r_i;
 
                 // Find the new joint positions
-                this->_chain->joints[i].x = static_cast<float>(
-                    (1-lambda_i)*nx + lambda_i*jx);
-                this->_chain->joints[i].y = static_cast<float>(
-                    (1-lambda_i)*ny + lambda_i*jy);
+                this->_chain->joints[i].x = static_cast<float>((1 - lambda_i) * nx + lambda_i * jx);
+                this->_chain->joints[i].y = static_cast<float>((1 - lambda_i) * ny + lambda_i * jy);
             }
 
             // STAGE 2: BACKWARD REACHING
@@ -175,44 +190,52 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
             this->_chain->joints[0].x = bx;
             this->_chain->joints[0].y = by;
 
-            for (int i = 0; i < this->_numJoints-1; i++) {
+            for (int i = 0; i < this->_numJoints - 1; i++) {
                 // Find the distance r_i between the new joint position
                 // i (nx,ny) and the joint i+1 (jx,jy)
-                float jx = this->_chain->joints[i+1].x;
-                float jy = this->_chain->joints[i+1].y;
+                float jx = this->_chain->joints[i + 1].x;
+                float jy = this->_chain->joints[i + 1].y;
                 float nx = this->_chain->joints[i].x;
                 float ny = this->_chain->joints[i].y;
                 float r_i = _distance(jx, jy, nx, ny);
-                float lambda_i = static_cast<float>(lengths[i])/r_i;
+                float lambda_i = static_cast<float>(lengths[i]) / r_i;
 
                 // Find the new joint positions
-                this->_chain->joints[i+1].x = static_cast<float>(
-                    (1-lambda_i)*nx + lambda_i*jx);
-                this->_chain->joints[i+1].y = static_cast<float>(
-                    (1-lambda_i)*ny + lambda_i*jy);
+                this->_chain->joints[i + 1].x =
+                    static_cast<float>((1 - lambda_i) * nx + lambda_i * jx);
+                this->_chain->joints[i + 1].y =
+                    static_cast<float>((1 - lambda_i) * ny + lambda_i * jy);
+
+                if (i > 0) {
+                    Joint const& parent_joint = this->_chain->joints[i - 1];
+                    _applyAngularConstraints(this->_chain->joints[i - 1], this->_chain->joints[i],
+                                             this->_chain->joints[i + 1]);
+                } else {
+                    _applyAngularConstraints(this->_chain->joints[i], this->_chain->joints[i],
+                                             this->_chain->joints[i + 1]);
+                }
             }
 
             // Update distance between end effector and target
-            ex = this->_chain->joints[this->_numJoints-1].x;
-            ey = this->_chain->joints[this->_numJoints-1].y;
+            ex = this->_chain->joints[this->_numJoints - 1].x;
+            ey = this->_chain->joints[this->_numJoints - 1].y;
             dist = _distance(ex, ey, x, y);
         }
     }
 
-    this->_chain->joints[0].angle = atan2(
-        this->_chain->joints[1].y, this->_chain->joints[1].x);
+    this->_chain->joints[0].angle = atan2(this->_chain->joints[1].y, this->_chain->joints[1].x);
 
     float prevAngle = this->_chain->joints[0].angle;
 
-    for (int i = 2; i <= this->_numJoints-1; i++) {
-        float ax = this->_chain->joints[i-1].x;
-        float ay = this->_chain->joints[i-1].y;
+    for (int i = 2; i <= this->_numJoints - 1; i++) {
+        float ax = this->_chain->joints[i - 1].x;
+        float ay = this->_chain->joints[i - 1].y;
         float bx = this->_chain->joints[i].x;
         float by = this->_chain->joints[i].y;
 
-        float aAngle = atan2(by-ay, bx-ax);
+        float aAngle = atan2(by - ay, bx - ax);
 
-        this->_chain->joints[i-1].angle = aAngle - prevAngle;
+        this->_chain->joints[i - 1].angle = aAngle - prevAngle;
 
         prevAngle = aAngle;
     }
@@ -220,12 +243,8 @@ uint8_t Fabrik2D::solve(float x, float y, int lengths[]) {
     return result_status;
 }
 
-uint8_t Fabrik2D::solve2(
-    float x, float y, float z,
-    float toolAngle,
-    float grippingOffset,
-    int lengths[]
-) {
+uint8_t Fabrik2D::solve2(float x, float y, float z, float toolAngle, float grippingOffset,
+                         int lengths[]) {
     uint8_t result_status = 0;
 
     if (this->_numJoints >= 4) {
@@ -234,15 +253,13 @@ uint8_t Fabrik2D::solve2(
 
         // Find wrist center by moving from the desired position with
         // tool angle and link length
-        float oc_r = r - (
-            lengths[this->_numJoints-2]+grippingOffset)*cos(toolAngle);
+        float oc_r = r - (lengths[this->_numJoints - 2] + grippingOffset) * cos(toolAngle);
 
-        float oc_y = y - (
-            lengths[this->_numJoints-2]+grippingOffset)*sin(toolAngle);
+        float oc_y = y - (lengths[this->_numJoints - 2] + grippingOffset) * sin(toolAngle);
 
         // We solve IK from first joint to wrist center
         int tmp = this->_numJoints;
-        this->_numJoints = this->_numJoints-1;
+        this->_numJoints = this->_numJoints - 1;
 
         result_status = solve(oc_r, oc_y, lengths);
 
@@ -250,44 +267,42 @@ uint8_t Fabrik2D::solve2(
 
         if (result_status == 1) {
             // Update the end effector position to preserve tool angle
-            this->_chain->joints[this->_numJoints-1].x =
-                this->_chain->joints[this->_numJoints-2].x
-                + lengths[this->_numJoints-2]*cos(toolAngle);
+            this->_chain->joints[this->_numJoints - 1].x =
+                this->_chain->joints[this->_numJoints - 2].x +
+                lengths[this->_numJoints - 2] * cos(toolAngle);
 
-            this->_chain->joints[this->_numJoints-1].y =
-                this->_chain->joints[this->_numJoints-2].y
-                + lengths[this->_numJoints-2]*sin(toolAngle);
+            this->_chain->joints[this->_numJoints - 1].y =
+                this->_chain->joints[this->_numJoints - 2].y +
+                lengths[this->_numJoints - 2] * sin(toolAngle);
 
             // Update angle of last joint
-            this->_chain->joints[0].angle = atan2(
-                this->_chain->joints[1].y,
-                this->_chain->joints[1].x);
+            this->_chain->joints[0].angle =
+                atan2(this->_chain->joints[1].y, this->_chain->joints[1].x);
 
             float prevAngle = this->_chain->joints[0].angle;
-            for (int i = 2; i <= this->_numJoints-1; i++) {
-                float ax = this->_chain->joints[i-1].x;
-                float ay = this->_chain->joints[i-1].y;
+            for (int i = 2; i <= this->_numJoints - 1; i++) {
+                float ax = this->_chain->joints[i - 1].x;
+                float ay = this->_chain->joints[i - 1].y;
                 float bx = this->_chain->joints[i].x;
                 float by = this->_chain->joints[i].y;
 
-                float aAngle = atan2(by-ay, bx-ax);
+                float aAngle = atan2(by - ay, bx - ax);
 
-                this->_chain->joints[i-1].angle = aAngle - prevAngle;
+                this->_chain->joints[i - 1].angle = aAngle - prevAngle;
 
                 prevAngle = aAngle;
             }
 
             // Save tool angle
-            this->_chain->joints[this->_numJoints-1].angle = toolAngle;
+            this->_chain->joints[this->_numJoints - 1].angle = toolAngle;
 
             // Save base angle
             this->_chain->z = z;
             this->_chain->angle = atan2(z, x);
 
             // Update joint X values based on base rotation
-            for (int i = 0; i <= this->_numJoints-1; i++) {
-                this->_chain->joints[i].x =
-                    this->_chain->joints[i].x * cos(-this->_chain->angle);
+            for (int i = 0; i <= this->_numJoints - 1; i++) {
+                this->_chain->joints[i].x = this->_chain->joints[i].x * cos(-this->_chain->angle);
             }
         }
     }
@@ -299,63 +314,54 @@ uint8_t Fabrik2D::solve(float x, float y, float toolAngle, int lengths[]) {
     return solve2(x, y, 0, toolAngle, 0, lengths);
 }
 
-uint8_t Fabrik2D::solve(
-    float x, float y,
-    float toolAngle,
-    float grippingOffset,
-    int lengths[]
-) {
+uint8_t Fabrik2D::solve(float x, float y, float toolAngle, float grippingOffset, int lengths[]) {
     return solve2(x, y, 0, toolAngle, grippingOffset, lengths);
 }
 
 uint8_t Fabrik2D::solve2(float x, float y, float z, int lengths[]) {
     float r = _distance(0, 0, x, z);
 
-    uint8_t result_status =  solve(r, y, lengths);
+    uint8_t result_status = solve(r, y, lengths);
     if (result_status == 1) {
         this->_chain->z = z;
         this->_chain->angle = atan2(z, x);
 
         // Update joint X values based on base rotation
-        for (int i = 0; i <= this->_numJoints-1; i++) {
-            this->_chain->joints[i].x =
-                this->_chain->joints[i].x * cos(-this->_chain->angle);
+        for (int i = 0; i <= this->_numJoints - 1; i++) {
+            this->_chain->joints[i].x = this->_chain->joints[i].x * cos(-this->_chain->angle);
         }
     }
 
     return result_status;
 }
 
-uint8_t Fabrik2D::solve2(
-    float x, float y, float z,
-    float toolAngle,
-    int lengths[]
-) {
+uint8_t Fabrik2D::solve2(float x, float y, float z, float toolAngle, int lengths[]) {
     return solve2(x, y, z, toolAngle, 0, lengths);
 }
 
 float Fabrik2D::getX(int joint) {
-  if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint].x;
-  }
-  return 0;
+    if (joint >= 0 && joint < this->_numJoints) {
+        return this->_chain->joints[joint].x;
+    }
+    return 0;
 }
 
 float Fabrik2D::getY(int joint) {
-  if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint].y;
-  }
-  return 0;
+    if (joint >= 0 && joint < this->_numJoints) {
+        return this->_chain->joints[joint].y;
+    }
+    return 0;
 }
 
 float Fabrik2D::getAngle(int joint) {
-  if (joint >= 0 && joint < this->_numJoints) {
-      return this->_chain->joints[joint].angle;
-  }
-  return 0;
+    if (joint >= 0 && joint < this->_numJoints) {
+        return this->_chain->joints[joint].angle;
+    }
+    return 0;
 }
 
 float Fabrik2D::getZ(int joint) {
+    static_cast<void>(joint);
     return this->_chain->z;
 }
 
@@ -369,12 +375,10 @@ void Fabrik2D::setBaseAngle(float baseAngle) {
 
     if (this->_numJoints >= 4) {
         // Update end effector Z value based on base rotation
-        this->_chain->z =
-            this->_chain->joints[this->_numJoints-1].x * sin(angle_diff);
+        this->_chain->z = this->_chain->joints[this->_numJoints - 1].x * sin(angle_diff);
         // Update joint X values based on base rotation
-        for (int i = 0; i <= this->_numJoints-1; i++) {
-            this->_chain->joints[i].x =
-                this->_chain->joints[i].x * cos(angle_diff);
+        for (int i = 0; i <= this->_numJoints - 1; i++) {
+            this->_chain->joints[i].x = this->_chain->joints[i].x * cos(angle_diff);
         }
     }
 }
@@ -393,9 +397,9 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
     float accY = 0;
     this->_chain->joints[0].angle = angles[0];
 
-    for (int i = 1; i < this->_numJoints-1; i++) {
-        this->_chain->joints[i].x = accX + lengths[i-1]*cos(accAng);
-        this->_chain->joints[i].y = accY + lengths[i-1]*sin(accAng);
+    for (int i = 1; i < this->_numJoints - 1; i++) {
+        this->_chain->joints[i].x = accX + lengths[i - 1] * cos(accAng);
+        this->_chain->joints[i].y = accY + lengths[i - 1] * sin(accAng);
         this->_chain->joints[i].angle = angles[i];
         accAng += angles[i];
         accX = this->_chain->joints[i].x;
@@ -403,11 +407,11 @@ void Fabrik2D::setJoints(float angles[], int lengths[]) {
     }
 
     // Update end effector x and y
-    this->_chain->joints[this->_numJoints-1].x =
-        accX + lengths[this->_numJoints-2]*cos(accAng);
-    this->_chain->joints[this->_numJoints-1].y =
-        accY + lengths[this->_numJoints-2]*sin(accAng);
-    this->_chain->joints[this->_numJoints-1].angle = 0;
+    this->_chain->joints[this->_numJoints - 1].x =
+        accX + lengths[this->_numJoints - 2] * cos(accAng);
+    this->_chain->joints[this->_numJoints - 1].y =
+        accY + lengths[this->_numJoints - 2] * sin(accAng);
+    this->_chain->joints[this->_numJoints - 1].angle = 0;
 }
 
 int Fabrik2D::numJoints() {
@@ -421,5 +425,46 @@ Fabrik2D::Chain* Fabrik2D::getChain() {
 float Fabrik2D::_distance(float x1, float y1, float x2, float y2) {
     float xDiff = x2 - x1;
     float yDiff = y2 - y1;
-    return sqrt(xDiff*xDiff + yDiff*yDiff);
+    return sqrt(xDiff * xDiff + yDiff * yDiff);
+}
+
+float Fabrik2D::_angleBetween(float x1, float y1, float x2, float y2) {
+    float dot = x1 * x2 + y1 * y2;
+    float mag1 = _distance(0.0, 0.0, x1, y1);
+    float mag2 = _distance(0.0, 0.0, x2, y2);
+    return acos(dot / (mag1 * mag2));
+}
+
+void Fabrik2D::_applyAngularConstraints(Joint const& parent_joint, Joint const& joint,
+                                        Joint& next_joint) {
+    float px = joint.x - parent_joint.x;
+    float py = joint.y - parent_joint.y;
+    float nx = next_joint.x - joint.x;
+    float ny = next_joint.y - joint.y;
+
+    // If previous vector results in zero vector, make it a vector pointing in positive x
+    if (_distance(0.0, 0.0, px, py) == 0.0) {
+        px = 1.0;
+    }
+
+    float current_angle = _angleBetween(px, py, nx, ny);
+
+    // Clamp the angle between the joint's limits
+    float clamped_angle =
+        constrain(current_angle, joint.constraint.min_angle, joint.constraint.max_angle);
+
+    // Adjust the joint position based on the clamped angle
+    if (current_angle != clamped_angle) {
+        float angle_diff = clamped_angle - current_angle;
+
+        // Rotate the next joint around the current joint by the angle difference
+        float cos_angle = cos(angle_diff);
+        float sin_angle = sin(angle_diff);
+
+        float new_x = nx * cos_angle - nx * sin_angle;
+        float new_y = nx * sin_angle + nx * cos_angle;
+
+        next_joint.x = joint.x + new_x;
+        next_joint.y = joint.y + new_y;
+    }
 }

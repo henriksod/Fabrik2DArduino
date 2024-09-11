@@ -42,3 +42,5 @@ getTolerance
 resetChain
 deleteChain
 Deallocates
+angleBetween
+applyAngularConstraints

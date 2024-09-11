@@ -24,7 +24,6 @@
  *
  **********************************************************************************************/
 
-
 #ifndef SRC_FABRIK2D_H_
 #define SRC_FABRIK2D_H_
 
@@ -32,51 +31,64 @@
 
 class Fabrik2D {
  public:
-    // Joint struct
-    typedef struct {
-        float x = 0;  // x position of joint relative to origin
-        float y = 0;  // y position of joint relative to origin
-        float angle = 0;  // angle of joint
-    } Joint;
+    /// An angular constraint
+    struct AngularConstraint {
+        /// The minimum angle of in radians
+        float min_angle;
+        /// The maximum angle in radians
+        float max_angle;
+    };
 
-    // Chain struct
-    typedef struct {
-      Joint* joints = nullptr;  // list of joints
-      float z = 0;  // z position defining the chain offset from the plane
-      float angle = 0;  // base (plane) rotation
-    } Chain;
+    /// Joint struct
+    struct Joint {
+        /// x position of joint relative to origin
+        float x = 0.0;
+        /// y position of joint relative to origin
+        float y = 0.0;
+        /// angle of joint relative to parent arm in radians
+        float angle = 0.0;
+        /// The angular constraint of the joint
+        AngularConstraint constraint = {-2.0 * M_PI, 2.0 * M_PI};
+    };
 
-    /* Fabrik2D()
-     *  
-     *  Default constructor. Call begin(numJoints, lengths) to initialize
-     */
-    Fabrik2D() {}
+    /// Chain struct
+    struct Chain {
+        /// list of joints
+        Joint* joints = nullptr;
+        /// z position defining the chain offset from the plane
+        float z = 0.0;
+        /// base (plane) rotation in radians
+        float angle = 0.0;
+    };
 
     /* Fabrik2D(numJoints, lengths, tolerance)
      * inputs: numJoints, lengths, (optional) tolerance
      *
-     * Calls begin(numJoints, lengths, tolerance)
+     * Initializes the library
+     * creates the chain to be used for the inverse kinematics solver
      *
      * tolerance is optional, will be set to 10 by default
      */
     Fabrik2D(int numJoints, int lengths[], float tolerance = 10);
 
+    /* Fabrik2D(numJoints, lengths, angular_constraints, tolerance)
+     * inputs: numJoints, lengths, angular_constraints, (optional) tolerance
+     *
+     * Initializes the library
+     * creates the chain to be used for the inverse kinematics solver
+     *
+     * Also takes in angular constraints for each joint
+     *
+     * tolerance is optional, will be set to 10 by default
+     */
+    Fabrik2D(int numJoints, int lengths[], AngularConstraint angular_constraints[],
+             float tolerance = 10);
+
     /* Fabrik2D destructor */
     ~Fabrik2D();
 
-    /*
-     * begin(numJoints, lengths, tolerance)
-     * inputs: numJoints, lengths, (optional) tolerance 
-     * 
-     * Initializes the library
-     * creates the chain to be used for the inverse kinematics solver
-     * 
-     * tolerance is optional, will be set to 10 by default
-     */
-     void begin(int numJoints, int lengths[], float tolerance = 10);
-
     /* solve(x, y, lengths)
-     *  
+     *
      * Inputs: x and y positions of target, lengths between each joint
      * Returns:
      *  0 if FABRIK could not converge
@@ -84,7 +96,7 @@ class Fabrik2D {
      *  2 if FABRIK converged with a higher tolerance value
      *
      * solves the inverse kinematics of the stored chain to reach the target
-     * 
+     *
      * Returns:
      *  0 if FABRIK could not converge
      *  1 if FABRIK converged to the set threshold
@@ -93,7 +105,7 @@ class Fabrik2D {
     uint8_t solve(float x, float y, int lengths[]);
 
     /* solve(x, y, angle, lengths)
-     *  
+     *
      * Inputs: x and y positions of target, desired tool angle and lengths
      *         between each joint
      * Returns:
@@ -111,7 +123,7 @@ class Fabrik2D {
     uint8_t solve(float x, float y, float toolAngle, int lengths[]);
 
     /* solve(x, y, angle, offset, lengths)
-     *  
+     *
      * Inputs: x and y positions of target, desired tool angle and lengths
      *         between each joint
      * Returns:
@@ -122,19 +134,15 @@ class Fabrik2D {
      * !!! tool angle is in radians !!!
      *
      * solves the inverse kinematics of the stored chain to reach the target
-     * with tool angle 
+     * with tool angle
      * and gripping offset
      *
      * will only work for 3DOF
      */
-    uint8_t solve(
-        float x, float y,
-        float toolAngle,
-        float grippingOffset,
-        int lengths[]);
+    uint8_t solve(float x, float y, float toolAngle, float grippingOffset, int lengths[]);
 
     /* solve2(x, y, z, lengths)
-     *  
+     *
      * Inputs: x, y and z positions of target, desired tool angle and lengths
      *         between each joint
      * Returns:
@@ -157,7 +165,7 @@ class Fabrik2D {
     uint8_t solve2(float x, float y, float z, int lengths[]);
 
     /* solve2(x, y, z, toolAngle, lengths)
-     *  
+     *
      * Inputs: x, y and z positions of target, desired tool angle and lengths
      *         between each joint
      * Returns:
@@ -177,12 +185,12 @@ class Fabrik2D {
      * from the plane
      *
      * will only work for 4DOF, i.e. 4 joints or more and a rotational base
-     * 
+     *
      */
     uint8_t solve2(float x, float y, float z, float toolAngle, int lengths[]);
 
     /* solve2(x, y, z, angle, offset, lengths)
-     *  
+     *
      * Inputs: x, y and z positions of target, desired tool angle, gripping
                offset and lengths between each joint
      * Returns:
@@ -192,7 +200,7 @@ class Fabrik2D {
      *
      * !!! tool angle is in radians !!!
      *
-     * solves the inverse kinematics of the stored chain to reach the target 
+     * solves the inverse kinematics of the stored chain to reach the target
      * with tool angle and gripping offset introducing the z-axis, which
      * allows a rotational base of the manipulator
      *
@@ -203,11 +211,7 @@ class Fabrik2D {
      *
      * will only work for 4DOF, i.e. 4 joints or more and a rotational base
      */
-    uint8_t solve2(
-        float x, float y, float z,
-        float toolAngle,
-        float grippingOffset,
-        int lengths[]);
+    uint8_t solve2(float x, float y, float z, float toolAngle, float grippingOffset, int lengths[]);
 
     /* getX(joint)
      * inputs: joint number
@@ -224,7 +228,7 @@ class Fabrik2D {
     /* getZ(joint)
      * inputs: (optional) joint number
      * outputs: z offset of the chain from the plane
-     * 
+     *
      * Passing the joint argument will not do anything.
      * It is just there for consistency with getX and getY.
      */
@@ -253,7 +257,7 @@ class Fabrik2D {
 
     /* setTolerance(tolerance)
      * inputs: tolerance value
-     * 
+     *
      * sets the tolerance of the distance between the end effector
      * and the target
      */
@@ -264,7 +268,7 @@ class Fabrik2D {
      *         between each joint
      *
      * Angles must be equal to the number of joints - 1
-     * 
+     *
      * manually sets the joint angles and updates their position using
      * forward kinematics
      */
@@ -295,6 +299,16 @@ class Fabrik2D {
      */
     void _createChain(int* lengths);
 
+    /* _createChain(lengths)
+     * inputs: lengths
+     *
+     * Creates a new chain and attaches it to the Fabrik2D object
+     *
+     * length size should always be one lesser than the number of joints
+     * angular_constraints size should always be one lesser than the number of joints
+     */
+    void _createChain(int* lengths, AngularConstraint* angular_constraints);
+
     /* _resetChain(lengths)
      * inputs: lengths
      *
@@ -311,13 +325,26 @@ class Fabrik2D {
      */
     void _deleteChain();
 
-    /* distance(x1,y1,x2,y2)
+    /* _distance(x1,y1,x2,y2)
      * inputs: coordinates
      * outputs: distance between points
      *
      * Uses euclidean distance
      */
     float _distance(float x1, float y1, float x2, float y2);
+
+    /* _angleBetween(x1,y1,x2,y2)
+     * inputs: two vectors
+     * outputs: angle between vectors in radians
+     */
+    float _angleBetween(float x1, float y1, float x2, float y2);
+
+    /* _applyAngularConstraints(parent_x, parent_y, joint, next_joint)
+     * inputs: joints
+     *
+     * Applies angular constraints to a joint, based on the position of parent_joint
+     */
+    void _applyAngularConstraints(Joint const& parent_joint, Joint const& joint, Joint& next_joint);
 };
 
 #endif  // SRC_FABRIK2D_H_
