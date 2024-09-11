@@ -223,12 +223,12 @@ unittest(test_solve_angular_constraint) {
 
     float base_angle = atan2(100, 100);
 
-    assertEqualFloat(base_angle, fabrik2D_4_3DOF.getBaseAngle(), 1e-3);
+    assertEqualFloat(base_angle, fabrik2D.getBaseAngle(), 1e-3);
 
-    assertEqualFloat(100, fabrik2D_4_3DOF.getX(3), fabrik2D_4_3DOF.getTolerance());
-    assertEqualFloat(100, fabrik2D_4_3DOF.getY(3), fabrik2D_4_3DOF.getTolerance());
-    assertEqualFloat(100, fabrik2D_4_3DOF.getZ(3), fabrik2D_4_3DOF.getTolerance());
-    assertEqualFloat(-M_PI / 2.0, fabrik2D_4_3DOF.getAngle(1), M_PI / 50.0);
+    assertEqualFloat(100, fabrik2D.getX(3), fabrik2D.getTolerance());
+    assertEqualFloat(100, fabrik2D.getY(3), fabrik2D.getTolerance());
+    assertEqualFloat(100, fabrik2D.getZ(3), fabrik2D.getTolerance());
+    assertEqualFloat(-M_PI / 2.0, fabrik2D.getAngle(1), M_PI / 50.0);
 }
 
 unittest(test_getters_setters) {
