@@ -9,7 +9,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: arduino/arduino-lint-action@v1
         with:
           library-manager: update
@@ -24,7 +24,7 @@ jobs:
         path:
           - 'src'
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Run clang-format style check for C/C++/Protobuf programs.
       uses: jidicula/clang-format-action@v4.13.0
       with:
@@ -34,7 +34,7 @@ jobs:
   unit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
@@ -50,7 +50,7 @@ jobs:
           - "arduino:avr:mega"
           - "arduino:sam:arduino_due_x_dbg"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: arduino/compile-sketches@v1
         with:
           fqbn: ${{ matrix.fqbn }}
